@@ -1,6 +1,6 @@
 * Jeudi 19/05
-  Installation de Débian8 avec Vincent Danjean. Mise en place de l'environnement de travail (quelques raccourcis qui me sont chères, des marque-pages, un Git).
-  Git : 
-  Il faut que je fournisse mon adresse MAC à Christian afin d'avoir Internet en filaire (très peu de Wifi dans la salle).
-  Prise en main de Org-mode sous emacs.
+  - Installation de Débian8 avec Vincent Danjean. 
+  - Mise en place de l'environnement de travail (quelques raccourcis qui me sont chères, des marque-pages, un Git: =https://github.com/FlorianPO/Performance-Regression-Testing=).
+  - Il faut que je fournisse mon adresse MAC à Christian afin d'avoir Internet en filaire (très peu de Wifi dans la salle).
+  - Prise en main de Org-mode sous emacs.
 
