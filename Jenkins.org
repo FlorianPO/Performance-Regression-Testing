@@ -15,9 +15,9 @@
     Jenkins can be installed on Windows, Ubuntu/Debian, Red
     Hat/Fedora/CentOS, Mac OS X, openSUSE, FReeBSD, OpenBSD, Gentoo.
 *** Liens
-    Quick guide : http://www.tutorialspoint.com/jenkins/jenkins_quick_guide.htm
-    Overview (slide) :  http://fr.slideshare.net/AhmedMGomaa/jenkins-overview 
-    Wiki : https://en.wikipedia.org/wiki/Jenkins_%28software%29
+    - Quick guide : http://www.tutorialspoint.com/jenkins/jenkins_quick_guide.htm
+    - Overview (slide) :  http://fr.slideshare.net/AhmedMGomaa/jenkins-overview 
+    - Wiki : https://en.wikipedia.org/wiki/Jenkins_%28software%29
 
 ** Features
    - Easy installation / configuration
