@@ -11,3 +11,5 @@
 - [[https://github.com/FlorianPO/Performance-Regression-Testing/blob/master/Phoronix.org][Overview de Phoronix]] : dépendant du matériel,
   deux tests n'auront du sens que s'ils sont éxecutés sur la /même/ machine.
 - [[https://github.com/FlorianPO/Performance-Regression-Testing/blob/master/CollectiveMind.org][Overview de CollectiveMind]] : plus proche du sujet (axé recherche)
+- [[https://github.com/FlorianPO/Performance-Regression-Testing/blob/master/Jenkins.org][Overview de Jenkins]]
+Ces documents ne sont qu'une ébauche, il conviendra à l'avenir de s'intéresser à leur points communs/différences. En première approximation, les benchmarks proposés dépendent de la machine qui les a générés (à l'exception de CollectiveMind qui semble s'intéresser au problème). Néanmoins, ces trois plateformes sont des /usines à gaz/, il reste encore énormément à découvrir.
