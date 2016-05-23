@@ -1,11 +1,11 @@
 * Phoronix
 ** Overview
 *** Intro
-    Phoronix Test Suite 5.2-Khanino Milestone 2 is now available and it
-    has working all of the fundamentals of the new Phoromatic server and 
-    client features for easily and quickly building your own open-source
-    test farm: test, execute the test, and report the result, via 
-    OpenBenchmarking.org integration.
+    Phoronix Test Suite 5.2-Khanino Milestone 2 is now available and
+    it has working all of the fundamentals of the new Phoromatic
+    server and client features for easily and quickly building your
+    own open-source test farm: test, execute the test, and report the
+    result, via OpenBenchmarking.org integration.
 *** For what ?
     For hardware (mainly) and software
 *** License
@@ -16,8 +16,9 @@
     - Phoronix Test Suite 6.2
     - Version 1.0 released in 2008
 *** Operating systems
-    Supports Linux (primary based on it), Apple Mac OS X, Microsoft Windows, Solaris, Hurd,
-    BSD, and other operating system environments
+    Supports Linux (primary based on it), Apple Mac OS X, Microsoft
+    Windows, Solaris, Hurd, BSD, and other operating system
+    environments
 *** Liens
 **** Phoronix
      - Overview : http://www.phoronix-test-suite.com/?k=phoromatic
@@ -29,24 +30,26 @@
      
 ** Features
    - Allows the automatic scheduling of tests, remote installation of
-     new tests, and the management of multiple test systems all through
-     an intuitive, easy-to-use web interface.
+     new tests, and the management of multiple test systems all
+     through an intuitive, easy-to-use web interface.
    - Phoromatic allows for scheduling benchmarks across systems to
-     occur on either a timed basis (with varying day and time options), on a
-     manual basis, or on an externally triggered basis -- allowing for
-     unlimited possibilities such as hooking in and triggering new tests
-     to take place whenever a new Git commit occurs or other external
-     criteria are met.
+     occur on either a timed basis (with varying day and time
+     options), on a manual basis, or on an externally triggered basis
+     -- allowing for unlimited possibilities such as hooking in and
+     triggering new tests to take place whenever a new Git commit
+     occurs or other external criteria are met.
    - The Phoromatic Server can be deployed within a corporate intranet
      lacking an Internet connection. See the included documentation or
      contact us for professional consultation and services around
-     enterprise deployments of Phoromatic. The Phoromatic Server is also
-     able to act as a file/download cache automatically to ease the
-     Phoronix Test Suite usage on closed networks.
+     enterprise deployments of Phoromatic. The Phoromatic Server is
+     also able to act as a file/download cache automatically to ease
+     the Phoronix Test Suite usage on closed networks.
    - More than 200 default tests : these tests range from battery power
      consumption monitoring for mobile devices to multi-threaded
      ray-tracing benchmarks and span the CPU, graphics, system memory,
      disk storage, and motherboard components.
 
 ** Resumé
-   Simple (fonctionne avec des commandes), intuitif (interface graphique). Usine à gaz.
+   Simple (fonctionne avec des commandes), intuitif (interface
+   graphique). Dépend du matériel sur lequel les tests sont mis en
+   oeuvre. /Grand public/.

@@ -1,13 +1,39 @@
 * CollectiveMind
 ** Overview
 *** Intro
-    Collective Mind technology (cM) attempts to fill in this gap
-    (often either covering very narrow research topics and too
-    simplistic (just data and code sharing) or very formal and still
-    require special programming skills often including Object Oriented
-    Programming) by providing researchers and companies a simple, portable,
-    technology-neutral and practically transparent way to gradually
-    systematize and classify all their data, code and tools.
+    Collective Knowledge Framework (cTuning 4 aka CK) for
+    collaborative and reproducible R&D.  Collective Mind technology
+    (cM) attempts to fill in a gap (often either covering very narrow
+    research topics and too simplistic (just data and code sharing) or
+    very formal and still require special programming skills often
+    including Object Oriented Programming) by providing researchers
+    and companies a simple, portable, technology-neutral and
+    practically transparent way to gradually systematize and classify
+    all their data, code and tools.  We focus on the following
+    technological and social aspects to enable collaborative,
+    systematic and reproducible research and experimentation
+    particularly related to benchmarking, optimization and co-design
+    of faster, smaller, cheaper, more power efficient and reliable
+    software and hardware.
+*** License
+    BSD-licensed
 *** Liens
 **** CollectiveMind
-     Main page : http://ctuning.org/cm/wiki/index.php?title=Main_Page
+     - Main page : http://ctuning.org/cm/wiki/index.php?title=Main_Page
+     - Content : http://ctuning.org/cm/wiki/index.php?title=Reproducibility
+     - Full doc : https://github.com/ctuning/ck/wiki
+       + Motivation : https://github.com/ctuning/ck/wiki/Motivation
+       + Intro : https://github.com/ctuning/ck/wiki/Getting_started_guide_basic
+
+** R&D
+   - Describing and cataloging whole experimental setups with all
+     related material including algorithms, benchmarks, codelets,
+     datasets, tools, models and any other artifact
+   - Developing specification to preserve experiments including all
+     software and hardware dependencies
+
+** Résumé
+   Plus rigoureux que Phoronix mais moins accessible, la préoccupation
+   du matériel est présente. L'objectif est de s'abstraire des
+   technologie (être neutre) et de pouvoir répliquer un plan
+   d'expérience. 
