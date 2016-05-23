@@ -8,5 +8,6 @@
 - Prise en main de Org-mode sous emacs
 
 * Lundi 23/05
-- Overview de Phoronix (voir Phoronix.org) : dépendant du matériel,
+- [[https://github.com/FlorianPO/Performance-Regression-Testing/blob/master/Phoronix.org][Overview de Phoronix]] : dépendant du matériel,
   deux tests n'auront du sens que s'ils sont éxecutés sur la /même/ machine.
+- [[https://github.com/FlorianPO/Performance-Regression-Testing/blob/master/CollectiveMind.org][Overview de CollectiveMind]] (in progress...)
