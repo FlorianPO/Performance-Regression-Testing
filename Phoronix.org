@@ -20,12 +20,12 @@
     BSD, and other operating system environments
 *** Liens
 **** Phoronix
-     Overview : http://www.phoronix-test-suite.com/?k=phoromatic
-     Full doc : http://www.phoronix-test-suite.com/documentation/phoronix-test-suite.pdf
-     Features : http://www.phoronix-test-suite.com/?k=features
-     Wiki (see /criticism/ section) : https://en.wikipedia.org/wiki/Phoronix_Test_Suite
+     - Overview : http://www.phoronix-test-suite.com/?k=phoromatic
+     - Full doc : http://www.phoronix-test-suite.com/documentation/phoronix-test-suite.pdf
+     - Features : http://www.phoronix-test-suite.com/?k=features
+     - Wiki (see /criticism/ section) : https://en.wikipedia.org/wiki/Phoronix_Test_Suite
 **** OpenBenchmarking
-     https://openbenchmarking.org/
+     - https://openbenchmarking.org/
      
 ** Features
    - Allows the automatic scheduling of tests, remote installation of
