@@ -13,8 +13,8 @@
     software license. The Phoronix Test Suite can be used for personal
     or professional purposes free of charge
 *** Last version
-    Phoronix Test Suite 6.2
-    Version 1.0 released in 2008
+    - Phoronix Test Suite 6.2
+    - Version 1.0 released in 2008
 *** Operating systems
     Supports Linux (primary based on it), Apple Mac OS X, Microsoft Windows, Solaris, Hurd,
     BSD, and other operating system environments

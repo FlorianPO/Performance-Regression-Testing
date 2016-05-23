@@ -7,6 +7,6 @@
   Internet en filaire (très peu de Wifi dans la salle)
 - Prise en main de Org-mode sous emacs
 
-* Lundi 23/05...
+* Lundi 23/05
 - Overview de Phoronix (voir Phoronix.org) : dépendant du matériel,
   deux tests n'auront du sens que s'ils sont éxecutés sur la /même/ machine.
