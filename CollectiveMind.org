@@ -1,0 +1,13 @@
+* CollectiveMind
+** Overview
+*** Intro
+    Collective Mind technology (cM) attempts to fill in this gap
+    (often either covering very narrow research topics and too
+    simplistic (just data and code sharing) or very formal and still
+    require special programming skills often including Object Oriented
+    Programming) by providing researchers and companies a simple, portable,
+    technology-neutral and practically transparent way to gradually
+    systematize and classify all their data, code and tools.
+*** Liens
+**** CollectiveMind
+     Main page : http://ctuning.org/cm/wiki/index.php?title=Main_Page

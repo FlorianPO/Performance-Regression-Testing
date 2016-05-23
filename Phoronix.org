@@ -49,4 +49,4 @@
      disk storage, and motherboard components.
 
 ** Resumé
-   Simple, intuitif (interface graphique). Usine à gaz.
+   Simple (fonctionne avec des commandes), intuitif (interface graphique). Usine à gaz.
