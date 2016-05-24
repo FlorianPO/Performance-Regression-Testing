@@ -30,5 +30,6 @@
     récupérer les données pour une exploitation spécifique, un peu de
     contrôle d'expérience, technologie pérenne). + utiliser Marker
     pour le journal.
+  - S'occuper de Pypy, ...
   - Tester Phoronix
   - Installation de Phoronix Test Suite v6.2.1
