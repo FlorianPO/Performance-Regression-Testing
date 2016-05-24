@@ -46,6 +46,10 @@
      consumption monitoring for mobile devices to multi-threaded
      ray-tracing benchmarks and span the CPU, graphics, system memory,
      disk storage, and motherboard components.
+   - If using a revision control system like Git, it is possible to
+     supply the necessary pieces of information to Phoronix, which
+     will then bisect the repository and carry out the test(s) each
+     step of the way until the regression is spotted
 
 ** Benchmarking
    The most comprehensive/ testing and benchmarking platform
