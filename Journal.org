@@ -31,3 +31,4 @@
     contrôle d'expérience, technologie pérenne). + utiliser Marker
     pour le journal.
   - Tester Phoronix
+  - Installation de Phoronix Test Suite v6.2.1
