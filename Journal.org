@@ -25,3 +25,9 @@
     plateformes sur le benchmarking.
   - Ajout d'un [[https://github.com/FlorianPO/Performance-Regression-Testing/blob/master/State_of_the_art.org][rapport]] /très bref/ sur l'état de l'art. Il convient d'en
     discuter.
+  - Réunion avec Arnaud Legrand : creuser les outils pour voir s'ils
+    correspondent au besoin (benchmarks propres, possibilité de
+    récupérer les données pour une exploitation spécifique, un peu de
+    contrôle d'expérience, technologie pérenne). + utiliser Marker
+    pour le journal.
+  - Tester Phoronix
