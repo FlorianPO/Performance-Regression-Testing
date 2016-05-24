@@ -6,8 +6,6 @@
     server and client features for easily and quickly building your
     own open-source test farm: test, execute the test, and report the
     result, via OpenBenchmarking.org integration.
-*** For what ?
-    For hardware (mainly) and software
 *** License
     The Phoronix Test Suite is licensed under the GNU GPLv3 free
     software license. The Phoronix Test Suite can be used for personal
@@ -19,7 +17,9 @@
     Supports Linux (primary based on it), Apple Mac OS X, Microsoft
     Windows, Solaris, Hurd, BSD, and other operating system
     environments
-*** Liens
+*** Written in
+    PHP
+*** Links
 **** Phoronix
      - Overview : http://www.phoronix-test-suite.com/?k=phoromatic
      - Full doc : http://www.phoronix-test-suite.com/documentation/phoronix-test-suite.pdf
@@ -39,15 +39,17 @@
      triggering new tests to take place whenever a new Git commit
      occurs or other external criteria are met.
    - The Phoromatic Server can be deployed within a corporate intranet
-     lacking an Internet connection. See the included documentation or
-     contact us for professional consultation and services around
-     enterprise deployments of Phoromatic. The Phoromatic Server is
-     also able to act as a file/download cache automatically to ease
-     the Phoronix Test Suite usage on closed networks.
+     lacking an Internet connection. The Phoromatic Server is also
+     able to act as a file/download cache automatically to ease the
+     Phoronix Test Suite usage on closed networks.
    - More than 200 default tests : these tests range from battery power
      consumption monitoring for mobile devices to multi-threaded
      ray-tracing benchmarks and span the CPU, graphics, system memory,
      disk storage, and motherboard components.
+
+** Benchmarking
+   The most comprehensive/ testing and benchmarking platform
+   (OpenBenchmarking.org integration)
 
 ** Resumé
    Simple (fonctionne avec des commandes), intuitif (interface

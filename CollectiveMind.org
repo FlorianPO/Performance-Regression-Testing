@@ -3,37 +3,73 @@
 *** Intro
     Collective Knowledge Framework (cTuning 4 aka CK) for
     collaborative and reproducible R&D.  Collective Mind technology
-    (cM) attempts to fill in a gap (often either covering very narrow
-    research topics and too simplistic (just data and code sharing) or
-    very formal and still require special programming skills often
-    including Object Oriented Programming) by providing researchers
-    and companies a simple, portable, technology-neutral and
-    practically transparent way to gradually systematize and classify
-    all their data, code and tools.  We focus on the following
-    technological and social aspects to enable collaborative,
-    systematic and reproducible research and experimentation
-    particularly related to benchmarking, optimization and co-design
-    of faster, smaller, cheaper, more power efficient and reliable
-    software and hardware.
+    (cMind) attempts to fill in a gap (often either covering very
+    narrow research topics and too simplistic (just data and code
+    sharing) or very formal and still require special programming
+    skills often including Object Oriented Programming) by providing
+    researchers and companies a simple, portable, technology-neutral
+    and practically transparent way to gradually systematize and
+    classify all their data, code and tools.  We focus on the
+    following technological and social aspects to enable
+    collaborative, systematic and reproducible research and
+    experimentation particularly related to benchmarking, optimization
+    and co-design of faster, smaller, cheaper, more power efficient
+    and reliable software and hardware.
 *** License
     BSD-licensed
-*** Liens
+*** Last version
+    - Version 1.7.1
+    - Version 0.1.140810 released in November 2014
+*** Operating systems
+    Support for most OSes and platforms (Linux, Android, Windows;
+    servers, cloud nodes, mobiles, laptops, tablets, supercomputers)
+*** Written in
+    Python
+*** Links
 **** CollectiveMind
      - Main page : http://ctuning.org/cm/wiki/index.php?title=Main_Page
      - Content : http://ctuning.org/cm/wiki/index.php?title=Reproducibility
      - Full doc : https://github.com/ctuning/ck/wiki
        + Motivation : https://github.com/ctuning/ck/wiki/Motivation
        + Intro : https://github.com/ctuning/ck/wiki/Getting_started_guide_basic
+       + Features : http://ctuning.org/cm/wiki/index.php?title=Tools:CM
 
-** R&D
+** Features
+   - Minimum third-party dependencies 
+   - Uses own simple directory/file-based NoSQL repository that can
+     keep the whole experiemental setup with any associated research
+     artifact and with extensible meta-data (benchmarks, datasets,
+     tools, code, models, architecture and compiler descriptions, etc)
+   - Any research artifact or interactive graph can be connected with
+     (possibly interactive) publications to be easily validated by the
+     community
+   - Can be easily used through a customizable Web-based interface and
+     Web services or from CMD
+
+** R&D usage
    - Describing and cataloging whole experimental setups with all
      related material including algorithms, benchmarks, codelets,
      datasets, tools, models and any other artifact
    - Developing specification to preserve experiments including all
      software and hardware dependencies
 
+** Benchmarking
+   - Multiple benchmarks (cBench, polybench, SPEC95, SPEC2000,
+     SPEC2006, EEMBC, etc), hundreds of MILEPOST/CAPS codelets,
+     thousands of cBench datasets
+   - Multiple compilers (GCC, LLVM, Open64, PathScale, Intel, IBM,
+     PGI)
+   - Plugins for powerful visualization and data export in various
+     formats
+   - Experimental pipeline for universal program and architecture
+     co-design, auto-tuning, performance/energy modeling and machine
+     learning (machine-learning enabled self-tuning cTuning CC
+     compiler that can wrap any existing compiler while using
+     crowd-tuning and collective knowledge to continuously improve its
+     own behavior)
+
 ** Résumé
    Plus rigoureux que Phoronix mais moins accessible, la préoccupation
    du matériel est présente. L'objectif est de s'abstraire des
    technologie (être neutre) et de pouvoir répliquer un plan
-   d'expérience. 
+   d'expérience.
