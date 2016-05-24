@@ -1,0 +1,29 @@
+* Définition Benchmark
+  Banc d'essai permettant de mesurer les performances d'un système
+  pour le comparer à d'autres ou à ses versions antérieures.
+
+* Ce qui se fait actuellement
+  Mise en place de tests manuels ou automatiques, périodiquement ou
+  ponctuellement (lors d'un commit par exemple), à l'aide d'outils
+  /simple/ permettant de faciliter cette tâche (collecte automatique des
+  données, représentation avec des courbes, ...).
+
+* Problèmes
+  Les benchmarks sont très dépendant de la plateforme qui les
+  éxécute : deux benchmarks n'auront du sens que s'ils ont été
+  éxécutés sur la même machine (même matériel). Cependant, d'autres
+  facteurs tels que le système d'exploitation ou bien le compilateur
+  peuvent jouer un rôle déterminant. Les compilateurs possèdent de
+  nombreuses options qui peuvent grandement jouer sur les performances
+  d'un code, les options /optimales/ peuvent différer d'un système à
+  l'autre pour un même code.
+
+* Solutions d'avenir
+  - La rigueur : :: concevoir des plans d'expériences /exacts/ afin de
+                    les reproduire à l'identique. Non exhaustivement :
+    - Matériel : :: CPU (fréquence, nombre de coeurs, taille des
+                    caches), RAM, Disques, GPU, ...
+    - Logiciel : :: OS, compilareurs, librairies et programmes tiers,
+                    ...
+  - Machine learning : :: pour les options de compilation (voir
+                          CollectiveMind)
