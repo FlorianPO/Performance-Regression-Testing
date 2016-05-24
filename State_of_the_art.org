@@ -26,4 +26,4 @@
     - Logiciel : :: OS, compilareurs, librairies et programmes tiers,
                     ...
   - Machine learning : :: Pour les options de compilation (voir
-                          CollectiveMind)
+                          [[https://github.com/FlorianPO/Performance-Regression-Testing/blob/master/CollectiveMind.org][CollectiveMind]])
