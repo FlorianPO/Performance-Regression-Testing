@@ -23,5 +23,5 @@
 * Mardi 24/05
   - Uniformisation des .org. L'objectif est de comparer les 3
     plateformes sur le benchmarking.
-  - Ajout d'un rapport /très bref/ sur l'état de l'art. Il convient d'en
+  - Ajout d'un [[https://github.com/FlorianPO/Performance-Regression-Testing/blob/master/State_of_the_art.org][rapport]] /très bref/ sur l'état de l'art. Il convient d'en
     discuter.
