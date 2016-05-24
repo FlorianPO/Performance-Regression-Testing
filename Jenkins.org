@@ -24,7 +24,7 @@
 **** Jenkins
      - Quick guide : http://www.tutorialspoint.com/jenkins/jenkins_quick_guide.htm
      - Overview (slide) : http://fr.slideshare.net/AhmedMGomaa/jenkins-overview Wiki :
-     - Wiki : https://en.wikipedia.org/wiki/Jenkins_%28software%29
+     - Wiki : https://en.wikipedia.org/wiki/Jenkins_%28software%291
 
 ** Features
    - Easy installation / configuration
