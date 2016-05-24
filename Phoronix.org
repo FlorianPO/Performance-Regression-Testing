@@ -51,7 +51,6 @@
    The most comprehensive/ testing and benchmarking platform
    (OpenBenchmarking.org integration)
 
-** Resumé
-   Simple (fonctionne avec des commandes), intuitif (interface
-   graphique). Dépend du matériel sur lequel les tests sont mis en
-   oeuvre. /Grand public/.
+** Résumé
+   Outil de tests automatiques. Simple (fonctionne avec des commandes),
+   intuitif (interface graphique). Orienté benchmarking.

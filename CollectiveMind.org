@@ -72,4 +72,5 @@
    Plus rigoureux que Phoronix mais moins accessible, la préoccupation
    du matériel est présente. L'objectif est de s'abstraire des
    technologie (être neutre) et de pouvoir répliquer un plan
-   d'expérience.
+   d'expérience. Trés orienté plan d'expérience et benchmarking +
+   machine learning.
