@@ -22,8 +22,8 @@
   - La rigueur : :: Concevoir des plans d'expériences /exacts/ afin de
                     les reproduire à l'identique. Non exhaustivement :
     - Matériel : :: CPU (fréquence, nombre de coeurs, taille des
-                    caches), RAM, Disques, GPU, ...
-    - Logiciel : :: OS, compilareurs, librairies et programmes tiers,
+                    caches, ...), RAM, Disques, GPU, ...
+    - Logiciel : :: OS, compilateurs, librairies et programmes tiers,
                     ...
   - Machine learning : :: Pour les options de compilation (voir
                           [[https://github.com/FlorianPO/Performance-Regression-Testing/blob/master/CollectiveMind.org][CollectiveMind]])
