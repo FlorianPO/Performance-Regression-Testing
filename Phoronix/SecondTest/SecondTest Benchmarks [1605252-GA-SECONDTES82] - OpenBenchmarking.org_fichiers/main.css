@@ -1,0 +1,719 @@
+/*
+OpenBenchmarking.com
+Author: Fatima Sheremetyeva
+*/
+/* BASE - Base styles, variables, mixins, etc */
+/* Font Colors */
+/* Background Colors */
+/* Sections */
+/* line 1, ../scss/base/_normalize.scss */
+h1, h2, h3, h4, h5, h6 {
+  margin-top: 0px;
+}
+
+/* line 1, ../scss/base/_base.scss */
+body {
+  font-family: "Ubuntu", sans-serif;
+  font-size: 15px;
+  line-height: 1.7em;
+  background: #f1f1f1;
+}
+
+/* line 8, ../scss/base/_base.scss */
+a {
+  text-decoration: none;
+}
+
+/* line 12, ../scss/base/_base.scss */
+ul, li {
+  list-style: none;
+}
+
+/* line 16, ../scss/base/_base.scss */
+input, textarea, select, checkbox, radio
+{
+	background: #008bb8;
+	color: #FFF;
+	font-weight: bold;
+	border: 1px solid #231f20;
+}
+@media (min-width: 768px) {
+	.navbar-header
+	{
+		float: none;
+	}
+	.main
+	{
+		min-height: 1750px;
+	}
+}
+input, textarea, button {
+  -moz-border-radius: 0px;
+  -webkit-border-radius: 0px;
+  -ms-border-radius: 0px;
+  border-radius: 0px;
+}
+.main
+{
+	padding-top: 20px !important;
+	background: #FFF;
+}
+/* line 19, ../scss/base/_base.scss */
+.ob-img {
+  height: auto;
+  width: 40px;
+}
+
+/* line 24, ../scss/base/_base.scss */
+.logo-image {
+  height: auto;
+  width: 350px;
+}
+
+/* MODULES - Individial Components */
+/* Lists */
+/* line 3, ../scss/modules/_typography.scss */
+.list {
+  margin-bottom: 50px;
+}
+
+/* line 11, ../scss/modules/_typography.scss */
+.list-feature li {
+  line-height: 1.7em;
+}
+
+/* line 18, ../scss/modules/_typography.scss */
+.fa-5 {
+  font-size: 40px !important;
+}
+
+/* line 21, ../scss/modules/_typography.scss */
+.fa-4 {
+  font-size: 30px !important;
+}
+
+/* line 24, ../scss/modules/_typography.scss */
+.fa-primary {
+  color: #3f99cd;
+}
+
+/* Blocks */
+/* line 4, ../scss/modules/_blocks.scss */
+.block li
+{
+  margin: 1px 0;
+ line-height: 1.2em;
+}
+.block, .block-light, .block-dark, .block-black, .block-green, .block-center {
+  padding: 15px;
+  min-height: 250px;
+  line-height: 2.0em;
+  font-size: 17px;
+}
+@media (min-width: 768px) {
+.block
+{
+ box-sizing: border-box;
+}
+}
+/* line 10, ../scss/modules/_blocks.scss */
+.block h4, .block-light h4, .block-dark h4, .block-black h4, .block-green h4, .block-center h4 {
+  margin-top: 0px;
+  padding-top: 5px;
+}
+
+/* line 20, ../scss/modules/_blocks.scss */
+.block-light {
+  background: #7f7f7f;
+  color: #fff;
+}
+.block-light a, .block-dark a, .block-green a {
+  color: #FFF;
+  font-weight: bold;
+}
+.block-light input, .block-dark input, .block-green input {
+  background: #FFF;
+  color: #000;
+}
+.block-light a:hover, .block-dark a:hover, .block-green a:hover {
+  color: #DDD;
+  text-decoration: none;
+}
+/* line 23, ../scss/modules/_blocks.scss */
+.block-light i {
+  background: white;
+  color: #fff;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -ms-border-radius: 50%;
+  border-radius: 50%;
+  border: 5px solid white;
+  color: #7f7f7f;
+  font-size: 35px;
+  padding: 6px;
+}
+
+/* line 34, ../scss/modules/_blocks.scss */
+.block-dark {
+  background: #285f80;
+  color: #fff;
+}
+/* line 38, ../scss/modules/_blocks.scss */
+.block-dark i {
+  background: white;
+  color: #fff;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -ms-border-radius: 50%;
+  border-radius: 50%;
+  border: 5px solid white;
+  color: #285f80;
+  font-size: 35px;
+  padding: 6px;
+}
+/* line 46, ../scss/modules/_blocks.scss */
+.block-dark img {
+  width: 50px;
+  height: auto;
+}
+/* line 50, ../scss/modules/_blocks.scss */
+.block-dark p {
+  padding: 6px;
+}
+
+/* line 55, ../scss/modules/_blocks.scss */
+.block-black {
+  background: #292929;
+  color: #fff;
+}
+/* line 59, ../scss/modules/_blocks.scss */
+.block-black i {
+  background: white;
+  color: #fff;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -ms-border-radius: 50%;
+  border-radius: 50%;
+  border: 5px solid white;
+  color: #292929;
+  font-size: 35px;
+  padding: 6px;
+}
+
+/* line 70, ../scss/modules/_blocks.scss */
+.block-green {
+  background: #1a8a52;
+  color: #fff;
+}
+/* line 74, ../scss/modules/_blocks.scss */
+.block-green i {
+  background: white;
+  color: #fff;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -ms-border-radius: 50%;
+  border-radius: 50%;
+  border: 5px solid white;
+  color: #1a8a52;
+  font-size: 35px;
+  padding: 6px;
+}
+
+/* line 85, ../scss/modules/_blocks.scss */
+.block-center {
+  background: #cc8d3f;
+  color: #fff;
+}
+/* line 90, ../scss/modules/_blocks.scss */
+.block-center i {
+  background: white;
+  color: #fff;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -ms-border-radius: 50%;
+  border-radius: 50%;
+  border: 5px solid white;
+  color: #CC8D3F;
+  font-size: 35px;
+  padding: 6px;
+  margin-bottom: 30px;
+}
+/* line 99, ../scss/modules/_blocks.scss */
+.block-center span {
+  padding-bottom: 10px;
+  color: #000;
+}
+
+/* line 105, ../scss/modules/_blocks.scss */
+.block-profile {
+  margin: 10px 20px;
+  line-height: 1.2em;
+  background: #cccccc;
+}
+/* line 110, ../scss/modules/_blocks.scss */
+.block-profile i {
+  background: white;
+  color: #fff;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -ms-border-radius: 50%;
+  border-radius: 50%;
+  border: 5px solid white;
+  color: #1a8a52;
+  font-size: 18px;
+  padding: 2px;
+  margin-right: 15px;
+  margin-top: 6px;
+}
+/* line 121, ../scss/modules/_blocks.scss */
+.block-profile h4, .block-profile h4 a {
+  font-weight: bold;
+  color: #1a8a52 !important;
+}
+/* line 125, ../scss/modules/_blocks.scss */
+.block-profile span {
+  padding-bottom: 10px !important;
+  color: #000;
+}
+
+/* Sections */
+/* line 2, ../scss/modules/_sections.scss */
+.section {
+  padding: 20px 0px;
+}
+
+/* line 5, ../scss/modules/_sections.scss */
+.section-top-logo {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  /* line 9, ../scss/modules/_sections.scss */
+  .section-top-logo {
+    display: block;
+    background: white;
+    color: #fff;
+    height: 96px;
+  }
+  /* line 13, ../scss/modules/_sections.scss */
+  .section-top-logo h2 {
+    padding-top: 30px;
+    color: #666666;
+  }
+}
+/* line 19, ../scss/modules/_sections.scss */
+.section-showcase {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  /* line 24, ../scss/modules/_sections.scss */
+  .section-showcase {
+    display: block;
+    min-height: 300px;
+    color: #fff !important;
+    background: #285f80;
+    color: #fff;
+  }
+  /* line 29, ../scss/modules/_sections.scss */
+  .section-showcase .showcase-content {
+    font-size: 20px;
+    padding-bottom: 10px;
+  }
+  /* line 33, ../scss/modules/_sections.scss */
+  .section-showcase h2 {
+    color: #fff;
+  }
+  /* line 36, ../scss/modules/_sections.scss */
+  .section-showcase img {
+    text-align: center;
+    height: auto;
+    width: 40px;
+  }
+}
+/* line 45, ../scss/modules/_sections.scss */
+.section-button .btn-primary {
+  background: #3f99cd !important;
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+@media (max-width: 768px) {
+.section-button .btn-primary {
+	display: none;
+}
+}
+
+/* line 52, ../scss/modules/_sections.scss */
+.section-numbers {
+  display: none;
+}
+.section-numbers h1 {
+  font-size: 26px;
+  text-transform: uppercase;
+}
+.section-numbers h1 a:hover {
+  text-decoration: none;
+}
+.section-numbers p {
+  color: #7F7F7F;
+}
+
+@media (min-width: 768px) {
+  /* line 56, ../scss/modules/_sections.scss */
+  .section-numbers {
+    display: block;
+    padding: 10px 0px;
+    background: #222;
+    color: #fff;
+    margin: 0;
+    font-weight: bold;
+  }
+  .section-numbers h1 a {
+	color: #fff;
+	}
+  .section-blocks {
+  margin: 10px 5px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display:         flex;
+  }
+}
+/* line 69, ../scss/modules/_sections.scss */'
+ol li a
+{
+    color: #444;
+    text-decoration: none;
+    transition: all .3s ease-out;   
+    line-height: 2em;
+}
+ol li a:hover
+{
+	text-decoration: none;
+	color: #1E476B;
+}   
+
+ol li a:before
+{
+    content: counter(li);
+    counter-increment: li;
+  background: #285F80;
+    color: #FFF;
+    line-height: 2em;
+    text-align: center;
+    font-weight: bold;
+	width: 40px;
+	display: block;
+	float: left;
+	margin-right: 4px;
+}
+
+ol li a:after{
+    content: '';
+    border: .5em solid transparent;
+    top: 50%;
+    transition: all .3s ease-out;               
+}
+ol li
+{
+    line-height: 2em;
+	display: block;
+	height: 40px;
+	clear: both;
+	padding: 4px;
+    font-size: 19px;
+}
+ol
+{
+    counter-reset: li;
+    list-style: none;
+    padding: 0;
+    margin-bottom: 5px;
+    text-shadow: 0 1px 0 rgba(255,255,255,.5);
+}
+@media (max-width: 670px) {
+ol
+{
+	margin: 0;
+	padding: 0;
+}
+ol li
+{
+	margin: 0;
+	padding: 4px 0;
+	font-size: 13px;
+}
+}
+tr a:hover
+{
+	text-decoration: none;
+	color: #1E476B;
+}
+tr td label.mouseoverflow
+{
+	display: none;
+}
+tr:hover td label.mouseoverflow
+{
+	display: block;
+}
+.section-table tr:nth-child(even) {
+  background: #f7fbff;
+}
+/* line 72, ../scss/modules/_sections.scss */
+.section-table tr:nth-child(odd) {
+  background: #D0D9D9;
+}
+/* line 75, ../scss/modules/_sections.scss */
+.section-table thead th {
+  background: #f7fbff;
+}
+/* line 78, ../scss/modules/_sections.scss */
+.section-table .featured {
+  background: #FFFEF7 !important;
+}
+/* line 81, ../scss/modules/_sections.scss */
+.section-table .checkbox {
+  margin: 0px !important;
+}
+
+/* line 86, ../scss/modules/_sections.scss */
+.section-sort-by {
+  min-height: 50px;
+  margin: 5px 20px;
+  background: #cccccc;
+}
+/* line 93, ../scss/modules/_sections.scss */
+.section-sort-by button {
+  margin-top: 7px;
+  margin-right: 10px;
+  background: #1a8a52;
+  color: #fff;
+  border: none;
+}
+/* line 99, ../scss/modules/_sections.scss */
+.section-sort-by .btn-primary:hover, .section-sort-by .btn-primary:active, .section-sort-by .btn-primary.active, .section-sort-by .open > .dropdown-toggle.btn-primary {
+  background: #21b069;
+  color: #fff;
+}
+
+/* Searchbox */
+/* line 6, ../scss/modules/_forms.scss */
+.search input[type="text"] {
+  height: 40px;
+  background: #cccccc;
+  -moz-border-radius: 0px;
+  -webkit-border-radius: 0px;
+  -ms-border-radius: 0px;
+  border-radius: 0px;
+  border: 0px;
+}
+/* line 13, ../scss/modules/_forms.scss */
+.search button {
+  background: #cccccc;
+  border: 0px;
+  -moz-border-radius: 0px;
+  -webkit-border-radius: 0px;
+  -ms-border-radius: 0px;
+  border-radius: 0px;
+  height: 40px;
+}
+
+/* LAYOUTS - Layout styles */
+/* Navbar*/
+/* line 2, ../scss/layouts/_nav.scss */
+.navbar {
+  background: #3f99cd;
+  background: -webkit-linear-gradient(#3f99cd, #337ca6);
+  /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(#3f99cd, #337ca6);
+  /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(#3f99cd, #337ca6);
+  /* For Firefox 3.6 to 15 */
+  background: linear-gradient(#3f99cd, #337ca6);
+  /* Standard syntax */
+  -moz-border-radius: 0px;
+  -webkit-border-radius: 0px;
+  -ms-border-radius: 0px;
+  border-radius: 0px;
+  border-color: #285f80;
+  margin-bottom: 0 !important;
+}
+
+/* line 9, ../scss/layouts/_nav.scss */
+.navbar-inverse .navbar-nav > li > a {
+  padding-top: 20px !important;
+  color: #fff;
+  font-size: 20px;
+  letter-spacing: -0.5px;
+}
+.nav-sidebar > li > a
+{
+    padding: 7px 0 7px 5px;
+}
+/* line 17, ../scss/layouts/_nav.scss */
+.navbar-inverse .navbar-nav > li > a:hover, .navbar-inverse .navbar-nav > li > a:focus {
+  background: #337ca6;
+}
+
+/* line 22, ../scss/layouts/_nav.scss */
+.navbar-brand {
+  display: none;
+}
+
+@media (max-width: 670px) {
+  /* line 26, ../scss/layouts/_nav.scss */
+  .navbar-brand {
+    display: block;
+  }
+  /* line 30, ../scss/layouts/_nav.scss */
+  .navbar-brand .logo-image-mobile {
+    max-width: 30px;
+    height: auto;
+    margin-top: -15px !important;
+  }
+}
+/* line 37, ../scss/layouts/_nav.scss */
+.sidebar {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  /* line 41, ../scss/layouts/_nav.scss */
+  .sidebar {
+    display: block;
+    background: #F0F0F0;
+    padding-right: 0px;
+    padding-left: 1px;
+  }
+}
+/* line 48, ../scss/layouts/_nav.scss */
+.nav > li > a {
+  color: #285f80;
+  font-size: 15px;
+  letter-spacing: -0.5px;
+  line-height: 1em;
+
+}
+
+.footer {
+  font-size: 12px;
+}
+
+/* line 54, ../scss/layouts/_nav.scss */
+.nav > li > a:hover {
+  background: #337ca6;
+  color: #fff;
+}
+
+/* line 59, ../scss/layouts/_nav.scss */
+li.active {
+  background-color: #3f99cd;
+  background: -webkit-linear-gradient(#3f99cd, #337ca6);
+  /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(#3f99cd, #337ca6);
+  /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(#3f99cd, #337ca6);
+  /* For Firefox 3.6 to 15 */
+  background: linear-gradient(#3f99cd, #337ca6);
+  /* Standard syntax */
+  color: #fff;
+  padding-left: 4px;
+  letter-spacing: -0.5px;
+  font-size: 20px;
+}
+p.oborg_expandable
+{
+	text-align: center;
+	overflow: auto;
+}
+svg
+{
+	min-width: 40%;
+	height: auto;
+}
+div.amzn-native-container  
+{
+	text-align: center;
+	margin: 5px auto;
+}
+span.amzn-native-header-text
+{
+	font-weight: bold;
+}
+div.results_area svg
+{
+	width: 90%;
+	height: auto;
+	max-width: 1000px;
+}
+@media (max-width: 768px) {
+div.results_area svg
+{
+	width: 100%;
+	height: auto;
+}
+div.results_area h2
+{
+	display: none;
+}
+}
+span#ob_result_compare_info_box
+{
+	display: none;
+	font-weight: bold;
+	font-size: 15px;
+}
+/* line 68, ../scss/layouts/_nav.scss */
+.navbar-inverse .navbar-text {
+  color: #fff;
+  line-height: 120%;
+}
+/* line 71, ../scss/layouts/_nav.scss */
+.navbar-inverse .navbar-text img {
+  padding: 30px 0px;
+  height: auto;
+  width: 100px;
+}
+/* line 78, ../scss/layouts/_nav.scss */
+.navbar-inverse .navbar-text img:hover {
+  opacity: 0.6;
+  filter: alpha(opacity=60);
+  /* For IE8 and earlier */
+}
+
+/* line 84, ../scss/layouts/_nav.scss */
+.navbar-inverse .navbar-text > p > a, .navbar-inverse .navbar-text > a {
+  color: #cccccc !important;
+}
+
+/* line 1, ../scss/layouts/_header.scss */
+.feature-header {
+  color: #7f7f7f;
+}
+/* line 4, ../scss/layouts/_header.scss */
+.feature-header i {
+  color: #7f7f7f;
+}
+label a h4
+{
+	font-weight: bold;
+}
+table div p
+{
+	font-weight: bold;
+}
+.close {
+  position: absolute;
+  top:5px;
+  right:7px;
+  font-size: 40px;
+  font-weight: bold;
+  line-height: 12px;
+  color:rgba(255, 255, 255, 1) !important;
+  text-decoration: none;
+}
+.close:hover {
+
+  cursor: pointer;
+} 
