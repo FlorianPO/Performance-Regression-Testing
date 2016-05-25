@@ -34,9 +34,24 @@
   - Tester Phoronix
   - Installation de Phoronix Test Suite v6.2.1
 * Mercredi 25/05						     :ATTACH:
+  - Phoronix ::
   :PROPERTIES:
   :Attachments: FirstTest.png SecondTest.png
   :ID:       d5f63874-eef8-49c2-b544-2f7391cd499d
   :END:
-  - Premier test avec Phoronix -> rbenchmark -> failed to run properly
-  - Deuxième test avec Phoronix -> 7zip compression -> ok
+    + Premier test avec Phoronix -> rbenchmark -> failed to run properly
+    + Deuxième test avec Phoronix -> 7zip compression -> ok
+    + Présence de tests multicoeurs
+    + L'injection de charges semble possible (see Fulldoc : "stressing
+      your system with random workloads") même si ce n'est pas
+      l'objectif premier (cf- Vincent)
+    + Possibilité d'exporter les données collectées
+    + L'interface semble simple à utiliser (même si je n'y suis pas
+      arrivé (pour le moment))
+    + S'intéresser aux tests eux-même (comment les écrire, etc...)
+  - Pypy ::
+    + Fait avec Django (Framework Web python) et Codespeed (Web
+      benchmark application) -> à regarder, semble intéressant !
+    + Code des benchmarks :
+      https://bitbucket.org/pypy/benchmarks/src/846fa56a282b/unladen_swallow/performance/
+    
