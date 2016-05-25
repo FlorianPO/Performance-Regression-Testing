@@ -49,7 +49,7 @@
     + L'interface semble simple à utiliser (même si je n'y suis pas
       arrivé (pour le moment))
     + S'intéresser aux tests eux-même (comment les écrire, etc...)
-  - Pypy ::
+  - Pypy :: http://speed.pypy.org/timeline/#/?exe=3,6,1,5&base=2+472&ben=ai&env=1&revs=200&equid=off
     + Fait avec Django (Framework Web python) et Codespeed (Web
       benchmark application) -> à regarder, semble intéressant !
     + Code des benchmarks :
