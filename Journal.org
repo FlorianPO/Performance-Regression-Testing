@@ -1,3 +1,5 @@
+#+TAGS: Phoronix(P) Pypy(Y)
+
 * Jeudi 19/05
   - Installation de Débian8 avec Vincent Danjean
   - Mise en place de l'environnement de travail (quelques raccourcis
@@ -34,24 +36,31 @@
   - Tester Phoronix
   - Installation de Phoronix Test Suite v6.2.1
 * Mercredi 25/05						     :ATTACH:
-  - Phoronix ::
-  :PROPERTIES:
+** Phoronix							   :Phoronix:
+ :PROPERTIES:
   :Attachments: FirstTest.png SecondTest.png
   :ID:       d5f63874-eef8-49c2-b544-2f7391cd499d
   :END:
-    + Premier test avec Phoronix -> rbenchmark -> failed to run properly
-    + Deuxième test avec Phoronix -> 7zip compression -> ok
-    + Présence de tests multicoeurs
-    + L'injection de charges semble possible (see Fulldoc : "stressing
-      your system with random workloads") même si ce n'est pas
-      l'objectif premier (cf- Vincent)
-    + Possibilité d'exporter les données collectées
-    + L'interface semble simple à utiliser (même si je n'y suis pas
-      arrivé (pour le moment))
-    + S'intéresser aux tests eux-même (comment les écrire, etc...)
-  - Pypy :: http://speed.pypy.org/timeline/#/?exe=3,6,1,5&base=2+472&ben=ai&env=1&revs=200&equid=off
-    + Fait avec Django (Framework Web python) et Codespeed (Web
-      benchmark application) -> à regarder, semble intéressant !
-    + Code des benchmarks :
-      https://bitbucket.org/pypy/benchmarks/src/846fa56a282b/unladen_swallow/performance/
+   + Premier test avec Phoronix -> rbenchmark -> failed to run properly
+   + Deuxième test avec Phoronix -> 7zip compression -> ok
+   + Présence de tests multicoeurs
+   + L'injection de charges semble possible (see Fulldoc : "stressing
+     your system with random workloads") même si ce n'est pas
+     l'objectif premier (cf- Vincent)
+   + Possibilité d'exporter les données collectées
+   + L'interface semble simple à utiliser (même si je n'y suis pas
+     arrivé (pour le moment))
+   + S'intéresser aux tests eux-même (comment les écrire, etc...)
+** Pypy								       :Pypy:
+   http://speed.pypy.org/timeline/#/?exe=3,6,1,5&base=2+472&ben=ai&env=1&revs=200&equid=off
+   + Fait avec Django (Framework Web python) et Codespeed (Web
+     benchmark application) -> à regarder, semble intéressant !
+   + Code des benchmarks :
+     https://bitbucket.org/pypy/benchmarks/src/846fa56a282b/unladen_swallow/performance/
     
+* Jeudi 26/05							       :Pypy:
+  - Codespeed :: https://github.com/tobami/codespeed
+                 - Problème d'installation (Python invalid syntax (?))
+		 - La commande magique : =python ./manage.py syncdb
+                   --migrate=
+		 - Serveur lancé : problème d'authentification cependant
