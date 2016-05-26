@@ -58,9 +58,22 @@
    + Code des benchmarks :
      https://bitbucket.org/pypy/benchmarks/src/846fa56a282b/unladen_swallow/performance/
     
-* Jeudi 26/05							       :Pypy:
-  - Codespeed :: https://github.com/tobami/codespeed
-                 - Problème d'installation (Python invalid syntax (?))
-		 - La commande magique : =python ./manage.py syncdb
-                   --migrate=
-		 - Serveur lancé : problème d'authentification cependant
+* Jeudi 26/05							       
+** Codespeed							       :Pypy:
+   https://github.com/tobami/codespeed
+   - Problème d'installation (Python invalid syntax (?))
+   - La commande magique : =python ./manage.py syncdb --migrate=
+   - Serveur lancé : problème d'authentification cependant
+   - Il faut créer un super-utilisateur : =python manage.py
+     createsuperuser=
+   - Lancer le serveur en _sudo_ : =sudo python manage.py runserver 8000=
+   - Fournir Codespeed en données : "Codespeed is a web application to
+     monitor and analyze the performance of your code" -> seulement de
+     la visualisation de données
+** Phoronix 							   :Phoronix:
+   Résultats des tests dans
+   =~/.phoronix-test-suite/test-results/<TEST>/= :
+     - =composite.xml= :: : plan d'expérience
+     - =system-logs/= :: : 2 tonnes de données collectées
+   Méta-données des tests (par défault) dans
+   =~/.phoronix-test-suite/test-profiles/pts/<TEST>/=
