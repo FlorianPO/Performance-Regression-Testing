@@ -85,3 +85,8 @@
      https://github.com/FlorianPO/Performance-Regression-Testing/raw/master/bubble_sort.py.tar.gz
    - Ecriture des méta-données du test (à tester, ne marchera sûrement
      pas du premier coup)
+*** Bubble sort TEST
+    - placer le test dans :
+      =~/.phoronix-test-suite/test-profiles/local/<TEST>/= (celui-ci
+      devrait être visible par la commande =phoronix-test-suite
+      list-available-tests=.
