@@ -89,4 +89,6 @@
     - placer le test dans :
       =~/.phoronix-test-suite/test-profiles/local/<TEST>/= (celui-ci
       devrait être visible par la commande =phoronix-test-suite
-      list-available-tests=.
+      list-available-tests=
+    - il faut générer un checksum MD5 de l'archive à télécharger :
+      =md5sum <FILE>= (à placer dans =download.xml=)
