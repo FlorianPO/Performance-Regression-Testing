@@ -17,10 +17,10 @@
     <TestType>Processor</TestType>
     <License>Free</License>
     <Status>Verified</Status>
-    <ExternalDependencies>build-utilities</ExternalDependencies>  <!-- ? -->
-    <EnvironmentSize>0.1</EnvironmentSize> <!-- ? -->
+    <ExternalDependencies>python</ExternalDependencies>
+    <EnvironmentSize>0.1</EnvironmentSize> <!-- Taille de l'environnement -->
     <ProjectURL>https://github.com/FlorianPO/Performance-Regression-Testing</ProjectURL>
-    <InternalTags>SMP</InternalTags>  <!-- ? -->
+    <InternalTags>Python</InternalTags>
     <Maintainer>Florian Popek</Maintainer>
   </TestProfile>
 </PhoronixTestSuite>

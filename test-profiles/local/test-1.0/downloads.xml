@@ -4,7 +4,7 @@
   <Downloads>
     <Package>
       <URL>https://github.com/FlorianPO/Performance-Regression-Testing/raw/master/bubble_sort.py.tar.gz</URL>
-      <MD5>fbf65a03649b54cc645fc6479559e118</MD5>  <!-- md5sum bubble_sort.py.taz -->
+      <MD5>fbf65a03649b54cc645fc6479559e118</MD5>  <!-- md5sum bubble_sort.py.tar.gz -->
       <FileSize>578</FileSize>
     </Package>
   </Downloads>
