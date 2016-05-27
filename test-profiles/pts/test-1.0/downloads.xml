@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v6.0.0m3-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/FlorianPO/Performance-Regression-Testing/raw/master/bubble_sort.py.tar.gz</URL>
+      <MD5>36c4ce04f99970fbf0d7c9c9f55f88bd</MD5>  <!-- ? generated from URL -->
+      <FileSize>578</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

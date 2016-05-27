@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v6.0.0m3-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Python-BubbleSort</Title>
+    <AppVersion>1.0</AppVersion>
+    <Description>This is a dumb sorting algorithm for test purpose (5000 elements sorted)</Description>
+    <ResultScale>Seconds</ResultScale>
+    <Proportion>LIB</Proportion>  <!-- ? -->
+    <SubTitle>Bubble sort, 5000 elements</SubTitle>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0</Version>
+    <SupportedPlatforms>Linux, Solaris, BSD, Windows, MacOSX</SupportedPlatforms>
+    <SoftwareType>Sorting algorithm</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities</ExternalDependencies>  <!-- ? -->
+    <EnvironmentSize>0.1</EnvironmentSize> <!-- ? -->
+    <ProjectURL>https://github.com/FlorianPO/Performance-Regression-Testing</ProjectURL>
+    <InternalTags>SMP</InternalTags>  <!-- ? -->
+    <Maintainer>Florian Popek</Maintainer>
+  </TestProfile>
+</PhoronixTestSuite>

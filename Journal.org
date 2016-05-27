@@ -80,4 +80,8 @@
 
 * Vendredi 27/05
 ** Phoronix							   :Phoronix:
-   Ecriture d'un bubble sort en python pour tester Phoronix
+   - Ecriture d'un bubble sort en python pour tester Phoronix,
+     téléchargeable à
+     https://github.com/FlorianPO/Performance-Regression-Testing/raw/master/bubble_sort.py.tar.gz
+   - Ecriture des méta-données du test (à tester, ne marchera sûrement
+     pas du premier coup)
