@@ -77,3 +77,7 @@
      - =system-logs/= :: : 2 tonnes de données collectées
    Méta-données des tests (par défault) dans
    =~/.phoronix-test-suite/test-profiles/pts/<TEST>/=
+
+* Vendredi 27/05
+** Phoronix							   :Phoronix:
+   Ecriture d'un bubble sort en python pour tester Phoronix
