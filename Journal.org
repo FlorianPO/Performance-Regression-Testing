@@ -92,4 +92,6 @@
       list-available-tests=
     - il faut générer un checksum MD5 de l'archive à télécharger :
       =md5sum <FILE>= (à placer dans =download.xml=)
-    - problème d'éxecutable
+    - problème d'éxecutable :
+      - le script généré dans install.sh doit avoir le même nom
+        =<TEST-NAME>= que le dossier du test =local/<TEST-NAME>=
