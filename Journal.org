@@ -99,3 +99,7 @@
 ** Phoronix							   :Phoronix:
    - Output template : la sortie du programme semble devoir
      correspondre à l'OutputTemplate dans =results-definition.xml=
+   - Update : la correspondance doit être exacte (sauf certains cas
+     (ex: en C les retours chariot semble ignorés), à étudier...)
+   - https://www.phoronix.com/forums/forum/phoronix/phoronix-test-suite/46913-custom-benchmark
+*** TODO Multiple results

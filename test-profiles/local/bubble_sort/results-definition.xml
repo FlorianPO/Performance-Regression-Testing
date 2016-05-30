@@ -2,6 +2,6 @@
 <!--Phoronix Test Suite v6.0.0m3-->
 <PhoronixTestSuite>
   <ResultsParser>
-    <OutputTemplate>Elapsed Time : #_RESULT_# Seconds</OutputTemplate>
+    <OutputTemplate>Elapsed time to sort : #_RESULT_# Seconds</OutputTemplate>
   </ResultsParser>
 </PhoronixTestSuite>
