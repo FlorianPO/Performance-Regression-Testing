@@ -109,3 +109,4 @@
 ** Autres pistes
    - Execo, XPFlow, ...
    - Regarder Webinar n°2 + état de l'art de ces outils (voir slide)
+     - Regardé jusqu'à 35 min (partie 6)
