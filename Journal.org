@@ -95,3 +95,7 @@
     - problème d'éxecutable :
       - le script généré dans install.sh doit avoir le même nom
         =<TEST-NAME>= que le dossier du test =local/<TEST-NAME>=
+* Lundi 30/05
+** Phoronix							   :Phoronix:
+   - Output template : la sortie du programme semble devoir
+     correspondre à l'OutputTemplate dans =results-definition.xml=
