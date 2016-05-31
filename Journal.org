@@ -152,4 +152,4 @@
     - Permet de lancer des commandes systèmes, etc...
     - Installation de =cairo= : =gem install cairo= (pour exporter en pdf)
       + permet de visualiser le workflow
-    - A tester avec Grid5000
+    - A tester avec Grid5000 -> demande de compte faite.
