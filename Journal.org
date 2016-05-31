@@ -1,4 +1,4 @@
-#+TAGS: Phoronix(P) Pypy(Y)
+#+TAGS: Phoronix(P) Pypy(Y) Expo(A) Execo(B) XPFlow(C) 
 
 * Jeudi 19/05
   - Installation de Débian8 avec Vincent Danjean
@@ -8,7 +8,6 @@
   - Il faut que je fournisse mon adresse MAC à Christian afin d'avoir
     Internet en filaire (très peu de Wifi dans la salle)
   - Prise en main de Org-mode sous emacs
-  
 * Lundi 23/05
   - [[https://github.com/FlorianPO/Performance-Regression-Testing/blob/master/Phoronix.org][Overview de Phoronix]] : dépendant du matériel, deux tests n'auront
     du sens que s'ils sont éxecutés sur la /même/ machine.
@@ -21,7 +20,6 @@
   les a générés (à l'exception de CollectiveMind qui semble
   s'intéresser au problème). Néanmoins, ces trois plateformes sont des
   /usines à gaz/, il reste encore énormément à découvrir.
-
 * Mardi 24/05
   - Uniformisation des .org. L'objectif est de comparer les 3
     plateformes sur le benchmarking.
@@ -107,6 +105,51 @@
     - Ce n'est pas possible...
     - Regarder dans le code source -> hardcore
 ** Autres pistes
-   - Execo, XPFlow, ...
+   - Execo, XPFlow, Expo
    - Regarder Webinar n°2 + état de l'art de ces outils (voir slide)
      - Regardé jusqu'à 35 min (partie 6)
+* Mardi 31/05
+** Expo								       :Expo:
+*** Intro
+    It aims at simplifying the experimental process on such
+    distributed platforms. Works with client / server.
+    - Liens :
+      + http://expo.gforge.inria.fr/
+    - Pros :
+      + Everything is logged : IO, commands, date, ...
+*** Avancement
+    - Installation de Ruby
+    - Installation de gem2.1
+    - Problème de version : Expo et ses dépendances utilisent Ruby
+      1.9.3 (current version : Ruby 2.3)
+    - Installation de RVM pour installer / switcher Ruby 1.9.3
+      + https://rvm.io/rvm/install 
+      + http://stackoverflow.com/questions/9919739/how-to-use-the-older-version-of-ruby-1-9-2
+      + Pour utiliser la commande =rvm= : =source
+        /home/<USER>/.rvm/scripts/rvm= (<USER> : florian)
+      + Pour switcher sur Ruby 1.9.3 : =rvm use ruby-1.9.3 --default=
+    - Petit tuto Ruby : http://tryruby.org/levels/1/challenges/0
+    - Impossible de lancer =./expo= -> problème syntaxe -> passage en
+      Ruby 2.3.1
+      + IMPOSSIBLE, rien ne marche
+      + Expo utilise Ruby 1.8.7 mais Restfully nécessite Ruby >= 1.9.3
+** XPFlow							     :XPFlow:
+*** Intro
+    XPFlow is a new approach to description and execution of
+    experiments involving large-scale computer installations. The main
+    idea consists in describing the experiment as workflow and using
+    achievements of Business Workflow Management to reliably and
+    efficiently execute it. Moreover, to facilitate the design
+    process, the framework provides abstractions that hide unnecessary
+    complexity from the user.
+    - Liens:
+      + http://xpflow.gforge.inria.fr/
+      + http://xpflow.gforge.inria.fr/img/slides/slides.pdf
+	* http://xpflow.gforge.inria.fr/img/slides/slides.pdf
+*** Avancement
+    - Installation de XPFlow
+    - Lecture des slides : pas dégueux du tout
+    - Permet de lancer des commandes systèmes, etc...
+    - Installation de =cairo= : =gem install cairo= (pour exporter en pdf)
+      + permet de visualiser le workflow
+    - A tester avec Grid5000
