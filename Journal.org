@@ -183,3 +183,6 @@
   - Contacter Olivier Richard et Michael Mercier au sujet de
     l'installation d'environnement. XPFlow mélange celui-ci et le
     contrôle de l'expérience : pas une bonne idée.
+* Mercredi 08/06
+  - Visionnage du webinar 1 + prise de note
+   

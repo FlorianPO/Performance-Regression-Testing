@@ -1,0 +1,107 @@
+* Webinar 1
+** Reproducible research
+*** Motivation
+    - Ca marche sur ma machine mais pas sur celle d'un autre (malgré la
+      présence d'un README expliquant tout ce qu'il faut installer)
+    - Pouvoir revenir sur des expériences passées et savoir de quoi il
+      s'agissait (graphes clairs : titre, échelle, unités, intervalles
+      de confiance ...)
+    - Refaire une expérience
+*** The dog ate my homework
+    But : récupérer le code d'un article pour tester soit même
+    - Versioning problem :: le code n'est pas exactement le même que
+         celui utilisé lors de l'expérience
+    - Bad backup practices :: le code est perdu
+    - Code will be available soon :: le code est en phase de nettoyage
+    - No intention to release :: pas moyen de récupérer le code
+    - Programmer left :: la personne compétente n'est plus là
+    - Commercial code :: le code n'est pas partageable pour des
+         raisons de business
+    - Proprietary academic code :: le code est la propriété de telle
+         ou telle université
+    - Research vs sharing :: code non partageable (trop
+         d'investissement requis)
+*** State of the art in science in general
+    - =Lots of data= -> =Tool= -> =Article review=
+    - Very hard to have reproducibility in general, why ?
+      + Experimenter bias :: mon code sera plus rapide que celui d'un
+           autre car je vais tout faire pour, mais s'il en faisait
+           autant ça serait très dur (problème de contexte
+           d'éxectution, de point de vue de l'expérimentateur)
+      + Human error :: programming errors, data manipulation mistakes
+      + Positive results :: rewarding, competition issue, ... (new
+           papers works all the time, you never know the pitfall)
+      + Technical difficulty :: who cares that you can reproduce it ?,
+           lack of easy use tools, hardware and software are
+           constantly changing -> =those are excuses, not valid anymore=
+    - This gap in reproducibility is showed by studies/papers
+    - Problème de fraude
+*** Reproducible research : a new buzzword ?
+    - Definition :
+      + Replicability :: Precisely replicate exactly what someone else
+                         has done, recreating their artifacts
+      + Reproducibility :: Recreate the spirit of what someone else
+           has done, using your own artifacts (same scientific
+           conclusions)
+    - Goal : write down everything you do
+*** Writting down
+    - ALPS2.0 :: defining and capturing in database a workflow (how
+                 the different parts of the workflow are combined,
+                 ...)
+    - VCR :: put data online instead of in your paper directly (a
+             change in data will change the paper) -> =bind data and
+             final document=
+    - Sumatra :: =smt run= instead of =bash myscript= : version control,
+                 get information platform, find dependencies, record
+                 times, find new files, ... and store this in a
+                 database
+    - Ipython/Jupyter Notebook :: web app to create and share
+         documents with code (which can be interactive), equations,
+         visualizations and explanatory text
+    - Reprozip :: /automagically/ pack your experiment to fight
+                  dependency hell : track all dependencies, pack them
+                  in a container which is sharable
+    - Lots of tool, but two main approaches :
+      + Automatic :: automatically keeping track of everything 
+	* the code that was run (source code, libraries, compilation
+          procedure)
+	* processor architecture, OS machine, date, ...
+      + Explicit :: ensuring others can understand/adapt what was done
+	* why did I run this ? Does it still work when I change this
+          piece of code for this one ? (the meaning of what you're
+          doing)
+** Keypoints
+   1. Replicable article : people can redo what was done
+   2. Logging your activity
+   3. Logging and backup your data
+   4. Organizing your data
+   5. Mastering your environment
+   6. Controlling your experiments
+   7. Making your data/code/article available
+*** Logging and backing up your data
+    - Control version :: be able to comeback to a previous state :
+         incremental backup (use git)
+*** Organizing and managing your data
+    - Use the machine readable CSV format
+    - Provide raw data and metada (how was it captured, ...)
+    - Never manipulate data by hand (non replicable) (use R or Python)
+*** Mastering your environment
+    - Restrict your tools/dependencies to the bare minimum
+    - Create and distribute your own /virtual image/ (brute force
+      approach)
+    - Have tools that automatically keep track of dependencies/files
+      and packages the code,data and environment
+    - Use a specific tool to generate customized appliances (kvm, LXC,
+      Virtualbox, iso, ...) : recipes with steps and aliases,
+      execution in contexts, checkpoints, ... (Kameleon)
+*** Controlling your experiments
+    - Use workflow management system (taverna, galaxy, kepler,
+      vistrails, ...)
+    - For parallel/sistributed experiments (expo, xpflow, execo)
+    - Control your numerical results (RNG, rounding and
+      non-determinism
+*** Making your data/code/article available
+    - Figshare, Zenodo -> upload this and make it sharable with
+      everybody
+    - Github :)
+    - Consider perennity and legal aspects
