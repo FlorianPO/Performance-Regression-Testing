@@ -105,3 +105,8 @@
       everybody
     - Github :)
     - Consider perennity and legal aspects
+** Demo
+*** Literate programming
+    Explanation of the program logic in natyral language interspersed
+    with snippets of macros and traditional source code (ex:
+    RMarkdown)
