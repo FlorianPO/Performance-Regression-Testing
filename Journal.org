@@ -184,5 +184,5 @@
     l'installation d'environnement. XPFlow mélange celui-ci et le
     contrôle de l'expérience : pas une bonne idée.
 * Mercredi 08/06
-  - Visionnage du webinar 1 + prise de note
+  - Visionnage du webinar 1 + [[https://github.com/FlorianPO/Performance-Regression-Testing/blob/master/Webinar_1.org][prise de note]]
    
