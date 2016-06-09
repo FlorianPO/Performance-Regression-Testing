@@ -188,4 +188,4 @@
     emacs pour trouver l'emplacement du fichier =.emacs=)  
   - Visionnage du webinar 1 + [[https://github.com/FlorianPO/Performance-Regression-Testing/blob/master/Webinar_1.org][prise de note]]
 * Jeudi 09/06
-  - Visionnage du webinar 2 + prise de note
+  - Visionnage du webinar 2 + [[https://github.com/FlorianPO/Performance-Regression-Testing/blob/master/Webinar_2.org][prise de note]]
