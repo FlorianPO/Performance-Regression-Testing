@@ -184,5 +184,8 @@
     l'installation d'environnement. XPFlow mélange celui-ci et le
     contrôle de l'expérience : pas une bonne idée.
 * Mercredi 08/06
+  - Installation de =emacs= sur Windows (=C-H v user-init-file RET= dans
+    emacs pour trouver l'emplacement du fichier =.emacs=)  
   - Visionnage du webinar 1 + [[https://github.com/FlorianPO/Performance-Regression-Testing/blob/master/Webinar_1.org][prise de note]]
-   
+* Jeudi 09/06
+  - Visionnage du webinar 2 + prise de note

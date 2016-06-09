@@ -1,0 +1,148 @@
+* Webinar 2
+** Controlling your experiment
+*** Motivation
+    - It's difficult to get our code un on someone else machine.
+    - Making it available is great first step
+    - Making sure others can rerun it is an other move -> you have to
+      have it in mind from the beginning
+**** Dependencies and compilation
+     - Less than 50% of ACM' articles experimental setups are
+       buildable
+**** Portability
+     - Portability issues :: protection against numerical instabilities
+          (OS, hardware, ...)
+     - Imprecise documentation :: how to install/configure/run it ?
+     - Dependency Hell :: "I can't install this dependency package
+          without breaking my entire system"
+     - Code rote :: package can evolve and be buggy/different ("what
+                    was the version that was used in the first place
+                    ?")
+**** Cultural factors
+     - Little efforts
+     - See Webinar 1 ...
+*** Way to distribute your code
+    - Software appliance (installer) =USER:= veasy =AUTHOR:= vhard
+    - Linux package =USER:= easy =AUTHOR:= hard
+    - Makefile =USER:= hard =AUTHOR:= easy
+    - .ZIP of code =USER:= vhard =AUTHOR:= veasy
+**** Disseminating software
+     - For a user who only wants to reproduce the experiment
+
+       | hard AUTHOR | Controlled environments | Extensive documentation |
+       | easy AUTHOR | Virtual machines        | Raw code and data       |
+       |             | easy USER               | hard USER               |
+
+     - For a user who wants to extend the experiment 
+
+       | hard AUTHOR | Controlled environments |                   |
+       |             | Extensive documentation |                   |
+       | easy AUTHOR |                         | Raw code and data |
+       |             |                         | Virtual machines  |
+       |             | easy USER               | hard USER         |
+
+***** Explanations
+      - Controlled environment :: software that helps programming
+           (workflow) can also limit options on language and
+           librairies I can use
+      - Virtual machines :: emulation of a system (you don't use the
+           already installed dependencies on your machine). Black box, hard to
+           figure out what's inside
+      - Containers :: virtual machines that share the host's kernel
+                      (faster / lighter)
+*** Environment
+    - Set of tools and materials that permits a complete
+      reproducibility of a part or of the whole experiment process
+    - The whole environment contains both hardware and software
+      information
+      + Hardware :: can't be shared, needs to be exhaustively
+                    documented (ex: =dmidecode=, =lstopo=, ...)
+      + Software :: different types of environment :
+	- Very succint :: 
+	  * minimal description / small documentation
+	  * README in a git repository
+	- Partial :: 
+	  * Bundle of the experiement tool and its dependencies
+	  * Linux container image
+	- Full ::
+	  * Virtual machine
+	  * Complete system image (.iso)
+*** Why take care of my experimental environment
+    - Be able to reproduce my experiment
+      + Allow corroboration (or not) of others with my results
+      + Allow them to base their research on mine and extend it
+    - Improve productivity (when preparing articles, PhD, rebuttals,
+      ...)
+    - Be able to scale my experiment on other machines
+    - Facilitate experiment extensions and modifications -> increase
+      collaboration possibilities
+    - Do better science
+*** How to take care of your experimental environment
+    - Preserving the mess -> capturing the already set up environment
+    - Encourage cleanliness
+      + Using a constrained environment -> could be problem for
+        tracking modifications applied in this environment (black box)
+      + Building your own environment 
+    - *Constraint for simplicity / Complexity for freedom*
+*** Capturing an environment
+    Several approaches :
+    - Export everything :: Kernel + Libraries + Application (heavy
+         but safe)
+      + On a local machine it's not easily usable by others
+      + On a VM : snapshot on each experiment
+    - Only what is needed :: Libraries (only dependencies) +
+         Application (lightweight but can be partial)
+      + Use tracking tool that crate bundles
+	* Binairies/Scripts + Configuration files + Libraries
+	* Risk of missing something
+      + Less messy than an virtual environment copy, but it is not
+        easy to modify it to extend an experiment
+    - Some tools ::
+      + CDE : seems not maintained
+      + ReproZip : nice
+      + Care : for experts 
+*** Building a complete environment
+    Major challenge : installing the prerequisite software environment
+    - Classic ways :: 
+      + Makefile
+      + Package manager -> unreliable
+    - DevOps way :: Dev = development, Ops = (system) operation
+      + Use scripts to install your toolset
+      + Use all goot thing that software engineering has created along
+        decades for ensuring *isolation* and *reproducibility*
+**** Docker
+     - Open-source engine that automates the deployment of any
+       application as a lightweight , portable, serl-sufficient
+       container that will run virtually anywhere
+     - Tries to achieve deterministic builds by isolating your
+       service, building it from a snapshotted OS and running
+       imperative steps ont top of it -> lightweight virtualization
+     - Dependency Hell :: works with images that consume minimal disk
+          space, are versioned, archivable, and shareable (DockerHub)
+     - Dockerfiles :: resolving imprecise documentation
+**** Vagrant
+     - Isolated sandbox to build the environment
+     - Text-based instructions to build virtual machines -> very
+       sharable ! (VM are not black box anymore)
+     - Possibility to use different providers : EC2, Virtualboxn
+       VMware, Docker, ...
+*** Reproducible builds
+**** NIX (functionnal package manager)
+    - A package is the ouput of a function that is deterministic (it
+      depends only on a function unputs, without any side effects)
+    - Functional hash-based immutable package management (if a package
+      changes, you will be aware) -> complete traceability of your
+      system
+    - Isolated build (using containers)
+    - No dependency Hell
+*** Reconstrucability
+    Non-deterministic problems :
+    - Parallel compilation
+    - Packages are validated based on timestamps (Debian 8)
+    - The compiler may purposedly be non-deterministic
+    - Host information (hostname, /proc/cpuinfo)
+    - Most important problem : the software we use is not available
+      anymore
+      + Solution : Debian community is archiving packages
+      + Problem for non-packed softwares
+**** TODO Kameleon
+     Used to make a software available in the futur with *persistent cache*
