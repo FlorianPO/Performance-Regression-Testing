@@ -189,3 +189,10 @@
   - Visionnage du webinar 1 + [[https://github.com/FlorianPO/Performance-Regression-Testing/blob/master/Webinar_1.org][prise de note]]
 * Jeudi 09/06
   - Visionnage du webinar 2 + [[https://github.com/FlorianPO/Performance-Regression-Testing/blob/master/Webinar_2.org][prise de note]]
+  - Docker for reproducible research :
+    http://www.carlboettiger.info/assets/files/pubs/10.1145/2723872.2723882.pdf
+  - SPACK + KAMELEON -> téléchargement (+ installation)
+    - SPACK : Lucas 
+    - Dépendances : Venìcius
+    - KAMELEON : Michael
+  - (XPFlow) -> Contrôle de l'expérience
