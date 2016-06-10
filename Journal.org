@@ -1,4 +1,6 @@
-#+TAGS: Phoronix(P) Pypy(Y) Expo(A) Execo(B) XPFlow(C) 
+#+TAGS: Phoronix(P) Pypy(Y) Jenkins(J) CollectiveMind(C)
+#+TAGS: XPFlow(C) Expo(A) Execo(B) 
+#+TAGS: Spack(S) Kameleon(K)
 
 * Jeudi 19/05
   - Installation de Débian8 avec Vincent Danjean
@@ -8,7 +10,7 @@
   - Il faut que je fournisse mon adresse MAC à Christian afin d'avoir
     Internet en filaire (très peu de Wifi dans la salle)
   - Prise en main de Org-mode sous emacs
-* Lundi 23/05
+* Lundi 23/05				    :Phoronix:Jenkins:CollectiveMind:
   - [[https://github.com/FlorianPO/Performance-Regression-Testing/blob/master/Phoronix.org][Overview de Phoronix]] : dépendant du matériel, deux tests n'auront
     du sens que s'ils sont éxecutés sur la /même/ machine.
   - [[https://github.com/FlorianPO/Performance-Regression-Testing/blob/master/CollectiveMind.org][Overview de CollectiveMind]] : plus proche du sujet (axé recherche)
@@ -196,3 +198,18 @@
     - Dépendances : Venìcius
     - KAMELEON : Michael
   - (XPFlow) -> Contrôle de l'expérience
+* Vendredi 10/06
+** Spack							      :Spack:
+   Petits tutos sur le PATH pour se mettre à niveau :
+   - https://wiki.debian.org/EnvironmentVariables
+   - http://www.generation-linux.fr/index.php?post/2008/10/15/Changer-les-dossiers-par-defaut-dans-le-PATH
+   Installation de Spack
+*** Liens :
+    - Features :: http://software.llnl.gov/spack/features.html
+    - Doc :: http://software.llnl.gov/spack/
+    - Package installable ::
+         http://software.llnl.gov/spack/basic_usage.html
+** Kameleon							   :Kameleon:
+   Installation de Kameleon
+*** Liens :
+    - Doc :: http://kameleon.imag.fr/index.html
