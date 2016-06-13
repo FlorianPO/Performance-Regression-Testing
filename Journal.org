@@ -213,3 +213,11 @@
    Installation de Kameleon
 *** Liens :
     - Doc :: http://kameleon.imag.fr/index.html
+* Lundi 13/06
+** Kameleon							   :Kameleon:
+   - Le tutoriel qui va bien :
+     http://kameleon.imag.fr/grid5000_tutorial.html
+   - Kameleon + Puppet :
+     https://www.grid5000.fr/mediawiki/index.php/Environments_creation_using_Kameleon_and_Puppet
+** Spack							      :Spack:
+   - http://software.llnl.gov/spack/basic_usage.html
