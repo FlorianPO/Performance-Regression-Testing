@@ -221,3 +221,122 @@
      https://www.grid5000.fr/mediawiki/index.php/Environments_creation_using_Kameleon_and_Puppet
 ** Spack							      :Spack:
    - http://software.llnl.gov/spack/basic_usage.html
+* Mardi 14/06
+  - Lecture complète de la doc de Kameleon : fait.
+  - Réunion avec Michael et Arnaud :
+    + Préliminaires :      
+      * Lire le /Getting started/ de G5k
+        https://www.grid5000.fr/mediawiki/index.php/Getting_Started
+      * Déployer une image, jouer avec les commandes, ...
+      * Objectif : lancer au moins un benchmark StarPU Morse
+        http://starpu.gforge.inria.fr/testing/morse/trunk/morse.html
+    + Automatiser : 
+      * Kameleon + Spack (pour les BLAS)
+      * récupérer sur Git StarPU / Morse
+      * benchmark sur les versions (en mode réel ou simulé)
+	- mode simulé : éxecution des versions parallèles (Execo
+          peut-il faire ceci ? Voir avec Michael)
+      * logger
+** Grid5000 getting started
+*** Réservation
+    - Dabord, la frontale :
+      #+begin_src sh :session foo :results output :exports both 
+      ssh fpopek@access.grid5000.fr
+      #+end_src
+
+      #+RESULTS:
+      #+begin_example
+
+      Linux access-south.grid5000.fr 3.2.0-4-amd64 #1 SMP Debian 3.2.73-2+deb7u3 x86_64
+      ----- Grid'5000 - access-south.grid5000.fr -----
+
+      Welcome to Grid'5000
+
+      ** Connect to a site:
+      ssh {grenoble,lille,luxembourg,lyon,nancy,nantes,reims,rennes}
+
+      ** Useful links:
+       - account management (password change): https://api.grid5000.fr/ui/account
+       - homepage: https://www.grid5000.fr/mediawiki/index.php/Category:Portal:User
+       - charter : https://www.grid5000.fr/mediawiki/index.php/Grid5000:UserCharter
+       - support : https://www.grid5000.fr/mediawiki/index.php/Support
+
+      ** Data on access.grid5000.fr :
+       - your home directory on access machines (access-north and access-south)
+	 is not synchronized and should not be use to store data.
+       - please use ssh forwarding to send data directly to sites or
+      scp files login@access.grid5000.fr:reims/ using the nfs mount point in your home
+
+      [31m[5m
+      ** Warning: 1 event in progress
+      #Incident in #Sophia : hard drive failures on srv.sophia.grid5000.fr, site unavailable
+      [0m[31m    https://intranet.grid5000.fr/bugzilla/show_bug.cgi?id=6967
+      [0m
+      Last login: Tue Jun 14 14:39:37 2016 from 129.88.54.126
+#+end_example
+
+    - Puis grenoble :
+      #+begin_src sh :session foo :results output :exports both 
+      ssh grenoble
+      #+end_src
+
+      #+RESULTS:
+      #+begin_example
+      ----- Grid'5000 - Grenoble - fgrenoble.grenoble.grid5000.fr -----
+
+      This site has 3 clusters (see: https://api.grid5000.fr/stable/ui/visualizations/nodes.html)
+
+      Available in queue default:
+       - genepi (2008): 34 nodes (2 CPUs Intel Xeon E5420, 4 cores/CPU, 8GB RAM, 153GB HDD)
+       - edel   (2008): 72 nodes (2 CPUs Intel Xeon E5520, 4 cores/CPU, 24GB RAM, 119GB SSD)
+       - adonis (2010): 10 nodes (2 CPUs Intel Xeon E5520, 4 cores/CPU, 24GB RAM, 233GB HDD)
+
+      ** Useful links:
+       - account management (password change): https://api.grid5000.fr/ui/account
+       - homepage: https://www.grid5000.fr/mediawiki/index.php/Category:Portal:User
+       - charter : https://www.grid5000.fr/mediawiki/index.php/Grid5000:UserCharter
+       - support : https://www.grid5000.fr/mediawiki/index.php/Support
+
+      ** Others sites:
+      ssh {lille,luxembourg,lyon,nancy,nantes,reims,rennes,sophia}
+
+      Last login: Tue Jun 14 14:40:46 2016 from access-south.grid5000.fr
+#+end_example
+
+    - =oarsub -I= pour réserver une machine en mode interactif
+    - Pour réserver 2 noeuds pendant 30 min :
+      #+begin_src sh :session foo :results output :exports both 
+      oarsub -I -l nodes=2,walltime=0:30 
+      #+end_src
+
+    - Pour réserver dans le futur
+      #+begin_src sh :session foo :results output :exports both 
+      oarsub -I -r '2012-12-23 16:30:00'
+      #+end_src
+
+      + =oarstat= pour voir l'historique des réservations
+      + =oarstat -u= pour voir ses réservations
+      + =oarstat -r <JOB_ID>= pour supprimer une réservation
+    - Propriétés OAR
+      #+begin_src sh :session foo :results output :exports both 
+      oarsub -p "gpu='YES'"
+      #+end_src
+
+    - =oarsub -t deploy= pour déployer avec Kadeploy (/The root password
+      for all Grid'5000-provided images is grid5000/)
+*** Gestion des noeuds
+    - =uniq $OAR_NODEFILE= liste des noeuds réservés
+    - =oarsh <NODE>= utiliser un noeud réservé
+    - =ssh root@<NODE>= se connecter en root sur un noeud
+** Spack
+   Installation :
+   - =git clone https://github.com/llnl/spack.git=
+   - =export PATH=$SPACK_ROOT/bin:$PATH=
+   - =spack install libelf=
+** StarPU
+*** Installation avec Spack
+    http://morse.gforge.inria.fr/chameleon/tuto_chameleon/chameleon-tutorial-2015-12-16-inria.html#sec-6-2
+** TODO En pratique
+   - ssh grenoble.g5k (ou ssh fpopek@access.grid5000.fr puis ssh grenoble)
+   - ssh digitalis
+   - Faire un kadeploy jessie-big
