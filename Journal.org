@@ -336,7 +336,116 @@
 ** StarPU
 *** Installation avec Spack
     http://morse.gforge.inria.fr/chameleon/tuto_chameleon/chameleon-tutorial-2015-12-16-inria.html#sec-6-2
-** TODO En pratique
-   - ssh grenoble.g5k (ou ssh fpopek@access.grid5000.fr puis ssh grenoble)
-   - ssh digitalis
-   - Faire un kadeploy jessie-big
+*** En pratique (buggué)
+    Déploiement
+
+    #+begin_src sh :session foo :results output :exports both 
+    ssh grenoble.g5k (ou ssh fpopek@access.grid5000.fr puis ssh grenoble)
+    ssh digitalis
+    oarsub -I -t deploy
+    kadeploy3 -f $OAR_NODE_FILE -e jessie-x64-big -k (problème avec Digitalis)
+    ssh root@machine
+    #+end_src
+    
+    Installation de Spack
+    
+    #+begin_src sh :session foo :results output :exports both 
+    git clone https://github.com/fpruvost/spack
+    export SPACK_ROOT=~/spack/
+    export PATH=$SPACK_ROOT/bin:$PATH
+    #+end_src
+      
+    Morse package
+    
+    #+begin_src sh :session foo :results output :exports both 
+    cd spack
+    git checkout morse
+    #+end_src
+    
+    Installation de Chameleon
+
+    #+begin_src sh :session foo :results output :exports both 
+    spack install chameleon+examples
+    #+end_src
+
+    Installation de StarPU
+
+    #+begin_src sh :session foo :results output :exports both 
+    spack install -v chameleon@trunk~quark+examples+fxt ^starpu@svn-trunk+fxt
+    spack install -v chameleon@trunk~quark+simu+examples+fxt ^starpu@svn-trunk+simgrid+fxt ^simgrid@starpumpi (pour la simulation)
+
+    ( spack install -v chameleon@trunk~quark+examples+fxt )
+    #+end_src
+* Mercredi 15/06
+  - Ma version de Spack ne permet pas d'installer StarPu (0.9.1) celle
+  de Vinìcius (0.8.15) marche
+  - Problème d'import Python -> récupération de l'image de Vinìcius
+  - Problème de Spack -> envoie d'un mail à Lucas
+** Environnement de Vinìcius
+   #+begin_src sh :session foo :results output :exports both 
+   ssh grenoble.g5k
+   ssh digitalis
+   oarsub -I -t deploy
+   kadeploy3 -f $OAR_NODE_FILE -a imageIDCin.env -k
+   #+end_src
+  
+   Image copiée depuis =/home/vgarciapinto/= (avec modification de
+   imageIDCin.env avec mon login)
+
+   #+begin_src sh :session foo :results output :exports both 
+   ssh root@machine
+   sudo apt-get update
+   sudo apt-get install -y python2.7-dev
+   sudo apt-get install -y vim emacs
+   sudo apt-get install -y curl patch
+   sudo apt-get install -y git subversion mercurial
+   sudo apt-get install -y build-essential gfortran
+   sudo apt-get install -y autoconf automake cmake cmake-data doxygen texinfo
+   sudo apt-get install -y libtool libtool-bin
+   sudo apt-get install -y libboost-dev
+   sudo apt-get install -y gawk
+   sudo apt-get install -y bison flex
+   sudo apt-get install -y binutils-dev libelf-dev libiberty-dev
+   sudo apt-get install -y libz-dev
+   sudo apt-get install -y libqt4-dev freeglut3-dev
+   sudo apt-get install -y environment-modules
+   #+end_src
+
+   #+begin_src sh :session foo :results output :exports both 
+   git clone https://github.com/fpruvost/spack
+   export SPACK_ROOT=~/spack/
+   export PATH=$SPACK_ROOT/bin:$PATH
+   #+end_src
+
+   #+begin_src sh :session foo :results output :exports both 
+   cd spack/
+   git checkout morse
+   #+end_src
+
+   La branche morse peut (sous quelles conditions ?) ne pas marcher :
+
+    #+RESULTS:
+    #+begin_example
+   Traceback (most recent call last):
+     File "/root/spack//bin/spack", line 50, in <module>
+       import nose
+     File "/root/spack/lib/spack/external/nose/__init__.py", line 1, in <module>
+       from nose.core import collector, main, run, run_exit, runmodule
+     File "/root/spack/lib/spack/external/nose/core.py", line 9, in <module>
+      import unittest
+     File "/usr/lib/python2.7/unittest/__init__.py", line 58, in <module>
+      from .result import TestResult
+     File "/usr/lib/python2.7/unittest/result.py", line 10, in <module>
+      from functools import wraps
+   ImportError: cannot import name wraps
+   #+endexample
+
+   #+begin_src sh :session foo :results output :exports both 
+   spack install chameleon
+   #+end_src
+
+   #+begin_src sh :session foo :results output :exports both 
+   spack install -v chameleon@trunk~quark+examples+fxt ^starpu@svn-trunk+fxt
+   #+end_src
+
+   ==> Error: chameleon does not depend on starpu
