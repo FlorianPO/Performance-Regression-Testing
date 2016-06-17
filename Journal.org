@@ -336,7 +336,7 @@
 ** StarPU
 *** Installation avec Spack
     http://morse.gforge.inria.fr/chameleon/tuto_chameleon/chameleon-tutorial-2015-12-16-inria.html#sec-6-2
-*** En pratique (buggué)
+*** En pratique (buggué, voir le lendemain)
     Déploiement
 
     #+begin_src sh :session foo :results output :exports both 
@@ -401,11 +401,11 @@
    sudo apt-get install -y git subversion mercurial
    sudo apt-get install -y build-essential gfortran
    sudo apt-get install -y autoconf automake cmake cmake-data doxygen texinfo
-   sudo apt-get install -y libtool libtool-bin
+   sudo apt-get install -y libtool (libtool-bin)
    sudo apt-get install -y libboost-dev
    sudo apt-get install -y gawk
    sudo apt-get install -y bison flex
-   sudo apt-get install -y binutils-dev libelf-dev libiberty-dev
+   sudo apt-get install -y binutils-dev libelf-dev (libiberty-dev)
    sudo apt-get install -y libz-dev
    sudo apt-get install -y libqt4-dev freeglut3-dev
    sudo apt-get install -y environment-modules
@@ -424,8 +424,8 @@
 
    La branche morse peut (sous quelles conditions ?) ne pas marcher :
 
-    #+RESULTS:
-    #+begin_example
+   #+RESULTS:
+   #+begin_example
    Traceback (most recent call last):
      File "/root/spack//bin/spack", line 50, in <module>
        import nose
@@ -438,14 +438,171 @@
      File "/usr/lib/python2.7/unittest/result.py", line 10, in <module>
       from functools import wraps
    ImportError: cannot import name wraps
-   #+endexample
+   #+end_example
 
+   (semble optionnel)
    #+begin_src sh :session foo :results output :exports both 
    spack install chameleon
    #+end_src
 
    #+begin_src sh :session foo :results output :exports both 
-   spack install -v chameleon@trunk~quark+examples+fxt ^starpu@svn-trunk+fxt
+   spack install chameleon~quark+fxt+starpu ^starpu+fxt
    #+end_src
 
    ==> Error: chameleon does not depend on starpu
+* Vendredi 17/06
+  Enregistrement d'une nouvelle image contenant Chameleon et Starpu (+
+  toutes les dépendances nécessaires)
+
+  #+begin_src sh :session foo :results output :exports both 
+  ssh grenoble.g5k
+  ssh digitalis
+  oarsub -I -t deploy
+  kadeploy3 -f $OAR_NODE_FILE -a image.env -k
+  #+end_src
+
+  Rappel de l'objectif : lancer un benchmark 
+  http://starpu.gforge.inria.fr/testing/morse/trunk/morse.html
+
+  #+begin_src sh :session foo :results output :exports both 
+  export SPACK_ROOT=~/spack/
+  export PATH=$SPACK_ROOT/bin:$PATH
+  spack install -v chameleon@trunk~quark+simu+examples+fxt+starpu ^starpu@svn-trunk+simgrid+fxt ^simgrid@starpumpi (pour la simulationg, ne marche pas)
+  #+end_src
+
+  #+RESULTS:
+  #+begin_example
+  ==> Successfully installed simgrid
+  Fetch: 11.83s.  Build: 45.30s.  Total: 57.12s.
+  [+] /root/spack/opt/spack/linux-x86_64/gcc-4.7/simgrid-starpumpi-tosagznhajv6jgnrtesrrzuhppizpmp3
+  Traceback (most recent call last):
+    File "/root/spack//bin/spack", line 176, in <module>
+      main()
+    File "/root/spack//bin/spack", line 154, in main
+      return_val = command(parser, args)
+    File "/root/spack/lib/spack/spack/cmd/install.py", line 82, in install
+      explicit=True)
+    File "/root/spack/lib/spack/spack/package.py", line 927, in do_install
+      make_jobs=make_jobs)
+    File "/root/spack/lib/spack/spack/package.py", line 1051, in do_install_dependencies
+      dep.package.do_install(**kwargs)
+    File "/root/spack/lib/spack/spack/package.py", line 1008, in do_install
+      spack.build_environment.fork(self, build_process)
+    File "/root/spack/lib/spack/spack/build_environment.py", line 402, in fork
+      setup_package(pkg)
+    File "/root/spack/lib/spack/spack/build_environment.py", line 360, in setup_package
+      dpkg.setup_dependent_package(pkg.module, spec)
+    File "/root/spack/var/spack/repos/builtin/packages/simgrid/package.py", line 37, in setup_dependent_package
+      if spec.satisfies('+smpi'):
+  NameError: global name 'spec' is not defined
+  ==> Error: Installation process had nonzero exit code.
+  #+end_example
+
+  Solution : remplacer =spec= par =dep_spec=
+
+  #+RESULTS:
+  #+begin_example
+  ==> 'make' '-j16'
+  Making all in src
+  make[1]: Entering directory `/tmp/root/spack-stage/spack-stage-Bqd_mp/trunk/src'
+  make[2]: Entering directory `/tmp/root/spack-stage/spack-stage-Bqd_mp/trunk/src'
+    CC     libstarpu_1.3_la-barrier.lo
+    CC     libstarpu_1.3_la-barrier_counter.lo
+    CC     libstarpu_1.3_la-bitmap.lo
+    CC     libstarpu_1.3_la-hash.lo
+    CC     libstarpu_1.3_la-rwlock.lo
+    CC     libstarpu_1.3_la-starpu_spinlock.lo
+    CC     libstarpu_1.3_la-timing.lo
+    CC     libstarpu_1.3_la-utils.lo
+    CC     libstarpu_1.3_la-fxt.lo
+    CC     libstarpu_1.3_la-thread.lo
+    CC     libstarpu_1.3_la-rbtree.lo
+    CC     libstarpu_1.3_la-graph.lo
+    CC     libstarpu_1.3_la-jobs.lo
+    CC     libstarpu_1.3_la-task.lo
+    CC     libstarpu_1.3_la-task_bundle.lo
+    CC     libstarpu_1.3_la-tree.lo
+  common/fxt.c: In function ‘_starpu_profile_set_tracefile’:
+  common/fxt.c:86:2: error: implicit declaration of function ‘vnsprintf’ [-Werror=implicit-function-declaration]
+  cc1: some warnings being treated as errors
+  make[2]: *** [libstarpu_1.3_la-fxt.lo] Error 1
+  make[2]: *** Waiting for unfinished jobs....
+  make[2]: Leaving directory `/tmp/root/spack-stage/spack-stage-Bqd_mp/trunk/src'
+  make[1]: *** [all-recursive] Error 1
+  make[1]: Leaving directory `/tmp/root/spack-stage/spack-stage-Bqd_mp/trunk/src'
+  make: *** [all-recursive] Error 1
+  #+end_example
+
+  Solution : rajouter le flag *-posix* au compilateur C : 
+
+  #+begin_src sh :session foo :results output :exports both 
+  spack install -v chameleon@trunk~quark+simu+examples+fxt+starpu cflags=\"-posix\" ^starpu@svn-trunk+simgrid+fxt ^simgrid@starpumpi
+  #+end_src
+
+  #+RESULTS:
+  #+begin_example
+  /tmp/root/spack-stage/spack-stage-NiynFP/cmake-3.5.2/Source/kwsys/ProcessUNIX.c:189:53: error: unknown type name ‘siginfo_t’
+  /tmp/root/spack-stage/spack-stage-NiynFP/cmake-3.5.2/Source/kwsys/ProcessUNIX.c: In function ‘cmsysProcess_AddCommand’:
+  /tmp/root/spack-stage/spack-stage-NiynFP/cmake-3.5.2/Source/kwsys/ProcessUNIX.c:469:46: warning: incompatible implicit declaration of built-in function ‘strdup’ [enabled by default]
+  /tmp/root/spack-stage/spack-stage-NiynFP/cmake-3.5.2/Source/kwsys/ProcessUNIX.c: In function ‘kwsysProcessKill’:
+  /tmp/root/spack-stage/spack-stage-NiynFP/cmake-3.5.2/Source/kwsys/ProcessUNIX.c:2687:16: warning: initialization makes pointer from integer without a cast [enabled by default]
+  /tmp/root/spack-stage/spack-stage-NiynFP/cmake-3.5.2/Source/kwsys/ProcessUNIX.c: In function ‘kwsysProcessesAdd’:
+  /tmp/root/spack-stage/spack-stage-NiynFP/cmake-3.5.2/Source/kwsys/ProcessUNIX.c:2861:17: error: ‘struct sigaction’ has no member named ‘sa_sigaction’
+  /tmp/root/spack-stage/spack-stage-NiynFP/cmake-3.5.2/Source/kwsys/ProcessUNIX.c:2861:33: error: ‘kwsysProcessesSignalHandler’ undeclared (first use in this function)
+  /tmp/root/spack-stage/spack-stage-NiynFP/cmake-3.5.2/Source/kwsys/ProcessUNIX.c:2861:33: note: each undeclared identifier is reported only once for each function it appears in
+  /tmp/root/spack-stage/spack-stage-NiynFP/cmake-3.5.2/Source/kwsys/ProcessUNIX.c: At top level:
+  /tmp/root/spack-stage/spack-stage-NiynFP/cmake-3.5.2/Source/kwsys/ProcessUNIX.c:2950:43: error: unknown type name ‘siginfo_t’
+  #+end_example
+
+  Solution : rajouter le flag *-D_POSIX_C_SOURCE=200112L* (le flag
+  -posix n'est plus nécessaire)
+  http://stackoverflow.com/questions/22912674/unknown-type-name-siginfo-t-with-clang-using-posix-c-source-2-why
+  
+  Autre erreur de déclaration implicite (je ne vais pas toutes les noter).
+
+  Solution : rajouter le flag *-D_GNU_SOURCE*
+
+  #+begin_src sh :session foo :results output :exports both 
+  spack install -v chameleon@trunk~quark+simu+examples+fxt+starpu cflags=\"-D_POSIX_C_SOURCE=200112L -D_GNU_SOURCE\" ^starpu@svn-trunk+simgrid+fxt ^simgrid@starpumpi
+  #+end_src
+
+  #+RESULTS:
+  #+begin_example
+  core/perfmodel/perfmodel_history.c: In function ‘_starpu_perfmodel_realloc’:
+  core/perfmodel/perfmodel_history.c:662:2: error: ‘LONG_MAX’ undeclared (first use in this function)
+  core/perfmodel/perfmodel_history.c:662:2: note: each undeclared identifier is reported only once for each function it appears in
+  make[2]: *** [libstarpu_1.3_la-perfmodel_history.lo] Error 1
+  make[2]: *** Waiting for unfinished jobs....
+  make[2]: Leaving directory `/tmp/root/spack-stage/spack-stage-AAkAxm/trunk/src'
+  make[1]: *** [all-recursive] Error 1
+  make[1]: Leaving directory `/tmp/root/spack-stage/spack-stage-AAkAxm/trunk/src'
+  make: *** [all-recursive] Error 1
+  #+end_example
+
+  Solution : rajouter le flag *-include limits.h*
+
+  #+begin_src sh :session foo :results output :exports both 
+  spack install -v chameleon@trunk~quark+simu+examples+fxt+starpu cflags=\"-D_POSIX_C_SOURCE=200112L -D_GNU_SOURCE -include limits.h\" ^starpu@svn-trunk+simgrid+fxt ^simgrid@starpumpi
+  #+end_src
+
+  #+RESULTS:
+  #+begin_example
+  CMake Error at tools/cmake/CompleteInFiles.cmake:117 (message):
+  Failed to find Boost libraries.Did you install libboost-dev and
+  libboost-context-dev?(libboost-context-dev is optional)
+  #+end_example
+
+** Récapitulatif
+   #+begin_src sh :session foo :results output :exports both 
+   ssh grenoble.g5k
+   ssh digitalis
+   oarsub -I -t deploy
+   kadeploy3 -f $OAR_NODE_FILE -a image.env -k
+
+   ssh root@node
+   export SPACK_ROOT=~/spack/
+   export PATH=$SPACK_ROOT/bin:$PATH
+   spack install -v chameleon@trunk~quark+simu+examples+fxt+starpu cflags=\"-D_POSIX_C_SOURCE=200112L -D_GNU_SOURCE -include limits.h\" ^starpu@svn-trunk+simgrid+fxt ^simgrid@starpumpi
+   #+end_src
+
+   + résolution *spec* -> *dep_spec*
