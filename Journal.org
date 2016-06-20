@@ -412,7 +412,7 @@
    #+end_src
 
    #+begin_src sh :session foo :results output :exports both 
-   git clone https://github.com/fpruvost/spack
+git clone https://github.com/fpruvost/spack
    export SPACK_ROOT=~/spack/
    export PATH=$SPACK_ROOT/bin:$PATH
    #+end_src
@@ -606,3 +606,92 @@
    #+end_src
 
    + résolution *spec* -> *dep_spec*
+* Lundi 20/06
+  Florent Pruvost : la branche est instable. Cette commande fonctionne + report d'un bug dans Spack
+  #+begin_src sh :session foo :results output :exports both 
+  spack install -v chameleon@trunk+starpu+fxt+simu+mpi ^simgrid@starpumpi
+  #+end_src
+
+  Lancement des premières simulations avec StarPU -> toutes fausses :)
+
+  Image actuelle trop "sale", création d'une nouvelle image, exclusivement pour la simulation,
+  avec le nouveau pull de Spack
+
+  Pour le hash : =chameleon-trunk-b7vkqkzpqff7jhw4v76hmcnh7wxvqfp7=
+  Lancement des simulations -> segmentation fault..
+  
+  Nouvelle installation :
+  #+begin_src sh :session foo :results output :exports both 
+  spack install -v chameleon@trunk+starpu+fxt+simu+mpi ^simgrid@starpumpi ^starpu@svn-trunk+simgrid+fxt
+  #+end_src
+  -> problème d'installation
+
+  Nouvelle installation (tirée de ce qui a été fait Vendredi 17/06) :
+  #+begin_src sh :session foo :results output :exports both 
+  spack install -v chameleon@trunk+simu+fxt+starpu cflags=\"-D_POSIX_C_SOURCE=200112L -D_GNU_SOURCE -include limits.h\" ^starpu@svn-trunk+simgrid+fxt ^simgrid@starpumpi
+  #+end_src
+
+  Pour le hash : =chameleon-trunk-4iyjznfgw6drrrgli47trrjadryxs72e=
+  Lancement des simulations -> segmentation fault..
+
+  Installation de la version non simulée :
+  #+begin_src sh :session foo :results output :exports both 
+  spack install -v chameleon@trunk+starpu+fxt ^starpu@svn-trunk+fxt
+  #+end_src
+
+  Hash correspondant : =chameleon-trunk-gj5brkq45hyoavckcdaxtcpz3hjdlxmd=
+  
+  Cette version marche.
+
+  Bilan : la simulation ne marche pas, des déviations très importantes
+  (voir le warning) pour le mode non simulé -> quoiqu'il en soit
+  l'installation avec Spack est maîtrisée
+
+  #+RESULTS:
+  #+begin_example
+  ./timing/time_spotrf_tile --warmup --gpus=3 --threads=9 --nb=960 --ib=96 --n_range=48000:48000:9600
+  [starpu][starpu_initialize] Warning: StarPU was configured with --with-fxt, which slows down a bit
+  [starpu][_starpu_bind_thread_on_cpu] Warning: both workers 0 and 8 are bound to the same PU 0, this will strongly degrade performance
+  #
+  # CHAMELEON 0.9.1, ./timing/time_spotrf_tile
+  # Nb threads: 9
+  # Nb GPUs:    3
+  # NB:         960
+  # IB:         96
+  # eps:        5.960464e-08
+  #
+  #     M       N  K/NRHS   seconds   Gflop/s Deviation
+    48000   48000       1 [starpu][_starpu_update_perfmodel_history] Too big deviation for model splgsy on cpu0_impl0 (Comb0): 17470.704000 vs average 11059.039143, 7 such errors against 7 samples (+57.976690%), flushing the performance model. Use the STARPU_HISTORY_MAX_ERROR environement variable to control the threshold (currently 50%)
+  [starpu][_starpu_update_perfmodel_history] Too big deviation for model splgsy on cpu0_impl0 (Comb0): 10813.469000 vs average 18872.197000, 1 such errors against 1 samples (-42.701589%), flushing the performance model. Use the STARPU_HISTORY_MAX_ERROR environement variable to control the threshold (currently 50%)
+  [starpu][_starpu_update_perfmodel_history] Too big deviation for model splgsy on cpu0_impl0 (Comb0): 21952.844000 vs average 11692.761069, 29 such errors against 29 samples (+87.747307%), flushing the performance model. Use the STARPU_HISTORY_MAX_ERROR environement variable to control the threshold (currently 50%)
+  [starpu][_starpu_update_perfmodel_history] Too big deviation for model splgsy on cpu0_impl0 (Comb0): 9965.069000 vs average 22145.963190, 79 such errors against 79 samples (-55.002774%), flushing the performance model. Use the STARPU_HISTORY_MAX_ERROR environement variable to control the threshold (currently 50%)
+  [starpu][_starpu_update_perfmodel_history] Too big deviation for model strsm on cpu0_impl0 (Comb0): 51143.533000 vs average 82083.798857, 7 such errors against 7 samples (-37.693511%), flushing the performance model. Use the STARPU_HISTORY_MAX_ERROR environement variable to control the threshold (currently 50%)
+    242.332    152.13 +-   0.00  
+
+  #---------------------
+  Worker stats:
+  CPU 0                           
+  	3335 task(s)
+  CPU 1                           
+  	6089 task(s)
+  CPU 2                           
+  	6095 task(s)
+  CPU 3                           
+  	6072 task(s)
+  CPU 4                           
+  	6067 task(s)
+  CPU 5                           
+  	6089 task(s)
+  CPU 6                           
+  	6073 task(s)
+  CPU 7                           
+  	6062 task(s)
+  CPU 8                           
+  	3318 task(s)
+  #---------------------
+  #+end_example
+
+** A faire
+   Installer Kameleon et intégrer Spack à Kameleon (lancer les
+   commandes Spack depuis Kameleon)
+   
