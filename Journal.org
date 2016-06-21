@@ -412,7 +412,7 @@
    #+end_src
 
    #+begin_src sh :session foo :results output :exports both 
-git clone https://github.com/fpruvost/spack
+   git clone https://github.com/fpruvost/spack
    export SPACK_ROOT=~/spack/
    export PATH=$SPACK_ROOT/bin:$PATH
    #+end_src
@@ -695,3 +695,49 @@ git clone https://github.com/fpruvost/spack
    Installer Kameleon et intégrer Spack à Kameleon (lancer les
    commandes Spack depuis Kameleon)
    
+* Mardi 21/06							   :Kameleon:
+  Préparation d'une image pour déploiement sur Grid5000
+
+  Rappel sur l'installation de Kameleon :
+
+  #+begin_src sh :session foo :results output :exports both
+  apt-get install ruby-dev ruby-childprocess polipo libguestfs-tools
+  gem install --no-ri --no-rdoc kameleon-builder
+  
+  kameleon template repo add default https://github.com/oar-team/kameleon-recipes.git
+  #+end_src
+
+  Création d'un custom recipe pour grid5000 :
+  
+  #+begin_src sh :session foo :results output :exports both 
+  kameleon new debian8_g5k default/grid5000/debian8
+  #+end_src
+  
+  Premier déploiement d'une sur Grid5000 avec Kameleon : le recipe
+  =default/grid5000/debian8.yaml= se charge de déployer lors du build
+
+  Problème avec Git :
+
+  #+begin_src sh :session foo :results output :exports both 
+  Step 24 : setup/first_step/spack
+  --> Running the step...
+  [in] Cloning into 'spack'...
+  [in] fatal: Not a git repository (or any of the parent directories): .git
+  Starting command: "bash"
+  Starting command: "ssh -A -t -F /home/florian/Bureau/Kameleon/build/debian8_g5k/ssh_config grenoble /bin/bash"
+  Starting command: "ssh -A -t -F /home/florian/Bureau/Kameleon/build/debian8_g5k/ssh_config debian8_g5k /bin/bash"
+  Error occured when executing the following command :
+
+  > exec_in: git checkout morse
+  #+end_src
+
+  Source du problème : la commande =cd= ne fonctionne pas, ni =export= ->
+  faire autrement
+
+  Solution (Michael) : exporter la variable du contexte =out= vers =in= ou
+  bien utiliser un fichier intermediaire
+  
+  Pour =cd= : grouper les comandes dans le =exec_in= avec =|= (voir cheat
+  sheet yaml pour se familiariser avec la syntaxe :
+  http://lzone.de/cheat-sheet/YAML). Le directory courant est remis à
+  sa position initial entre chaque =exec_in=. 

@@ -1,0 +1,21 @@
+echo The 'local_context' has been initialized
+mkdir -p $(dirname /home/florian/Bureau/Kameleon/build/debian8_g5k/ssh_config);
+cat >/home/florian/Bureau/Kameleon/build/debian8_g5k/ssh_config <<EOF
+Host *
+  UserKnownHostsFile /dev/null
+  StrictHostKeyChecking no
+  ConnectTimeout 2
+  LogLevel FATAL
+  ForwardAgent yes
+  Protocol 2
+  ControlPath /tmp/f74c0fc5a332%r@%h:%p
+  ControlMaster auto
+  ControlPersist yes
+  Compression yes
+Host g5kaccess
+  User fpopek
+  Hostname access.grid5000.fr
+Host grenoble
+  User fpopek
+  ProxyCommand ssh -F /home/florian/Bureau/Kameleon/build/debian8_g5k/ssh_config g5kaccess "nc -q 1 grenoble %p"
+EOF
