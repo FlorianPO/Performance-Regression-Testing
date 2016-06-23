@@ -15,11 +15,6 @@ global:
   my_g5k_site: grenoble
   my_g5k_user: fpopek
 
-  in_context:
-    cmd: |
-      export SPACK_ROOT=/root/kameleon_workdir/$$kameleon_recipe_name/spack/
-      export PATH=$SPACK_ROOT/bin:$PATH
-
 bootstrap:
   - "@base"
 
@@ -46,6 +41,8 @@ setup:
     - spack:
       - exec_in: |
           git clone https://github.com/fpruvost/spack
+          export SPACK_ROOT=/root/kameleon_workdir/$$kameleon_recipe_name/spack/
+          export PATH=$SPACK_ROOT/bin:$PATH          
           cd spack/
           git checkout morse
           spack install -v chameleon@trunk+starpu+fxt ^starpu@svn-trunk+fxt

@@ -741,3 +741,5 @@
   sheet yaml pour se familiariser avec la syntaxe :
   http://lzone.de/cheat-sheet/YAML). Le directory courant est remis à
   sa position initial entre chaque =exec_in=. 
+* Jeudi 23/06
+  Intégration de Spack à Kameleon.
