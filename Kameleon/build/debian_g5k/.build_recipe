@@ -1,50 +1,49 @@
 ---
-name: debian8_g5k
-path: "/home/florian/Bureau/Kameleon/debian8_g5k.yaml"
+name: debian_g5k
+path: "/home/bepo/Bureau/Kameleon/debian_g5k.yaml"
 base_recipes_files:
-- "/home/florian/Bureau/Kameleon/debian8_g5k.yaml"
-- "/home/florian/Bureau/Kameleon/default/grid5000/debian8.yaml"
-- "/home/florian/Bureau/Kameleon/default/chroot/debian8.yaml"
-- "/home/florian/Bureau/Kameleon/default/chroot/debian7.yaml"
-- "/home/florian/Bureau/Kameleon/default/chroot/base.yaml"
+- "/home/bepo/Bureau/Kameleon/debian_g5k.yaml"
+- "/home/bepo/Bureau/Kameleon/default/grid5000/debian8.yaml"
+- "/home/bepo/Bureau/Kameleon/default/chroot/debian8.yaml"
+- "/home/bepo/Bureau/Kameleon/default/chroot/debian7.yaml"
+- "/home/bepo/Bureau/Kameleon/default/chroot/base.yaml"
 step_files:
-- "/home/florian/Bureau/Kameleon/default/grid5000/steps/global/grid5000_options.yaml"
-- "/home/florian/Bureau/Kameleon/default/chroot/steps/aliases/defaults.yaml"
-- "/home/florian/Bureau/Kameleon/default/grid5000/steps/bootstrap/g5k_reserv.yaml"
-- "/home/florian/Bureau/Kameleon/default/chroot/steps/setup/debian/configure_apt.yaml"
-- "/home/florian/Bureau/Kameleon/default/chroot/steps/setup/debian/upgrade_system.yaml"
-- "/home/florian/Bureau/Kameleon/default/chroot/steps/setup/debian/install_software.yaml"
-- "/home/florian/Bureau/Kameleon/default/chroot/steps/setup/debian/configure_system.yaml"
-- "/home/florian/Bureau/Kameleon/default/chroot/steps/setup/debian/configure_keyboard.yaml"
-- "/home/florian/Bureau/Kameleon/default/chroot/steps/setup/debian/configure_network.yaml"
-- "/home/florian/Bureau/Kameleon/default/chroot/steps/setup/kameleon_customization.yaml"
-- "/home/florian/Bureau/Kameleon/default/chroot/steps/setup/create_user.yaml"
-- "/home/florian/Bureau/Kameleon/default/chroot/steps/setup/debian/clean_system.yaml"
+- "/home/bepo/Bureau/Kameleon/default/grid5000/steps/global/grid5000_options.yaml"
+- "/home/bepo/Bureau/Kameleon/default/chroot/steps/aliases/defaults.yaml"
+- "/home/bepo/Bureau/Kameleon/default/grid5000/steps/bootstrap/g5k_reserv.yaml"
+- "/home/bepo/Bureau/Kameleon/default/chroot/steps/setup/debian/configure_apt.yaml"
+- "/home/bepo/Bureau/Kameleon/default/chroot/steps/setup/debian/upgrade_system.yaml"
+- "/home/bepo/Bureau/Kameleon/default/chroot/steps/setup/debian/install_software.yaml"
+- "/home/bepo/Bureau/Kameleon/default/chroot/steps/setup/debian/configure_system.yaml"
+- "/home/bepo/Bureau/Kameleon/default/chroot/steps/setup/debian/configure_keyboard.yaml"
+- "/home/bepo/Bureau/Kameleon/default/chroot/steps/setup/debian/configure_network.yaml"
+- "/home/bepo/Bureau/Kameleon/default/chroot/steps/setup/kameleon_customization.yaml"
+- "/home/bepo/Bureau/Kameleon/default/chroot/steps/setup/create_user.yaml"
+- "/home/bepo/Bureau/Kameleon/default/chroot/steps/setup/debian/clean_system.yaml"
 env_files:
-- "/home/florian/Bureau/Kameleon/default/chroot/steps/env/bashrc"
-- "/home/florian/Bureau/Kameleon/default/chroot/steps/env/functions.sh"
+- "/home/bepo/Bureau/Kameleon/default/chroot/steps/env/bashrc"
+- "/home/bepo/Bureau/Kameleon/default/chroot/steps/env/functions.sh"
 data_files:
-- "/home/florian/Bureau/Kameleon/default/chroot/steps/data/skel/.bashrc"
-- "/home/florian/Bureau/Kameleon/default/chroot/steps/data/skel/.vimrc"
-- "/home/florian/Bureau/Kameleon/default/chroot/steps/data/skel/.pythonrc.py"
+- "/home/bepo/Bureau/Kameleon/default/chroot/steps/data/skel/.bashrc"
+- "/home/bepo/Bureau/Kameleon/default/chroot/steps/data/skel/.vimrc"
+- "/home/bepo/Bureau/Kameleon/default/chroot/steps/data/skel/.pythonrc.py"
 global:
-  kameleon_recipe_name: debian8_g5k
-  kameleon_recipe_dir: "/home/florian/Bureau/Kameleon"
-  kameleon_cwd: "/home/florian/Bureau/Kameleon/build/debian8_g5k"
+  kameleon_recipe_name: debian_g5k
+  kameleon_recipe_dir: "/home/bepo/Bureau/Kameleon"
+  kameleon_cwd: "/home/bepo/Bureau/Kameleon/build/debian_g5k"
   in_context:
-    cmd: |
-      export SPACK_ROOT=/root/kameleon_workdir/debian8_g5k/spack/
-      export PATH=$SPACK_ROOT/bin:$PATH
-    proxy_cache: 127.0.0.1
-    interactive_cmd: |
-      export SPACK_ROOT=/root/kameleon_workdir/debian8_g5k/spack/
-      export PATH=$SPACK_ROOT/bin:$PATH
-  out_context:
-    cmd: ssh -A -t -F /home/florian/Bureau/Kameleon/build/debian8_g5k/ssh_config grenoble
+    cmd: ssh -A -t -F /home/bepo/Bureau/Kameleon/build/debian_g5k/ssh_config debian_g5k
       /bin/bash
     proxy_cache: 127.0.0.1
-    workdir: "/home/fpopek/kameleon_workdir/debian8_g5k"
-    interactive_cmd: ssh -A -t -F /home/florian/Bureau/Kameleon/build/debian8_g5k/ssh_config
+    workdir: "/root/kameleon_workdir/debian_g5k"
+    interactive_cmd: ssh -A -t -F /home/bepo/Bureau/Kameleon/build/debian_g5k/ssh_config
+      debian_g5k /bin/bash
+  out_context:
+    cmd: ssh -A -t -F /home/bepo/Bureau/Kameleon/build/debian_g5k/ssh_config grenoble
+      /bin/bash
+    proxy_cache: 127.0.0.1
+    workdir: "/home/fpopek/kameleon_workdir/debian_g5k"
+    interactive_cmd: ssh -A -t -F /home/bepo/Bureau/Kameleon/build/debian_g5k/ssh_config
       grenoble /bin/bash
   proxy_local: ''
   proxy_out: ''
@@ -59,16 +58,16 @@ global:
   default_timezone: UTC
   appliance_tar_compression_level: '9'
   rootfs_archive_url: http://kameleon.imag.fr/rootfs/x86_64/debian8.tar.xz
-  rootfs_archive_download_path: "/home/florian/Bureau/Kameleon/build/debian8_g5k/rootfs.tar.xz"
-  rootfs: "/home/florian/Bureau/Kameleon/build/debian8_g5k/rootfs"
+  rootfs_archive_download_path: "/home/bepo/Bureau/Kameleon/build/debian_g5k/rootfs.tar.xz"
+  rootfs: "/home/bepo/Bureau/Kameleon/build/debian_g5k/rootfs"
   arch: x86_64
   hostname: kameleon-debian
   filesystem_type: ext4
   image_size: 10G
   image_format: qcow2
-  image_disk: "/home/florian/Bureau/Kameleon/build/debian8_g5k/base_debian8_g5k"
+  image_disk: "/home/bepo/Bureau/Kameleon/build/debian_g5k/base_debian_g5k"
   appliance_formats: qcow2 tar.gz
-  appliance_filename: "/home/florian/Bureau/Kameleon/build/debian8_g5k/debian8_g5k"
+  appliance_filename: "/home/bepo/Bureau/Kameleon/build/debian_g5k/debian_g5k"
   appliance_tar_excludes: "./etc/fstab ./root/.bash_history ./root/kameleon_workdir
     ./root/.ssh ./var/tmp/* ./tmp/* ./var/log/* ./dev/* ./proc/* ./run/* ./sys/*"
   include_steps:
@@ -88,15 +87,17 @@ global:
     sysvinit systemd systemd-sysv pciutils
   g5k_user: fpopek
   g5k_site: grenoble
+  g5k_property: -p "gpu='YES'"
   kenv: jessie-x64-base
-  ssh_config_file: "/home/florian/Bureau/Kameleon/build/debian8_g5k/ssh_config"
-  out_cwd: "/home/fpopek/kameleon_workdir/debian8_g5k"
-  in_cwd: "/root/kameleon_workdir/debian8_g5k"
+  ssh_config_file: "/home/bepo/Bureau/Kameleon/build/debian_g5k/ssh_config"
+  out_cwd: "/home/fpopek/kameleon_workdir/debian_g5k"
+  in_cwd: "/root/kameleon_workdir/debian_g5k"
   my_g5k_site: grenoble
   my_g5k_user: fpopek
+  my_g5k_property: -p \"gpu='YES'\"
   persistent_cache: 'false'
-  kameleon_uuid: 88fabc40-6a06-4883-a091-f74c0fc5a332
-  kameleon_short_uuid: f74c0fc5a332
+  kameleon_uuid: 0b482d39-6e1f-4c9e-9758-90faf3e4e9a5
+  kameleon_short_uuid: 90faf3e4e9a5
 aliases:
   write_local:
   - exec_local: |
@@ -135,8 +136,9 @@ aliases:
       @2
       EOF
   local2out:
-  - exec_out: |
-      mkdir -p $(dirname @2)
+  - exec_out: 'mkdir -p $(dirname @2)
+
+'
   - pipe:
     - exec_local: cat @1
     - exec_out: cat > @2
@@ -178,14 +180,20 @@ aliases:
     - exec_in: command -V @1 2> /dev/null
     - breakpoint: "@1 is missing from in_context"
   umount_out:
-  - exec_out: |
-      echo "try umount @1..." ; mountpoint -q "@1" && umount -f -l "@1" || true
+  - exec_out: 'echo "try umount @1..." ; mountpoint -q "@1" && umount -f -l "@1" ||
+      true
+
+'
   umount_local:
-  - exec_local: |
-      echo "try umount @1..." ; mountpoint -q "@1" && umount -f -l "@1" || true
+  - exec_local: 'echo "try umount @1..." ; mountpoint -q "@1" && umount -f -l "@1"
+      || true
+
+'
   umount_in:
-  - exec_in: |
-      echo "try umount @1..." ; mountpoint -q "@1" && umount -f -l "@1" || true
+  - exec_in: 'echo "try umount @1..." ; mountpoint -q "@1" && umount -f -l "@1" ||
+      true
+
+'
   download_file_in:
   - exec_in: __download "@1" "@2"
   download_file_out:
@@ -194,11 +202,11 @@ aliases:
   - exec_local: __download "@1" "@2"
 steps:
 - bootstrap/g5k_reserv/create_local_ssh_config_base:
-    identifier: 7f064b99e594
+    identifier: 665822fb3a89
     cmds:
     - exec_local: |-
-        mkdir -p $(dirname /home/florian/Bureau/Kameleon/build/debian8_g5k/ssh_config);
-        cat >/home/florian/Bureau/Kameleon/build/debian8_g5k/ssh_config <<EOF
+        mkdir -p $(dirname /home/bepo/Bureau/Kameleon/build/debian_g5k/ssh_config);
+        cat >/home/bepo/Bureau/Kameleon/build/debian_g5k/ssh_config <<EOF
         Host *
           UserKnownHostsFile /dev/null
           StrictHostKeyChecking no
@@ -206,7 +214,7 @@ steps:
           LogLevel FATAL
           ForwardAgent yes
           Protocol 2
-          ControlPath /tmp/f74c0fc5a332%r@%h:%p
+          ControlPath /tmp/90faf3e4e9a5%r@%h:%p
           ControlMaster auto
           ControlPersist yes
           Compression yes
@@ -215,16 +223,19 @@ steps:
           Hostname access.grid5000.fr
         Host grenoble
           User fpopek
-          ProxyCommand ssh -F /home/florian/Bureau/Kameleon/build/debian8_g5k/ssh_config g5kaccess "nc -q 1 grenoble %p"
+          ProxyCommand ssh -F /home/bepo/Bureau/Kameleon/build/debian_g5k/ssh_config g5kaccess -W %h:%p
+        Host grenoble
+          User fpopek
+          ProxyCommand ssh -F /home/bepo/Bureau/Kameleon/build/debian_g5k/ssh_config grenoble -W %h:%p
         EOF
 - bootstrap/g5k_reserv/deploy_image:
-    identifier: 3cbe0921fde5
+    identifier: 2fa918088a22
     cmds:
     - exec_out: echo "Deploying image jessie-x64-base with kadeploy"
     - exec_out: sleep 1
     - exec_out: echo "Submitting a job for deployment"
-    - exec_out: oarstat -u | grep -q "f74c0fc5a332" || oarsub -n "f74c0fc5a332" -l
-        walltime=1:00:00 -t deploy "sleep 1000000"
+    - exec_out: oarstat -u | grep -q "90faf3e4e9a5" || oarsub -p "gpu='YES'" -n "90faf3e4e9a5"
+        -l walltime=1:00:00 -t deploy "sleep 1000000"
     - exec_out: |-
         echo -n "Waiting for the reservation to be ready"
         until $(oarstat -fu fpopek | grep -q "state = Running")
@@ -241,15 +252,15 @@ steps:
     - exec_out: kadeploy3 -e jessie-x64-base -m $machine -k
     - pipe:
       - exec_out: echo $machine
-      - exec_local: cat >/home/florian/Bureau/Kameleon/build/debian8_g5k/g5k_machine
+      - exec_local: cat >/home/bepo/Bureau/Kameleon/build/debian_g5k/g5k_machine
     - exec_out: sleep 1
 - bootstrap/g5k_reserv/create_out_ssh_config:
-    identifier: 0fca3a3248e9
+    identifier: 9b764104eecd
     cmds:
     - exec_out: |-
-        mkdir -p $(dirname /home/fpopek/kameleon_workdir/debian8_g5k/ssh_config);
-        cat >/home/fpopek/kameleon_workdir/debian8_g5k/ssh_config <<EOF
-        Host debian8_g5k
+        mkdir -p $(dirname /home/fpopek/kameleon_workdir/debian_g5k/ssh_config);
+        cat >/home/fpopek/kameleon_workdir/debian_g5k/ssh_config <<EOF
+        Host debian_g5k
           User root
           Hostname $machine
           UserKnownHostsFile /dev/null
@@ -260,22 +271,22 @@ steps:
           Protocol 2
         EOF
 - bootstrap/g5k_reserv/append_ssh_node_config:
-    identifier: bf4e1bbff9de
+    identifier: 5e068215e2c7
     cmds:
     - exec_local: |-
-        mkdir -p $(dirname /home/florian/Bureau/Kameleon/build/debian8_g5k/ssh_config);
-        cat >>/home/florian/Bureau/Kameleon/build/debian8_g5k/ssh_config <<EOF
-        Host debian8_g5k
+        mkdir -p $(dirname /home/bepo/Bureau/Kameleon/build/debian_g5k/ssh_config);
+        cat >>/home/bepo/Bureau/Kameleon/build/debian_g5k/ssh_config <<EOF
+        Host debian_g5k
           User root
-          ProxyCommand ssh -F /home/florian/Bureau/Kameleon/build/debian8_g5k/ssh_config grenoble "nc -q 1 `cat /home/florian/Bureau/Kameleon/build/debian8_g5k/g5k_machine | awk '{print $NF}'` %p"
+          ProxyCommand ssh -F /home/bepo/Bureau/Kameleon/build/debian_g5k/ssh_config grenoble "nc -q 1 `cat /home/bepo/Bureau/Kameleon/build/debian_g5k/g5k_machine | awk '{print $NF}'` %p"
         EOF
 - setup/g5k_tweaks/enable_g5k_proxy:
-    identifier: fbc0ed625c04
+    identifier: 2307d7c9a81d
     cmds:
     - exec_in: export http_proxy="http://proxy:3128"
     - exec_in: export https_proxy="http://proxy:3128"
 - setup/configure_apt/configure_source_list:
-    identifier: 8eb8ae563732
+    identifier: 8a99e2eacc66
     cmds:
     - exec_in: |-
         mkdir -p $(dirname /etc/apt/sources.list);
@@ -290,7 +301,7 @@ steps:
         deb-src http://security.debian.org/ jessie/updates main
         EOF
 - setup/configure_apt/add_contribs_and_nonfree_sources:
-    identifier: 781ccd4819a7
+    identifier: be35049855cc
     cmds:
     - exec_in: |-
         if [ true = true ]; then
@@ -302,11 +313,11 @@ steps:
         fi
     - exec_in: perl -pi -e "s/main$/main $REPO_CONTRIB $REPO_NONFREE/" /etc/apt/sources.list
 - setup/configure_apt/update_repositories:
-    identifier: d80369a13b4b
+    identifier: 18aef5b368f3
     cmds:
     - exec_in: apt-get -o Acquire::Check-Valid-Until=false -y --force-yes update
 - setup/upgrade_system/upgrade_system:
-    identifier: 44658d3274f5
+    identifier: f8ae7aaa014e
     cmds:
     - exec_in: apt-get -y --force-yes $INSTALL_RECOMMENDS upgrade 2>&1
     - exec_in: |-
@@ -314,7 +325,7 @@ steps:
             apt-get -y --force-yes dist-upgrade 2>&1
         fi
 - setup/install_software/apt_install:
-    identifier: d02194bed31b
+    identifier: 0319e878cdb4
     cmds:
     - exec_in: |-
         APT_OPTS="-y --force-yes"
@@ -327,7 +338,7 @@ steps:
         psmisc openssh-server acpid acpi-support-base sysvinit systemd systemd-sysv
         pciutils 2>&1
 - setup/configure_system/configure_locales:
-    identifier: 19abaec2f075
+    identifier: 28777f35c0b8
     cmds:
     - exec_in: |-
         test ! -f /etc/locale.gen || \
@@ -335,16 +346,16 @@ steps:
     - exec_in: locale-gen en_US.UTF-8
     - exec_in: update-locale LANG=en_US.UTF-8
 - setup/configure_system/set_timezone:
-    identifier: a3a2ed16bccf
+    identifier: 64c25968f716
     cmds:
     - exec_in: echo "UTC" > /etc/timezone
     - exec_in: dpkg-reconfigure -f noninteractive tzdata 2>&1
 - setup/configure_system/set_root_password:
-    identifier: 0ecf75c22445
+    identifier: e6d896d1fec9
     cmds:
     - exec_in: echo -n 'root:kameleon' | chpasswd
 - setup/configure_keyboard/keyboard_config:
-    identifier: 5713c0910144
+    identifier: 331494c384d3
     cmds:
     - exec_in: |-
         mkdir -p $(dirname /etc/default/keyboard);
@@ -356,7 +367,7 @@ steps:
         EOF
     - exec_in: apt-get -y --force-yes install console-setup console-data 2>&1
 - setup/configure_network/network_interfaces:
-    identifier: ef9a30b37047
+    identifier: c6dcdcf50ddb
     cmds:
     - exec_in: |-
         mkdir -p $(dirname /etc/network/interfaces);
@@ -369,7 +380,7 @@ steps:
             pre-up ip link set mtu 1492 eth0
         EOF
 - setup/configure_network/set_hosts:
-    identifier: e2ea735f5577
+    identifier: 6f63ac44224b
     cmds:
     - exec_in: |-
         mkdir -p $(dirname /etc/hosts);
@@ -383,53 +394,55 @@ steps:
         ::1   localhost.localdomain localhost
         EOF
 - setup/configure_network/set_hostname:
-    identifier: 0e6cb2684d53
+    identifier: ab6092b78393
     cmds:
     - exec_in: echo "kameleon-debian" > /etc/hostname
 - setup/kameleon_customization/configure_bashrc:
-    identifier: 6f707e0adda5
+    identifier: 01dcc35527be
     cmds:
     - exec_in: mkdir -p $(dirname /etc/skel/.bashrc)
     - pipe:
-      - exec_local: cat /home/florian/Bureau/Kameleon/default/chroot/steps/data/skel/.bashrc
+      - exec_local: cat /home/bepo/Bureau/Kameleon/default/chroot/steps/data/skel/.bashrc
       - exec_in: cat > /etc/skel/.bashrc
     - exec_in: mkdir -p $(dirname /root/.bashrc)
     - pipe:
-      - exec_local: cat /home/florian/Bureau/Kameleon/default/chroot/steps/data/skel/.bashrc
+      - exec_local: cat /home/bepo/Bureau/Kameleon/default/chroot/steps/data/skel/.bashrc
       - exec_in: cat > /root/.bashrc
 - setup/kameleon_customization/configure_vim:
-    identifier: 9daa411b3c31
+    identifier: 9b36a4ac4eb8
     cmds:
     - exec_in: mkdir -p $(dirname /etc/skel/.vimrc)
     - pipe:
-      - exec_local: cat /home/florian/Bureau/Kameleon/default/chroot/steps/data/skel/.vimrc
+      - exec_local: cat /home/bepo/Bureau/Kameleon/default/chroot/steps/data/skel/.vimrc
       - exec_in: cat > /etc/skel/.vimrc
     - exec_in: mkdir -p $(dirname /root/.vimrc)
     - pipe:
-      - exec_local: cat /home/florian/Bureau/Kameleon/default/chroot/steps/data/skel/.vimrc
+      - exec_local: cat /home/bepo/Bureau/Kameleon/default/chroot/steps/data/skel/.vimrc
       - exec_in: cat > /root/.vimrc
 - setup/kameleon_customization/configure_python:
-    identifier: 07d0fa0da90d
+    identifier: dd8b63dab0e0
     cmds:
     - exec_in: mkdir -p $(dirname /etc/skel/.pythonrc.py)
     - pipe:
-      - exec_local: cat /home/florian/Bureau/Kameleon/default/chroot/steps/data/skel/.pythonrc.py
+      - exec_local: cat /home/bepo/Bureau/Kameleon/default/chroot/steps/data/skel/.pythonrc.py
       - exec_in: cat > /etc/skel/.pythonrc.py
     - exec_in: mkdir -p $(dirname /root/.pythonrc.py)
     - pipe:
-      - exec_local: cat /home/florian/Bureau/Kameleon/default/chroot/steps/data/skel/.pythonrc.py
+      - exec_local: cat /home/bepo/Bureau/Kameleon/default/chroot/steps/data/skel/.pythonrc.py
       - exec_in: cat > /root/.pythonrc.py
 - setup/create_user/add_user:
-    identifier: bc46a8e26021
+    identifier: 6e3b0731f3d7
     cmds:
     - exec_in: useradd -m kameleon -s /bin/bash
     - exec_in: echo -n 'kameleon:kameleon' | chpasswd
 - setup/create_user/add_to_groups:
-    identifier: 17e1d3e05c26
+    identifier: 9836747332c4
     cmds:
-    - exec_in: usermod -G "$(echo sudo | tr ' ' ',')" kameleon
+    - exec_in: 'usermod -G "$(echo sudo | tr '' '' '','')" kameleon
+
+'
 - setup/first_step/some_packages:
-    identifier: d4787f202ee2
+    identifier: c28abf304bb7
     cmds:
     - exec_in: |-
         apt-get update
@@ -439,31 +452,29 @@ steps:
         apt-get install -y git subversion mercurial
         apt-get install -y build-essential gfortran
         apt-get install -y autoconf automake cmake cmake-data doxygen texinfo
-        apt-get install -y libtool
+        apt-get install -y libtool libtool-bin
         apt-get install -y libboost-dev
         apt-get install -y gawk
         apt-get install -y bison flex
-        apt-get install -y binutils-dev libelf-dev
+        apt-get install -y binutils-dev libelf-dev libiberty-dev
         apt-get install -y libz-dev
         apt-get install -y libqt4-dev freeglut3-dev
         apt-get install -y environment-modules
 - setup/first_step/spack:
-    identifier: 2b4eded9b0b5
+    identifier: d914676d002e
     cmds:
-    - exec_in: |-
-        git clone https://github.com/fpruvost/spack
-        cd spack/
-        git checkout morse
-        spack install -v chameleon@trunk+starpu+fxt ^starpu@svn-trunk+fxt
+    - exec_in: "git clone https://github.com/fpruvost/spack\nexport SPACK_ROOT=/root/kameleon_workdir/debian_g5k/spack/\nexport
+        PATH=$SPACK_ROOT/bin:$PATH          \ncd spack/\ngit checkout morse\nspack
+        install -v chameleon@trunk+starpu+fxt ^starpu@svn-trunk+fxt\n"
 - setup/_clean_setup/_clean_2_clean_udev:
-    identifier: b6fd66ffaa7e
+    identifier: 71f24f125d45
     cmds:
     - exec_in: rm -rf /etc/udev/rules.d/70-persistent-net.rules
     - exec_in: mkdir /etc/udev/rules.d/70-persistent-net.rules
     - exec_in: rm -rf  /lib/udev/rules.d/75-persistent-net-generator.rules
     - exec_in: rm -rf /dev/.udev/ /var/lib/dhcp/*
 - setup/_clean_setup/_clean_1_clean_apt_repository:
-    identifier: 34b6c5fd5ae8
+    identifier: 91af57315457
     cmds:
     - exec_in: apt-get -y --force-yes autoremove
     - exec_in: apt-get -y --force-yes autoclean
@@ -471,29 +482,29 @@ steps:
     - exec_in: apt-get -y --force-yes purge
     - exec_in: rm -rf /var/lib/apt/lists/*
 - setup/_clean_setup/_clean_0_update_repositories:
-    identifier: d6100fbe58d9
+    identifier: 03e2a168b7d0
     cmds:
     - exec_in: apt-get -y --force-yes autoclean
     - exec_in: apt-get -y --force-yes clean
     - exec_in: apt-get -y --force-yes autoremove
 - export/g5k_custom/kadeploy_file:
-    identifier: 98a73f0e08f5
+    identifier: bae863bfbc90
     cmds:
     - exec_local: |-
-        mkdir -p $(dirname /home/florian/Bureau/Kameleon/build/debian8_g5k/debian8_g5k.yaml);
-        cat >/home/florian/Bureau/Kameleon/build/debian8_g5k/debian8_g5k.yaml <<EOF
+        mkdir -p $(dirname /home/bepo/Bureau/Kameleon/build/debian_g5k/debian_g5k.yaml);
+        cat >/home/bepo/Bureau/Kameleon/build/debian_g5k/debian_g5k.yaml <<EOF
         #
         # Kameleon generated based on kadeploy description file
         #
 
-        name: debian8_g5k
+        name: debian_g5k
 
         version: 1
 
         os: linux
 
         image:
-          file: debian8_g5k.tar.gz
+          file: debian_g5k.tar.gz
           kind: tar
           compression: gzip
 

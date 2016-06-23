@@ -741,6 +741,8 @@
   sheet yaml pour se familiariser avec la syntaxe :
   http://lzone.de/cheat-sheet/YAML). Le directory courant est remis à
   sa position initial entre chaque =exec_in=. 
+* Mercredi 22/06
+  A rattraper...
 * Jeudi 23/06
   Intégration de Spack à Kameleon -> problème d'installation. Une
   partie des logs est cachée, ce qui n'est pas pratique.
@@ -750,3 +752,102 @@
   abords).
 
   BUG Kameleon : pas d'espace dans le chemin de recipe Kameleon
+
+  Ajout d'une issue dans le GitHub de Kameleon :
+  https://github.com/oar-team/kameleon/issues/84
+
+  Problème de build avec spack :
+  #+RESULTS
+  #+begin_example
+  [in] Traceback (most recent call last):
+  [in]   File "/root/kameleon_workdir/debian_g5k/spack/lib/spack/spack/build_environment.py", line 406, in fork
+  [in]     function()
+  [in]   File "/root/kameleon_workdir/debian_g5k/spack/lib/spack/spack/package.py", line 1016, in build_process
+  [in]     self.install(self.spec, self.prefix)
+  [in]   File "/root/kameleon_workdir/debian_g5k/spack/lib/spack/spack/multimethod.py", line 124, in __call__
+  [in]     return self.default(package_self, *args, **kwargs)
+  [in]   File "/root/kameleon_workdir/debian_g5k/spack/var/spack/repos/builtin/packages/starpu/package.py", line 84, in install
+  [in]     subprocess.check_call("./autogen.sh")
+  [in]   File "/usr/lib/python2.7/subprocess.py", line 540, in check_call
+  [in]     raise CalledProcessError(retcode, cmd)
+  [in] subprocess.CalledProcessError: Command './autogen.sh' returned non-zero exit status 1
+  [in] ==> Error: Installation process had nonzero exit code.
+  Starting command: "bash"
+  Starting command: "ssh -A -t -F /home/bepo/Bureau/Kameleon/build/debian_g5k/ssh_config grenoble /bin/bash"
+  Starting command: "ssh -A -t -F /home/bepo/Bureau/Kameleon/build/debian_g5k/ssh_config debian_g5k /bin/bash"
+  Error occured when executing the following command :
+  
+  > exec_in: "git clone https://github.com/fpruvost/spack\nexport SPACK_ROOT=/root/kameleon_workdir/debian_g5k/spack/\nexport
+  >   PATH=$SPACK_ROOT/bin:$PATH          \ncd spack/\ngit checkout morse\nspack install
+  >   -v chameleon@trunk+starpu+fxt ^starpu@svn-trunk+fxt\n"
+
+  #+end_example
+
+  Rajout de dépendances supplémentaires (celles indiquées ici :
+  http://morse.gforge.inria.fr/chameleon/tuto_chameleon/chameleon-tutorial-2015-12-16-inria.html#sec-1-2-1)
+
+  Nouveau problème : 
+  #+RESULTS
+  #+begin_example
+  [in] checking glpk.h usability... no
+  [in] checking glpk.h presence... no==> Error: Command exited with status 1:
+  [in] ==> Error: Installation process had nonzero exit code.
+  Starting command: "bash"
+  Starting command: "ssh -A -t -F /home/bepo/Bureau/Kameleon/build/debian_g5k/ssh_config grenoble /bin/bash"
+  Starting command: "ssh -A -t -F /home/bepo/Bureau/Kameleon/build/debian_g5k/ssh_config debian_g5k /bin/bash"
+  Error occured when executing the following command :
+  
+  > exec_in: "git clone https://github.com/fpruvost/spack\nexport SPACK_ROOT=/root/kameleon_workdir/debian_g5k/spack/\nexport
+  >   PATH=$SPACK_ROOT/bin:$PATH          \ncd spack/\ngit checkout morse\nspack install
+  >   -v chameleon@trunk+starpu+fxt ^starpu@svn-trunk+fxt\n"
+  #+end_example
+
+  Le problème est peut-être dû au fait que la machine ne contient pas
+  de GPU (ou autre chose), tout du moins, cela marchait sur Digitalis.
+
+  Essayer de se connecter à Digitalis via le recipe Kameleon.
+
+  Michael : faire un tunnel ssh
+
+  -> modification de =g5k_reserv.yaml=
+  
+  Problème :
+  #+RESULTS
+  #+begin_example
+  [out] Deploying environment jessie-x64-base on grimage-9.grenoble.grid5000.fr
+  [out] Resource not found /environments
+  Starting command: "bash"
+  Starting command: "ssh -A -t -F /home/bepo/Bureau/Kameleon/build/debian_g5k/ssh_config digitalis /bin/bash"
+  Error occured when executing the following command :
+  
+  > exec_out: kadeploy3 -e jessie-x64-base -m $machine -k
+  #+end_example
+
+  -> Digitalis ne possède pas le répertoire /environments
+
+  On va réserver une machine avec des GPU à la main :
+  #+begin_src sh :session foo :results output :exports both 
+  oarsub -p "gpu='YES'" -t deploy
+  #+end_src
+
+  Ajout dans la recette g5k (méthode brutale)
+
+  #+begin_src sh :session foo :results output :exports both 
+  [out] The out_context has been initialized
+  [out] Deploying image jessie-x64-base with kadeploy
+  [out] Submitting a job for deployment
+  [out] Properties: (gpu='YES') AND deploy = 'YES'
+  [out] [ADMISSION RULE] Modify resource description with type constraints
+  [out] Generate a job key...
+  [out] There are not enough resources for your request
+  [out] Oarsub failed: please verify your request syntax or ask for support to your admin.
+  #+end_src
+
+  Aka : Comment se faire jeter par Grid5000 ?
+
+  Solution : déployer une image .tgz sur Digitalis (l'image de Vinìnius)
+
+  En attendant : modifier la recette de façon propre (avec des
+  variables globales) -> DONE
+
+  Pour voir les caractères speciaux dans vim : =:set list=    

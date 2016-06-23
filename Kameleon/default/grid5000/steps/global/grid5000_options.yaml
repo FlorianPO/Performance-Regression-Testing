@@ -1,6 +1,7 @@
 # Frontend options
 g5k_user: $$my_g5k_user  # CHANGE ME
 g5k_site: $$my_g5k_site  # CHANGE ME
+g5k_property: $$my_g5k_property # CHANGE ME
 
 kenv: "$${release}-x64-base"
 

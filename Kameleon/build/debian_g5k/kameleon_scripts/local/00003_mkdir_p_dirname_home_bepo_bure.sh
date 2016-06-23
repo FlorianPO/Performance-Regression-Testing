@@ -7,7 +7,7 @@ __ROOT_DIRECTORY__=$(dirname $(readlink -f ${BASH_SOURCE[0]}))
 
 function save_env {
     # Save environment
-    
+    set +x
     (comm -3 <(declare | sort) <(declare -f | sort)) > "${__ROOT_DIRECTORY__}/bash_env"
 }
 
@@ -17,8 +17,8 @@ trap 'save_env' INT TERM EXIT
 source "${__ROOT_DIRECTORY__}/bash_env" 2> /dev/null || true
 
 # Log cmd
-echo mkdir\ -p\ \$\(dirname\ /home/florian/Bureau/Kameleon/build/debian8_g5k/ssh_config\)\;'
-'cat\ \>/home/florian/Bureau/Kameleon/build/debian8_g5k/ssh_config\ \<\<EOF'
+echo mkdir\ -p\ \$\(dirname\ /home/bepo/Bureau/Kameleon/build/debian_g5k/ssh_config\)\;'
+'cat\ \>/home/bepo/Bureau/Kameleon/build/debian_g5k/ssh_config\ \<\<EOF'
 'Host\ \*'
 '\ \ UserKnownHostsFile\ /dev/null'
 '\ \ StrictHostKeyChecking\ no'
@@ -26,7 +26,7 @@ echo mkdir\ -p\ \$\(dirname\ /home/florian/Bureau/Kameleon/build/debian8_g5k/ssh
 '\ \ LogLevel\ FATAL'
 '\ \ ForwardAgent\ yes'
 '\ \ Protocol\ 2'
-'\ \ ControlPath\ /tmp/f74c0fc5a332\%r@\%h:\%p'
+'\ \ ControlPath\ /tmp/90faf3e4e9a5\%r@\%h:\%p'
 '\ \ ControlMaster\ auto'
 '\ \ ControlPersist\ yes'
 '\ \ Compression\ yes'
@@ -35,13 +35,16 @@ echo mkdir\ -p\ \$\(dirname\ /home/florian/Bureau/Kameleon/build/debian8_g5k/ssh
 '\ \ Hostname\ access.grid5000.fr'
 'Host\ grenoble'
 '\ \ User\ fpopek'
-'\ \ ProxyCommand\ ssh\ -F\ /home/florian/Bureau/Kameleon/build/debian8_g5k/ssh_config\ g5kaccess\ \"nc\ -q\ 1\ grenoble\ \%p\"'
+'\ \ ProxyCommand\ ssh\ -F\ /home/bepo/Bureau/Kameleon/build/debian_g5k/ssh_config\ g5kaccess\ -W\ \%h:\%p'
+'Host\ grenoble'
+'\ \ User\ fpopek'
+'\ \ ProxyCommand\ ssh\ -F\ /home/bepo/Bureau/Kameleon/build/debian_g5k/ssh_config\ grenoble\ -W\ \%h:\%p'
 'EOF >> "${__ROOT_DIRECTORY__}/bash_history"
 
+set -o xtrace 
 
-
-mkdir -p $(dirname /home/florian/Bureau/Kameleon/build/debian8_g5k/ssh_config);
-cat >/home/florian/Bureau/Kameleon/build/debian8_g5k/ssh_config <<EOF
+mkdir -p $(dirname /home/bepo/Bureau/Kameleon/build/debian_g5k/ssh_config);
+cat >/home/bepo/Bureau/Kameleon/build/debian_g5k/ssh_config <<EOF
 Host *
   UserKnownHostsFile /dev/null
   StrictHostKeyChecking no
@@ -49,7 +52,7 @@ Host *
   LogLevel FATAL
   ForwardAgent yes
   Protocol 2
-  ControlPath /tmp/f74c0fc5a332%r@%h:%p
+  ControlPath /tmp/90faf3e4e9a5%r@%h:%p
   ControlMaster auto
   ControlPersist yes
   Compression yes
@@ -58,6 +61,9 @@ Host g5kaccess
   Hostname access.grid5000.fr
 Host grenoble
   User fpopek
-  ProxyCommand ssh -F /home/florian/Bureau/Kameleon/build/debian8_g5k/ssh_config g5kaccess "nc -q 1 grenoble %p"
+  ProxyCommand ssh -F /home/bepo/Bureau/Kameleon/build/debian_g5k/ssh_config g5kaccess -W %h:%p
+Host grenoble
+  User fpopek
+  ProxyCommand ssh -F /home/bepo/Bureau/Kameleon/build/debian_g5k/ssh_config grenoble -W %h:%p
 EOF
 

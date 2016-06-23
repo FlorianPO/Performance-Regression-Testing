@@ -14,6 +14,7 @@ global:
   # variables that you can override
   my_g5k_site: grenoble
   my_g5k_user: fpopek
+  my_g5k_property: -p \"gpu='YES'\"
 
 bootstrap:
   - "@base"
@@ -30,11 +31,11 @@ setup:
           apt-get install -y git subversion mercurial
           apt-get install -y build-essential gfortran
           apt-get install -y autoconf automake cmake cmake-data doxygen texinfo
-          apt-get install -y libtool
+          apt-get install -y libtool libtool-bin
           apt-get install -y libboost-dev
           apt-get install -y gawk
           apt-get install -y bison flex
-          apt-get install -y binutils-dev libelf-dev
+          apt-get install -y binutils-dev libelf-dev libiberty-dev
           apt-get install -y libz-dev
           apt-get install -y libqt4-dev freeglut3-dev
           apt-get install -y environment-modules
