@@ -742,4 +742,11 @@
   http://lzone.de/cheat-sheet/YAML). Le directory courant est remis à
   sa position initial entre chaque =exec_in=. 
 * Jeudi 23/06
-  Intégration de Spack à Kameleon.
+  Intégration de Spack à Kameleon -> problème d'installation. Une
+  partie des logs est cachée, ce qui n'est pas pratique.
+
+  Utilisation d'une tour pour déployer -> problème de chemin, un
+  projet Kameleon est quelque part lié à une machine (de premiers
+  abords).
+
+  BUG Kameleon : pas d'espace dans le chemin de recipe Kameleon
