@@ -851,3 +851,23 @@
   variables globales) -> DONE
 
   Pour voir les caractères speciaux dans vim : =:set list=    
+* Lundi 27/06							      :Execo:
+  Tuto fourni pour Michael :
+  https://www.grid5000.fr/mediawiki/index.php/Execo_Practical_Session
+
+  Utiliser Spack dans Execo ? Spack installe et _compile_. Réponse : OUI.
+
+  Installation locale d'Execo pour tester + récupération d'un test de
+  Michael : ce test comprend la réservation et le déploiement d'un
+  benchmark sur Grid5000. Ceci est fait par Kameleon, il convient de
+  pouvoir donner à Execo ces options de réservations (nombres de
+  noeuds, walltime, ...)
+
+  Grid5000 sur Grenoble down -> impossible de déployer sur Digitalis
+
+  Lecture approfondie de la doc Execo
+** A faire
+   - Inclure les données de Kameleon dans Execo (voir Michael si
+     besoin)
+   - Piloter avec Execo
+   - Déployer
