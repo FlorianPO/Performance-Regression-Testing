@@ -7,7 +7,7 @@ __ROOT_DIRECTORY__=$(dirname $(readlink -f ${BASH_SOURCE[0]}))
 
 function save_env {
     # Save environment
-    set +x
+    
     (comm -3 <(declare | sort) <(declare -f | sort)) > "${__ROOT_DIRECTORY__}/bash_env"
 }
 
@@ -41,7 +41,7 @@ echo mkdir\ -p\ \$\(dirname\ /home/bepo/Bureau/Kameleon/build/debian_g5k/ssh_con
 '\ \ ProxyCommand\ ssh\ -F\ /home/bepo/Bureau/Kameleon/build/debian_g5k/ssh_config\ grenoble\ -W\ \%h:\%p'
 'EOF >> "${__ROOT_DIRECTORY__}/bash_history"
 
-set -o xtrace 
+
 
 mkdir -p $(dirname /home/bepo/Bureau/Kameleon/build/debian_g5k/ssh_config);
 cat >/home/bepo/Bureau/Kameleon/build/debian_g5k/ssh_config <<EOF

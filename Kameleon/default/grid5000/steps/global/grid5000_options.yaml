@@ -2,6 +2,8 @@
 g5k_user: $$my_g5k_user  # CHANGE ME
 g5k_site: $$my_g5k_site  # CHANGE ME
 g5k_property: $$my_g5k_property # CHANGE ME
+g5k_nodes: $$my_g5k_nodes # CHANGE ME
+g5k_walltime: $$my_g5k_walltime # CHANGE ME
 
 kenv: "$${release}-x64-base"
 

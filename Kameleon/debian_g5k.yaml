@@ -15,6 +15,8 @@ global:
   my_g5k_site: grenoble
   my_g5k_user: fpopek
   my_g5k_property: -p \"gpu='YES'\"
+  my_g5k_nodes: 2
+  my_g5k_walltime: "1:00:00"
 
 bootstrap:
   - "@base"
@@ -47,6 +49,9 @@ setup:
           cd spack/
           git checkout morse
           spack install -v chameleon@trunk+starpu+fxt ^starpu@svn-trunk+fxt
+    - execo:
+      - exec_in: |
+          python execo.py $${my_g5k_site} $job_id $${my_g5k_nodes} $${my_g5k_walltime}
 
 export:
   - g5k_custom:

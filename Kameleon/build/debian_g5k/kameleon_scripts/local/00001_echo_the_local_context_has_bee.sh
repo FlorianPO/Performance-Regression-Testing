@@ -7,7 +7,7 @@ __ROOT_DIRECTORY__=$(dirname $(readlink -f ${BASH_SOURCE[0]}))
 
 function save_env {
     # Save environment
-    set +x
+    
     (comm -3 <(declare | sort) <(declare -f | sort)) > "${__ROOT_DIRECTORY__}/bash_env"
 }
 
@@ -19,7 +19,7 @@ source "${__ROOT_DIRECTORY__}/bash_env" 2> /dev/null || true
 # Log cmd
 echo echo\ The\ \'local_context\'\ has\ been\ initialized >> "${__ROOT_DIRECTORY__}/bash_history"
 
-set -o xtrace 
+
 
 echo The 'local_context' has been initialized
 

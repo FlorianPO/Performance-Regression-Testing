@@ -6,4 +6,4 @@
       if [ ! "$$recommends" = "true" ]; then
         APT_OPTS="$APT_OPTS --no-install-recommends"
       fi
-  - exec_in: DEBIAN_FRONTEND=noninteractive apt-get $APT_OPTS install $$packages 2>&1
+  - exec_in: DEBIAN_FRONTEND=noninteractive apt-get -y $APT_OPTS install $$packages 2>&1

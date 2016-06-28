@@ -871,3 +871,34 @@
      besoin)
    - Piloter avec Execo
    - Déployer
+* Mardi 28/06
+  Intégration de Execo à Kameleon : Kameleon se charge de déployer sur
+  Grid5000 et fournit au script Execo un certain nombre
+  d'informations : le site, l'ID du job (grep dans le recipe
+  Kameleon), le nombre de noeud ainsi que le walltime.
+
+  Question (voir Michael) : les variables d'environnement
+  restent-elles présentes lors de toute la durée du recipe Kameleon ?
+  (espérer que oui).
+
+  Problème d'installation d'environnement :
+  #+RESULTS:
+  #+begin_example
+  [in] Installing new version of config file /etc/init.d/nscd ...
+  [in] 
+  [in] Configuration file `/etc/nscd.conf'
+  [in]  ==> Modified (by you or by a script) since installation.
+  [in]  ==> Package distributor has shipped an updated version.
+  [in]    What would you like to do about it ?  Your options are:
+  [in]     Y or I  : install the package maintainer's version
+  [in]     N or O  : keep your currently-installed version
+  [in]       D     : show the differences between the versions
+  [in]       Z     : start a shell to examine the situation
+  [in]  The default action is to keep your current version.
+  [in] *** nscd.conf (Y/I/N/O/D/Z) [default=N] ? 
+  #+end_example
+
+  L'opération est bloquante (entrer un caractère est sans effet) :
+  impossibilité de tester (voir Michael)
+
+  A faire : intégrer Spack dans Execo (et non dans Kameleon)

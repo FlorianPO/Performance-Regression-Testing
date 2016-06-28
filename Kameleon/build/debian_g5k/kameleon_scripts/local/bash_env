@@ -8,10 +8,9 @@ BASH_LINENO=([0]="1")
 BASH_SOURCE=([0]="/home/bepo/Bureau/Kameleon/build/debian_g5k/kameleon_scripts/local/bash_rc")
 BASH_VERSINFO=([0]="4" [1]="3" [2]="11" [3]="1" [4]="release" [5]="x86_64-pc-linux-gnu")
 BASH_VERSION='4.3.11(1)-release'
-CINNAMON_VERSION=2.8.8
 CLUTTER_BACKEND=x11
 COLORTERM=gnome-terminal
-DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-KtbG201Kiu,guid=8c7334f72d801aae9a5e87a8576ba9f0
+DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-tpFsqTmu2U,guid=e7366b133b33880d230ae32e57725090
 DEBIAN_FRONTEND=noninteractive
 DEFAULTS_PATH=/usr/share/gconf/cinnamon.default.path
 DESKTOP_SESSION=cinnamon
@@ -21,12 +20,10 @@ EUID=1000
 FUNCNAME=([0]="save_state_handler")
 GDMSESSION=cinnamon
 GDM_XSERVER_LOCATION=local
-GJS_DEBUG_OUTPUT=stderr
-GJS_DEBUG_TOPICS='JS ERROR;JS LOG'
 GNOME_DESKTOP_SESSION_ID=this-is-deprecated
-GNOME_KEYRING_CONTROL=/run/user/1000/keyring-85TZCf
-GNOME_KEYRING_PID=1962
-GPG_AGENT_INFO=/run/user/1000/keyring-85TZCf/gpg:0:1
+GNOME_KEYRING_CONTROL=/run/user/1000/keyring-TVpiRp
+GNOME_KEYRING_PID=2518
+GPG_AGENT_INFO=/run/user/1000/keyring-TVpiRp/gpg:0:1
 GROUPS=()
 HISTFILE=/home/bepo/Bureau/Kameleon/build/debian_g5k/kameleon_scripts/local/bash_history
 HOME=/home/bepo
@@ -53,16 +50,16 @@ OPTIND=1
 OSTYPE=linux-gnu
 PATH=/usr/bin:/usr/sbin:/bin:/sbin:/usr/bin:/usr/sbin:/bin:/sbin:/usr/bin:/usr/sbin:/bin:/sbin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games
 PIPESTATUS=([0]="0")
-PPID=29116
+PPID=6459
 PS4='+ '
 PWD=/home/bepo/Bureau/Kameleon/build/debian_g5k
 QT_STYLE_OVERRIDE=gtk
-SESSION_MANAGER=local/bepo-HP-Z800-Workstation:@/tmp/.ICE-unix/2038,unix/bepo-HP-Z800-Workstation:/tmp/.ICE-unix/2038
+SESSION_MANAGER=local/bepo-HP-Z800-Workstation:@/tmp/.ICE-unix/2528,unix/bepo-HP-Z800-Workstation:/tmp/.ICE-unix/2528
 SHELL=/bin/bash
 SHELLOPTS=braceexpand:hashall:interactive-comments
 SHLVL=3
-SSH_AGENT_PID=2164
-SSH_AUTH_SOCK=/run/user/1000/keyring-85TZCf/ssh
+SSH_AGENT_PID=2654
+SSH_AUTH_SOCK=/run/user/1000/keyring-TVpiRp/ssh
 TERM=xterm
 TEXTDOMAIN=im-config
 TEXTDOMAINDIR=/usr/share/locale/
@@ -71,18 +68,18 @@ UID=1000
 USER=bepo
 USERNAME=bepo
 VTE_VERSION=3409
-WINDOWID=41944396
-WINDOWPATH=8
+WINDOWID=44040200
+WINDOWPATH=7
 XAUTHORITY=/home/bepo/.Xauthority
 XDG_CONFIG_DIRS=/etc/xdg/xdg-cinnamon:/etc/xdg
 XDG_CURRENT_DESKTOP=X-Cinnamon
 XDG_DATA_DIRS=/usr/share/cinnamon:/usr/share/gnome:/usr/local/share/:/usr/share/:/usr/share/mdm/
 XDG_RUNTIME_DIR=/run/user/1000
 XDG_SEAT=seat0
-XDG_SESSION_COOKIE=143f8ed1e0f777530ac25c5956d94edb-1466673646.467525-753153910
+XDG_SESSION_COOKIE=143f8ed1e0f777530ac25c5956d94edb-1467109519.327127-1050787766
 XDG_SESSION_DESKTOP=cinnamon
-XDG_SESSION_ID=c1
-XDG_VTNR=8
+XDG_SESSION_ID=c2
+XDG_VTNR=7
 _='Saved ENV in /home/bepo/Bureau/Kameleon/build/debian_g5k/kameleon_scripts/local/bash_env file'
 	declare -fx __download
 	declare -fx __find_free_port
