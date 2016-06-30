@@ -15,7 +15,7 @@ global:
   my_g5k_site: grenoble
   my_g5k_user: fpopek
   my_g5k_property: -p \"gpu='YES'\"
-  my_g5k_nodes: 2
+  my_g5k_nodes: 1
   my_g5k_walltime: "1:00:00"
 
 bootstrap:

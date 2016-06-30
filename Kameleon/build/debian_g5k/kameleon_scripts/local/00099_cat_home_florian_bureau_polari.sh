@@ -17,9 +17,9 @@ trap 'save_env' INT TERM EXIT
 source "${__ROOT_DIRECTORY__}/bash_env" 2> /dev/null || true
 
 # Log cmd
-echo echo\ The\ \'local_context\'\ has\ been\ initialized >> "${__ROOT_DIRECTORY__}/bash_history"
+echo cat\ /home/florian/Bureau/Polaris/Kameleon/default/chroot/steps/data/skel/.vimrc >> "${__ROOT_DIRECTORY__}/bash_history"
 
 
 
-echo The 'local_context' has been initialized
+cat /home/florian/Bureau/Polaris/Kameleon/default/chroot/steps/data/skel/.vimrc
 

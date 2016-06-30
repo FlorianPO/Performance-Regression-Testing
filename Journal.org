@@ -879,7 +879,7 @@
 
   Question (voir Michael) : les variables d'environnement
   restent-elles présentes lors de toute la durée du recipe Kameleon ?
-  (espérer que oui).
+  (espérer que oui) -> OUI
 
   Problème d'installation d'environnement :
   #+RESULTS:
@@ -902,3 +902,87 @@
   impossibilité de tester (voir Michael)
 
   A faire : intégrer Spack dans Execo (et non dans Kameleon)
+* Mercredi 29/06
+  Michael : correctif du bug du Mardi 28/06, utiliser :
+  
+  #+begin_src sh :session foo :results output :exports both 
+  -o Dpkg::Options::="--force-confnew"
+  #+end_src
+
+  Ceci arrive fréquemment, voire systématiquement et semble intervenir
+  lorsque une même machine est déployée plusieurs fois (?) ->
+  utilisation des variables d'environnement dans Kameleon pour alléger
+  les recipes.
+
+  #+RESULTS:
+  #+begin_example
+  [in] E: dpkg was interrupted, you must manually run 'dpkg --configure -a' to correct the problem. 
+  [in] Fetched 21.3 MB in 3s (6,288 kB/s)
+  Starting command: "bash"
+  Starting command: "ssh -A -t -F /home/florian/Bureau/Polaris/Kameleon/build/debian_g5k/ssh_config grenoble /bin/bash"
+  Starting command: "ssh -A -t -F /home/florian/Bureau/Polaris/Kameleon/build/debian_g5k/ssh_config debian_g5k /bin/bash"
+  Error occured when executing the following command :
+  
+  > exec_in: apt-get -o Acquire::Check-Valid-Until=false -y --force-yes update
+  Press [r] to retry
+  Press [c] to continue with execution
+  Press [a] to abort execution
+  Press [l] to switch to local_context shell
+  Press [o] to switch to out_context shell
+  Press [i] to switch to in_context shell
+  answer ? [c/a/r/l/o/i]:  i
+  User choice: [i] launch in_context
+  Starting interactive shell
+  Starting interactive command: "source /var/lib/gems/2.1.0/gems/kameleon-builder-2.7.2/contrib/kameleon_bashrc.sh 2> /dev/null; ssh -A -t -F /home/florian/Bureau/Polaris/Kameleon/build/debian_g5k/ssh_config debian_g5k /bin/bash --rcfile /root/kameleon_workdir/debian_g5k/kameleon_scripts/in/bash_rc"
+  (in_context) root@adonis-3: /root/kameleon_workdir/debian_g5k # dpkg --configure -a
+  Setting up bash (4.3-11+b1) ...
+  
+  Configuration file '/etc/skel/.bashrc'
+  ==> Modified (by you or by a script) since installation.
+  ==> Package distributor has shipped an updated version.
+  What would you like to do about it ?  Your options are:
+  Y or I  : install the package maintainer's version
+  N or O  : keep your currently-installed version
+  D     : show the differences between the versions
+  Z     : start a shell to examine the situation
+  The default action is to keep your current version.
+  *** .bashrc (Y/I/N/O/D/Z) [default=N] ? Y
+  Installing new version of config file /etc/skel/.bashrc ...
+  update-alternatives: using /usr/share/man/man7/bash-builtins.7.gz to provide /usr/share/man/man7/builtins.7.gz (builtins.7.gz) in auto mode
+  (in_context) root@adonis-3: /root/kameleon_workdir/debian_g5k # exit
+  Saved ENV in /root/kameleon_workdir/debian_g5k/kameleon_scripts/in/bash_env file
+  Shared connection to debian_g5k closed.
+  Getting back to Kameleon...
+  Press [r] to retry
+  Press [c] to continue with execution
+  Press [a] to abort execution
+  Press [l] to switch to local_context shell
+  Press [o] to switch to out_context shell
+  Press [i] to switch to in_context shell
+  answer ? [c/a/r/l/o/i]:  r
+  ...
+  [in] Get:11 http://ftp.debian.org jessie-backports/non-free Translation-en/DiffIndex [7,330 B]
+  [in] Fetched 424 kB in 2s (175 kB/s)
+  [in] Reading package lists...
+  [in] W: Ignoring Provides line with DepCompareOp for package python-cffi-backend-api-max
+  [in] W: Ignoring Provides line with DepCompareOp for package python-cffi-backend-api-min
+  [in] W: Ignoring Provides line with DepCompareOp for package python3-cffi-backend-api-max
+  [in] W: Ignoring Provides line with DepCompareOp for package python3-cffi-backend-api-min
+  [in] W: You may want to run apt-get update to correct these problems
+  #+end_example
+
+  Modification à faire de la recette Kameleon pour prendre en compte /
+  déployer sur plusieurs noeuds (=$OAR_NODE_FILES= n'est pas atteignable
+  directement)
+
+  Erreur lors de l'installation de Kameleon dans les machines (?) :
+  #+begin_src sh :session foo :results output :exports both 
+  useradd -m kameleon -s /bin/bash
+  #+end_src
+  #+RESULTS:
+  #+begin_example
+  [in] useradd: cannot create directory /home/kameleon
+  #+end_example
+
+  Source des problèmes : conflit entre le déploiement d'un environnement
+  de base et d'un .tgz

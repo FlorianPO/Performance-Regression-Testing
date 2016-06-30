@@ -3,8 +3,9 @@
 - dist_upgrade: true
 
 - upgrade_system:
-  - exec_in: apt-get -y --force-yes $INSTALL_RECOMMENDS upgrade 2>&1
+  - exec_in: APT_OPTS="-y --force-yes -o Dpkg::Options::="--force-confnew""
+  - exec_in: apt-get $APT_OPTS $INSTALL_RECOMMENDS upgrade 2>&1
   - exec_in: |
       if [ $$dist_upgrade = false ]; then
-          apt-get -y --force-yes dist-upgrade 2>&1
+          apt-get $APT_OPTS dist-upgrade 2>&1
       fi
