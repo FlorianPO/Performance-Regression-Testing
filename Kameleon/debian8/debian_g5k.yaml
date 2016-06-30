@@ -1,0 +1,90 @@
+#==============================================================================
+# vim: softtabstop=2 shiftwidth=2 expandtab fenc=utf-8 cc=81 tw=80
+#==============================================================================
+#
+# DESCRIPTION: <MY RECIPE DESCRIPTION>
+#
+#==============================================================================
+
+---
+extend: default/grid5000/debian8.yaml
+
+global:
+  # You can see the base template `default/grid5000/debian8.yaml` to know the
+  # variables that you can override
+  my_g5k_site: grenoble
+  my_g5k_user: fpopek
+  my_g5k_property: -p \"gpu='YES'\"
+  my_g5k_nodes: 1
+  my_g5k_walltime: "1:00:00"
+
+bootstrap:
+  - "@base"
+
+setup:
+  - "@base"
+  - first_step:
+    - some_packages:
+      - exec_in: |
+          apt-get update
+          apt-get install -y python2.7-dev
+          apt-get install -y vim emacs
+          apt-get install -y curl patch
+          apt-get install -y git subversion mercurial
+          apt-get install -y build-essential gfortran
+          apt-get install -y autoconf automake cmake cmake-data doxygen texinfo
+          apt-get install -y libtool libtool-bin
+          apt-get install -y libboost-dev
+          apt-get install -y gawk
+          apt-get install -y bison flex
+          apt-get install -y binutils-dev libelf-dev libiberty-dev
+          apt-get install -y libz-dev
+          apt-get install -y libqt4-dev freeglut3-dev
+          apt-get install -y environment-modules
+          apt-get install -y hwloc libhwloc-dev
+    - spack:
+      - exec_in: |
+          git clone https://github.com/fpruvost/spack
+          export SPACK_ROOT=/root/kameleon_workdir/$$kameleon_recipe_name/spack/
+          export PATH=$SPACK_ROOT/bin:$PATH          
+          cd spack/
+          git checkout morse
+          spack install -v chameleon@trunk+starpu+fxt ^starpu@svn-trunk+fxt
+    - execo:
+      - exec_in: |
+          python execo.py $${my_g5k_site} $job_id $${my_g5k_nodes} $${my_g5k_walltime}
+
+export:
+  - g5k_custom:
+    - kadeploy_file:
+      - write_local:
+        - $$kameleon_cwd/$$kameleon_recipe_name.yaml
+        - |
+          #
+          # Kameleon generated based on kadeploy description file
+          #
+          ---
+          name: $$kameleon_recipe_name
+
+          version: 1
+
+          os: linux
+
+          image:
+            file: $$kameleon_recipe_name.tar.gz
+            kind: tar
+            compression: gzip
+
+          postinstalls:
+            - archive: server:///grid5000/postinstalls/debian-x64-base-2.6-post.tgz
+              compression: gzip
+              script: traitement.ash /rambin
+
+          boot:
+            kernel: /vmlinuz
+            initrd: /initrd.img
+
+          filesystem: $$filesystem_type
+
+
+

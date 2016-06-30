@@ -194,7 +194,7 @@
   - Docker for reproducible research :
     http://www.carlboettiger.info/assets/files/pubs/10.1145/2723872.2723882.pdf
   - SPACK + KAMELEON -> téléchargement (+ installation)
-    - SPACK : Lucas 
+    - SPACK : Luka 
     - Dépendances : Venìcius
     - KAMELEON : Michael
   - (XPFlow) -> Contrôle de l'expérience
@@ -986,3 +986,19 @@
 
   Source des problèmes : conflit entre le déploiement d'un environnement
   de base et d'un .tgz
+* Jeudi 30/06
+  Création de deux recipes distinctes : une basée sur debian8, l'autre
+  basée sur un .tgz
+
+  Problème avec HWLOC :
+  #+RESULTS:
+  #+begin_example
+  [in] checking for FFTW... checking for FFTWF... checking for FFTWL... checking for HWLOC... configure: error: libhwloc was not found on your system. If the target machine is hyperthreaded the performance may be impacted a lot.  It is strongly recommended to install libhwloc. However, if you really want to use StarPU without enabling libhwloc, please restart configure by speci==> Error: Command exited with status 1:
+  [in] ==> Error: Installation process had nonzero exit code.
+  #+end_example
+
+  HWLOC est pourtant bien installé -> envoie d'un mail à Luka
+
+  Le recipe custom marche pourtant -> problème avec le debian8 de base
+
+  
