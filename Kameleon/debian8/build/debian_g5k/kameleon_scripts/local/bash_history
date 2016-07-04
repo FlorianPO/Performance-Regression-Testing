@@ -11,3 +11,4 @@ cat /home/bepo/Bureau/debian8/default/chroot/steps/data/skel/.vimrc
 cat /home/bepo/Bureau/debian8/default/chroot/steps/data/skel/.vimrc
 cat /home/bepo/Bureau/debian8/default/chroot/steps/data/skel/.pythonrc.py
 cat /home/bepo/Bureau/debian8/default/chroot/steps/data/skel/.pythonrc.py
+cat execo_script.py

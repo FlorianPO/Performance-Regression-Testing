@@ -1,9 +1,9 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 
 import sys
 import os
 import time
-import ipdb
+# import ipdb
 import traceback
 from shutil import copy
 from execo import Process, SshProcess, Remote, format_date, Put
@@ -40,20 +40,25 @@ class ExecoWorkload(Engine):
                     for node in nodes[:int(nbr_node)]:
                         print>>hostfile, node.address
 
-            spack_process = Process('spack install -v chameleon@trunk+starpu+fxt ^starpu@svn-trunk+fxt')            
+            spack_command = 'spack install -v chameleon@trunk+starpu+fxt ^starpu@svn-trunk+fxt'
+	    # spack_process = Remote(spack_command, nodes)
+            spack_process = Process(spack_command)            
+            
             spack_process.start()
             spack_process.wait()
             spack_process.kill()
+
+	    # Pilotage
 
         finally:
             logger.info("Delete job: {}".format(jobs))
             oardel(jobs)
 
 if __name__ == "__main__":
-    _site = (sys.argv)[0]
-    _jobID = (sys.argv)[1]
-    _nbrNodes = (sys.argv)[2]
-    _walltime = (sys.argv)[3]
+    _site = (sys.argv)[1]
+    _jobID = int((sys.argv)[2])
+    _nbrNodes = int((sys.argv)[3])
+    _walltime = (sys.argv)[4]
 
     execo = ExecoWorkload()
     execo.start()

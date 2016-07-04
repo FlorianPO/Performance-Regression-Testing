@@ -27,12 +27,11 @@ global:
     interactive_cmd: ssh -A -t -F /home/bepo/Bureau/custom/build/debian_g5k/ssh_config
       debian_g5k /bin/bash
   out_context:
-    cmd: ssh -A -t -F /home/bepo/Bureau/custom/build/debian_g5k/ssh_config grenoble
-      /bin/bash
+    cmd: ssh -A -t -F /home/bepo/Bureau/custom/build/debian_g5k/ssh_config lyon /bin/bash
     proxy_cache: 127.0.0.1
     workdir: "/home/fpopek/kameleon_workdir/debian_g5k"
     interactive_cmd: ssh -A -t -F /home/bepo/Bureau/custom/build/debian_g5k/ssh_config
-      grenoble /bin/bash
+      lyon /bin/bash
   proxy_local: ''
   proxy_out: ''
   proxy_in: ''
@@ -74,7 +73,7 @@ global:
     iputils-ping iproute2 netbase net-tools psmisc openssh-server acpid acpi-support-base
     sysvinit systemd systemd-sysv pciutils
   g5k_user: fpopek
-  g5k_site: grenoble
+  g5k_site: lyon
   g5k_property: -p "gpu='YES'"
   g5k_nodes: '1'
   g5k_walltime: '1:00:00'
@@ -82,7 +81,7 @@ global:
   ssh_config_file: "/home/bepo/Bureau/custom/build/debian_g5k/ssh_config"
   out_cwd: "/home/fpopek/kameleon_workdir/debian_g5k"
   in_cwd: "/root/kameleon_workdir/debian_g5k"
-  my_g5k_site: grenoble
+  my_g5k_site: lyon
   my_g5k_user: fpopek
   my_g5k_property: -p \"gpu='YES'\"
   my_g5k_nodes: 1
@@ -195,7 +194,7 @@ aliases:
   - exec_local: __download "@1" "@2"
 steps:
 - bootstrap/g5k_reserv/create_local_ssh_config_base:
-    identifier: bde7e2bf2d7e
+    identifier: feae3903f2fa
     cmds:
     - exec_local: |-
         mkdir -p $(dirname /home/bepo/Bureau/custom/build/debian_g5k/ssh_config);
@@ -214,15 +213,15 @@ steps:
         Host g5kaccess
           User fpopek
           Hostname access.grid5000.fr
-        Host grenoble
+        Host lyon
           User fpopek
           ProxyCommand ssh -F /home/bepo/Bureau/custom/build/debian_g5k/ssh_config g5kaccess -W %h:%p
-        Host grenoble
-          User fpopek
-          ProxyCommand ssh -F /home/bepo/Bureau/custom/build/debian_g5k/ssh_config grenoble -W %h:%p
+        # Host lyon
+        #  User fpopek
+        #  ProxyCommand ssh -F /home/bepo/Bureau/custom/build/debian_g5k/ssh_config grenoble -W %h:%p
         EOF
 - bootstrap/g5k_reserv/deploy_image:
-    identifier: afa88c2dc171
+    identifier: 5d80bef4901a
     cmds:
     - exec_out: echo "Deploying image  with kadeploy"
     - exec_out: sleep 1
@@ -231,7 +230,7 @@ steps:
         -t deploy "sleep 1000000"
     - exec_out: |-
         echo "Retrieving job ID"
-        export job_id=`oarstat -u | grep -o -E '[0-9]+' | head -1 | sed -e 's/^0\+//'`
+        export job_id=`oarstat -u | tail -n 1 | grep -o -E '[0-9]+' | head -n 1`
         echo "Job ID : $job_id"
     - exec_out: |-
         echo -n "Waiting for the reservation to be ready"
@@ -252,7 +251,7 @@ steps:
       - exec_local: cat >/home/bepo/Bureau/custom/build/debian_g5k/g5k_machine
     - exec_out: sleep 1
 - bootstrap/g5k_reserv/create_out_ssh_config:
-    identifier: 9933690d77a0
+    identifier: 0292c2f8b5cf
     cmds:
     - exec_out: |-
         mkdir -p $(dirname /home/fpopek/kameleon_workdir/debian_g5k/ssh_config);
@@ -268,17 +267,17 @@ steps:
           Protocol 2
         EOF
 - bootstrap/g5k_reserv/append_ssh_node_config:
-    identifier: cf622ffad4ff
+    identifier: d70cf7ddb62c
     cmds:
     - exec_local: |-
         mkdir -p $(dirname /home/bepo/Bureau/custom/build/debian_g5k/ssh_config);
         cat >>/home/bepo/Bureau/custom/build/debian_g5k/ssh_config <<EOF
         Host debian_g5k
           User root
-          ProxyCommand ssh -F /home/bepo/Bureau/custom/build/debian_g5k/ssh_config grenoble "nc -q 1 `cat /home/bepo/Bureau/custom/build/debian_g5k/g5k_machine | awk '{print $NF}'` %p"
+          ProxyCommand ssh -F /home/bepo/Bureau/custom/build/debian_g5k/ssh_config lyon "nc -q 1 `cat /home/bepo/Bureau/custom/build/debian_g5k/g5k_machine | awk '{print $NF}'` %p"
         EOF
 - setup/first_step/some_packages:
-    identifier: 1af7ad37f3af
+    identifier: 366eaba91980
     cmds:
     - exec_in: |-
         apt-get update
@@ -297,20 +296,17 @@ steps:
         apt-get install -y libqt4-dev freeglut3-dev
         apt-get install -y environment-modules
         apt-get install -y hwloc libhwloc-dev
-- setup/first_step/spack:
-    identifier: 59b604a8115e
+- setup/first_step/spack_execo:
+    identifier: db15d46761d2
     cmds:
+    - pipe:
+      - exec_in: cat execo.py
+      - exec_out: cat > execo.py
     - exec_in: "git clone https://github.com/fpruvost/spack\nexport SPACK_ROOT=/root/kameleon_workdir/debian_g5k/spack/\nexport
-        PATH=$SPACK_ROOT/bin:$PATH          \ncd spack/\ngit checkout morse\nspack
-        install -v chameleon@trunk+starpu+fxt ^starpu@svn-trunk+fxt\n"
-- setup/first_step/execo:
-    identifier: c1c47b74a7e6
-    cmds:
-    - exec_in: 'python execo.py grenoble $job_id 1 1:00:00
-
-'
+        PATH=$SPACK_ROOT/bin:$PATH          \ncd spack/\ngit checkout morse\n\npython
+        execo.py lyon $job_id 1 1:00:00\n"
 - export/g5k_custom/kadeploy_file:
-    identifier: 64eab0005730
+    identifier: c9313efff763
     cmds:
     - exec_local: |-
         mkdir -p $(dirname /home/bepo/Bureau/custom/build/debian_g5k/debian_g5k.yaml);

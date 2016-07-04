@@ -230,7 +230,7 @@ steps:
           ProxyCommand ssh -F /home/bepo/Bureau/debian8/build/debian_g5k/ssh_config g5kaccess -W %h:%p
         EOF
 - bootstrap/g5k_reserv/deploy_image:
-    identifier: fbd32b0fd025
+    identifier: '587775453822'
     cmds:
     - exec_out: echo "Deploying image jessie-x64-base with kadeploy"
     - exec_out: sleep 1
@@ -239,8 +239,7 @@ steps:
         -t deploy "sleep 1000000"
     - exec_out: |-
         echo "Retrieving job ID"
-        export job_id=`oarstat -u | grep -o -E '[0-9]+' | head -1 | sed -e 's/^0\+//'`
-        echo "Job ID : $job_id"
+        oarstat -u | tail -n 1 | grep -o -E '[0-9]+' | head -n 1 > job_id
     - exec_out: |-
         echo -n "Waiting for the reservation to be ready"
         until $(oarstat -fu fpopek | grep -q "state = Running")
@@ -260,7 +259,7 @@ steps:
       - exec_local: cat >/home/bepo/Bureau/debian8/build/debian_g5k/g5k_machine
     - exec_out: sleep 1
 - bootstrap/g5k_reserv/create_out_ssh_config:
-    identifier: c1cc44059376
+    identifier: 750b2cb44ee3
     cmds:
     - exec_out: |-
         mkdir -p $(dirname /home/fpopek/kameleon_workdir/debian_g5k/ssh_config);
@@ -276,7 +275,7 @@ steps:
           Protocol 2
         EOF
 - bootstrap/g5k_reserv/append_ssh_node_config:
-    identifier: e403c3b2521d
+    identifier: bf8958453e53
     cmds:
     - exec_local: |-
         mkdir -p $(dirname /home/bepo/Bureau/debian8/build/debian_g5k/ssh_config);
@@ -286,12 +285,12 @@ steps:
           ProxyCommand ssh -F /home/bepo/Bureau/debian8/build/debian_g5k/ssh_config grenoble "nc -q 1 `cat /home/bepo/Bureau/debian8/build/debian_g5k/g5k_machine | awk '{print $NF}'` %p"
         EOF
 - setup/g5k_tweaks/enable_g5k_proxy:
-    identifier: 2b6ff16f38dc
+    identifier: cc44af8577e1
     cmds:
     - exec_in: export http_proxy="http://proxy:3128"
     - exec_in: export https_proxy="http://proxy:3128"
 - setup/configure_apt/configure_source_list:
-    identifier: 9ba5258360c5
+    identifier: e118742478b3
     cmds:
     - exec_in: |-
         mkdir -p $(dirname /etc/apt/sources.list);
@@ -306,7 +305,7 @@ steps:
         deb-src http://security.debian.org/ jessie/updates main
         EOF
 - setup/configure_apt/add_contribs_and_nonfree_sources:
-    identifier: 02f38a946887
+    identifier: adb8671ccbcf
     cmds:
     - exec_in: |-
         if [ true = true ]; then
@@ -318,11 +317,11 @@ steps:
         fi
     - exec_in: perl -pi -e "s/main$/main $REPO_CONTRIB $REPO_NONFREE/" /etc/apt/sources.list
 - setup/configure_apt/update_repositories:
-    identifier: e6b7a6929aab
+    identifier: 33f03051dccf
     cmds:
     - exec_in: apt-get -o Acquire::Check-Valid-Until=false -y --force-yes update
 - setup/upgrade_system/upgrade_system:
-    identifier: 7ee28b55b2f3
+    identifier: d40fc54489cd
     cmds:
     - exec_in: APT_OPTS="-y --force-yes"
     - exec_in: apt-get $APT_OPTS $INSTALL_RECOMMENDS upgrade 2>&1
@@ -331,7 +330,7 @@ steps:
             apt-get $APT_OPTS dist-upgrade 2>&1
         fi
 - setup/install_software/apt_install:
-    identifier: 10a89e61f779
+    identifier: 5107a26ca499
     cmds:
     - exec_in: |-
         if [ ! "true" = "true" ]; then
@@ -343,7 +342,7 @@ steps:
         psmisc openssh-server acpid acpi-support-base sysvinit systemd systemd-sysv
         pciutils 2>&1
 - setup/configure_system/configure_locales:
-    identifier: b24b20c30772
+    identifier: 7d7d0ea1106b
     cmds:
     - exec_in: |-
         test ! -f /etc/locale.gen || \
@@ -351,16 +350,16 @@ steps:
     - exec_in: locale-gen en_US.UTF-8
     - exec_in: update-locale LANG=en_US.UTF-8
 - setup/configure_system/set_timezone:
-    identifier: 2bf628b46764
+    identifier: 48d8b42e19ac
     cmds:
     - exec_in: echo "UTC" > /etc/timezone
     - exec_in: dpkg-reconfigure -f noninteractive tzdata 2>&1
 - setup/configure_system/set_root_password:
-    identifier: c18c6ebcceb3
+    identifier: 81d6ab11489a
     cmds:
     - exec_in: echo -n 'root:kameleon' | chpasswd
 - setup/configure_keyboard/keyboard_config:
-    identifier: 71155197064a
+    identifier: eadff0f7a23f
     cmds:
     - exec_in: |-
         mkdir -p $(dirname /etc/default/keyboard);
@@ -372,7 +371,7 @@ steps:
         EOF
     - exec_in: apt-get -y --force-yes install console-setup console-data 2>&1
 - setup/configure_network/network_interfaces:
-    identifier: 7cebf781a3dc
+    identifier: 478bdc63463a
     cmds:
     - exec_in: |-
         mkdir -p $(dirname /etc/network/interfaces);
@@ -385,7 +384,7 @@ steps:
             pre-up ip link set mtu 1492 eth0
         EOF
 - setup/configure_network/set_hosts:
-    identifier: fce497e59761
+    identifier: fdf7d90ec6d5
     cmds:
     - exec_in: |-
         mkdir -p $(dirname /etc/hosts);
@@ -399,11 +398,11 @@ steps:
         ::1   localhost.localdomain localhost
         EOF
 - setup/configure_network/set_hostname:
-    identifier: 706a048fa38e
+    identifier: e35ee28d8a62
     cmds:
     - exec_in: echo "kameleon-debian" > /etc/hostname
 - setup/kameleon_customization/configure_bashrc:
-    identifier: f08fd2d70fa7
+    identifier: b5d3af2a68a8
     cmds:
     - exec_in: mkdir -p $(dirname /etc/skel/.bashrc)
     - pipe:
@@ -414,7 +413,7 @@ steps:
       - exec_local: cat /home/bepo/Bureau/debian8/default/chroot/steps/data/skel/.bashrc
       - exec_in: cat > /root/.bashrc
 - setup/kameleon_customization/configure_vim:
-    identifier: b6d14b094c3f
+    identifier: d93fa4e95172
     cmds:
     - exec_in: mkdir -p $(dirname /etc/skel/.vimrc)
     - pipe:
@@ -425,7 +424,7 @@ steps:
       - exec_local: cat /home/bepo/Bureau/debian8/default/chroot/steps/data/skel/.vimrc
       - exec_in: cat > /root/.vimrc
 - setup/kameleon_customization/configure_python:
-    identifier: 6897003ca117
+    identifier: 9f648405e02d
     cmds:
     - exec_in: mkdir -p $(dirname /etc/skel/.pythonrc.py)
     - pipe:
@@ -436,22 +435,22 @@ steps:
       - exec_local: cat /home/bepo/Bureau/debian8/default/chroot/steps/data/skel/.pythonrc.py
       - exec_in: cat > /root/.pythonrc.py
 - setup/create_user/add_user:
-    identifier: 0d0932aca847
+    identifier: da3c970dd67b
     cmds:
     - exec_in: useradd -m kameleon -s /bin/bash
     - exec_in: echo -n 'kameleon:kameleon' | chpasswd
 - setup/create_user/add_to_groups:
-    identifier: 6602be9a7b83
+    identifier: ae06e1461a9e
     cmds:
     - exec_in: 'usermod -G "$(echo sudo | tr '' '' '','')" kameleon
 
 '
 - setup/first_step/some_packages:
-    identifier: eab5938c47b1
+    identifier: b208d48c98b1
     cmds:
     - exec_in: |-
         apt-get update
-        apt-get install -y python2.7-dev
+        apt-get install -y python2.7-dev python-httplib2 python-pip
         apt-get install -y vim emacs
         apt-get install -y curl patch
         apt-get install -y git subversion mercurial
@@ -466,27 +465,28 @@ steps:
         apt-get install -y libqt4-dev freeglut3-dev
         apt-get install -y environment-modules
         apt-get install -y hwloc libhwloc-dev
-- setup/first_step/spack:
-    identifier: 6a4dba4b05fa
+- setup/first_step/spack_execo:
+    identifier: aa8de13ad781
     cmds:
-    - exec_in: "git clone https://github.com/fpruvost/spack\nexport SPACK_ROOT=/root/kameleon_workdir/debian_g5k/spack/\nexport
-        PATH=$SPACK_ROOT/bin:$PATH          \ncd spack/\ngit checkout morse\nspack
-        install -v chameleon@trunk+starpu+fxt ^starpu@svn-trunk+fxt\n"
-- setup/first_step/execo:
-    identifier: 7350209012cf
-    cmds:
-    - exec_in: 'python execo.py grenoble $job_id 1 1:00:00
-
-'
+    - pipe:
+      - exec_local: cat execo_script.py
+      - exec_in: cat > execo_script.py
+    - pipe:
+      - exec_out: cat job_id
+      - exec_in: cat > job_id
+    - exec_in: "git clone https://github.com/fpruvost/spack\nexport SPACK_ROOT=/home/fpopek/kameleon_workdir/debian_g5k/spack/\nexport
+        PATH=$SPACK_ROOT/bin:$PATH          \ncd spack/\ngit checkout morse\ncd ../
+        \         \n\npip install --user execo\n\nexport job_id=`cat job_id`\npython
+        execo_script.py grenoble $job_id 1 1:00:00\n"
 - setup/_clean_setup/_clean_2_clean_udev:
-    identifier: 8304b5cf79eb
+    identifier: 8dacbfb28484
     cmds:
     - exec_in: rm -rf /etc/udev/rules.d/70-persistent-net.rules
     - exec_in: mkdir /etc/udev/rules.d/70-persistent-net.rules
     - exec_in: rm -rf  /lib/udev/rules.d/75-persistent-net-generator.rules
     - exec_in: rm -rf /dev/.udev/ /var/lib/dhcp/*
 - setup/_clean_setup/_clean_1_clean_apt_repository:
-    identifier: 93a7884c7013
+    identifier: 549735e36312
     cmds:
     - exec_in: apt-get -y --force-yes autoremove
     - exec_in: apt-get -y --force-yes autoclean
@@ -494,13 +494,13 @@ steps:
     - exec_in: apt-get -y --force-yes purge
     - exec_in: rm -rf /var/lib/apt/lists/*
 - setup/_clean_setup/_clean_0_update_repositories:
-    identifier: 3a1a002618f8
+    identifier: 8fc0cad77adf
     cmds:
     - exec_in: apt-get -y --force-yes autoclean
     - exec_in: apt-get -y --force-yes clean
     - exec_in: apt-get -y --force-yes autoremove
 - export/g5k_custom/kadeploy_file:
-    identifier: 7c3de9823207
+    identifier: 72e6ce8a6a35
     cmds:
     - exec_local: |-
         mkdir -p $(dirname /home/bepo/Bureau/debian8/build/debian_g5k/debian_g5k.yaml);

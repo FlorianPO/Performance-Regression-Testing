@@ -27,7 +27,7 @@ setup:
     - some_packages:
       - exec_in: |
           apt-get update
-          apt-get install -y python2.7-dev
+          apt-get install -y python2.7-dev python-httplib2 python-pip
           apt-get install -y vim emacs
           apt-get install -y curl patch
           apt-get install -y git subversion mercurial
@@ -42,17 +42,25 @@ setup:
           apt-get install -y libqt4-dev freeglut3-dev
           apt-get install -y environment-modules
           apt-get install -y hwloc libhwloc-dev
-    - spack:
+    - spack_execo:
+      - pipe: # copy execo file in node
+        - exec_local: cat execo_script.py
+        - exec_in: cat > execo_script.py
+      - pipe: # retrieve job_id
+        - exec_out: cat job_id
+        - exec_in: cat > job_id
       - exec_in: |
           git clone https://github.com/fpruvost/spack
-          export SPACK_ROOT=/root/kameleon_workdir/$$kameleon_recipe_name/spack/
+          export SPACK_ROOT=/home/$${my_g5k_user}/kameleon_workdir/$${kameleon_recipe_name}/spack/
           export PATH=$SPACK_ROOT/bin:$PATH          
           cd spack/
           git checkout morse
-          spack install -v chameleon@trunk+starpu+fxt ^starpu@svn-trunk+fxt
-    - execo:
-      - exec_in: |
-          python execo.py $${my_g5k_site} $job_id $${my_g5k_nodes} $${my_g5k_walltime}
+          cd ../          
+        
+          pip install --user execo
+
+          export job_id=`cat job_id`
+          python execo_script.py $${my_g5k_site} $job_id $${my_g5k_nodes} $${my_g5k_walltime}
 
 export:
   - g5k_custom:

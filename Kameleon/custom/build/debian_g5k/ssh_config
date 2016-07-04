@@ -12,12 +12,9 @@ Host *
 Host g5kaccess
   User fpopek
   Hostname access.grid5000.fr
-Host grenoble
+Host lyon
   User fpopek
   ProxyCommand ssh -F /home/bepo/Bureau/custom/build/debian_g5k/ssh_config g5kaccess -W %h:%p
-Host grenoble
-  User fpopek
-  ProxyCommand ssh -F /home/bepo/Bureau/custom/build/debian_g5k/ssh_config grenoble -W %h:%p
-Host debian_g5k
-  User root
-  ProxyCommand ssh -F /home/bepo/Bureau/custom/build/debian_g5k/ssh_config grenoble "nc -q 1 adonis-5.grenoble.grid5000.fr %p"
+# Host lyon
+#  User fpopek
+#  ProxyCommand ssh -F /home/bepo/Bureau/custom/build/debian_g5k/ssh_config grenoble -W %h:%p

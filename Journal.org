@@ -1000,5 +1000,42 @@
   HWLOC est pourtant bien installé -> envoie d'un mail à Luka
 
   Le recipe custom marche pourtant -> problème avec le debian8 de base
-
   
+* Lundi 04/07
+  Récupérer le _dernier_ jobID
+
+  #+RESULTS:
+  #+begin_example
+  Job id     Name           User           Submission Date     S Queue
+  ---------- -------------- -------------- ------------------- - ----------
+  812911     a289d67b66d2   fpopek         2016-07-04 11:28:31 R default   
+  812917                    fpopek         2016-07-04 11:33:09 R default   
+  #+end_example
+
+  Commande : =oarstat -u | tail -n 1 | grep -o -E '[0-9]+' | head -n 1=
+
+  Frontale grenobe.g5k down -> impossible de récupérer mon image .tgz :'(
+  
+  Mot de passe non reconnu sur grenoble -> attente
+
+  Déploiement sur lyon avec le recipe =debian8=
+ 
+  Problème récurrent : kameleon crée l'utilisateur /kameleon/ mais il
+  peut déjà exister (il suffit alors de sauter l'étape)
+
+  Mise en place du script execo -> à placer dans
+  =build/$${kameleon_workdir}/= -> à changer 
+
+  Ne jamais appeller un script python du même nom que les modules
+  qu'il utilise !
+
+  Problème avec le walltime donné à execo :
+
+  #+RESULTS
+  #+begin_example
+  install --user execo\npython execo_script.py lyon $job_id 1
+  >   1:00:00\n"
+  #+end_example
+
+  -> le problème vient de =$job_id= qui est nulle ! -> utilisation d'un
+     fichier inter-contexte
