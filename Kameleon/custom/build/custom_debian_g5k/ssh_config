@@ -1,0 +1,23 @@
+Host *
+  UserKnownHostsFile /dev/null
+  StrictHostKeyChecking no
+  ConnectTimeout 2
+  LogLevel FATAL
+  ForwardAgent yes
+  Protocol 2
+  ControlPath /tmp/d7c379dee39f%r@%h:%p
+  ControlMaster auto
+  ControlPersist yes
+  Compression yes
+Host g5kaccess
+  User fpopek
+  Hostname access.grid5000.fr
+Host grenoble
+  User fpopek
+  ProxyCommand ssh -F /home/bepo/Bureau/custom/build/custom_debian_g5k/ssh_config g5kaccess -W %h:%p
+# Host grenoble
+#  User fpopek
+#  ProxyCommand ssh -F /home/bepo/Bureau/custom/build/custom_debian_g5k/ssh_config grenoble -W %h:%p
+Host custom_debian_g5k
+  User root
+  ProxyCommand ssh -F /home/bepo/Bureau/custom/build/custom_debian_g5k/ssh_config grenoble "nc -q 1 adonis-5.grenoble.grid5000.fr %p"

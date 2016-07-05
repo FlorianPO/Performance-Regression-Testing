@@ -26,29 +26,33 @@ class ExecoWorkload(Engine):
 
     def run(self):
         # Go to the result folder before everything
-        os.chdir(self.result_dir)
+        # os.chdir(self.result_dir)
 
         jobs = [(_jobID, _site)]
         # Get nodes
         nodes = get_oar_job_nodes(_jobID, _site)
 
         try:
-            logger.info("Creating hostfiles for all combinations...")
-            for nbr_node in _nbrNodes:
-                hostfile_filename = self.result_dir + '/' + 'hostfile-' + nbr_node
-                with open(hostfile_filename, 'w') as hostfile:
-                    for node in nodes[:int(nbr_node)]:
-                        print>>hostfile, node.address
-
+            # logger.info("Creating hostfiles for all combinations...")
+            # for nbr_node in _nbrNodes:
+            #     hostfile_filename = self.result_dir + '/' + 'hostfile-' + nbr_node
+            #     with open(hostfile_filename, 'w') as hostfile:
+            #         for node in nodes[:int(nbr_node)]:
+            #             print>>hostfile, node.address
             spack_command = 'spack install -v chameleon@trunk+starpu+fxt ^starpu@svn-trunk+fxt'
-	    # spack_process = Remote(spack_command, nodes)
-            spack_process = Process(spack_command)            
-            
-            spack_process.start()
+
+            logger.info("Starting StarPU installation...")
+            spack_process = Process(spack_command).start()
+
             spack_process.wait()
+            logger.info("StarPU installation DONE...")
+            if (not spack_process.ok):
+                logger.info("Error : {}".format(spack_process.error_reason))
+                logger.info("Spack stdout : {}".format(spack_process.stdout));
+
             spack_process.kill()
 
-	    # Pilotage
+            # Pilotage
 
         finally:
             logger.info("Delete job: {}".format(jobs))

@@ -26,11 +26,11 @@ class ExecoWorkload(Engine):
 
     def run(self):
         # Go to the result folder before everything
-        # os.chdir(self.result_dir)
+        os.chdir(self.result_dir)
 
-        jobs = [(_jobID, _site)]
+        # jobs = [(_jobID, _site)]
         # Get nodes
-        nodes = get_oar_job_nodes(_jobID, _site)
+        # nodes = get_oar_job_nodes(_jobID, _site)
 
         try:
             # logger.info("Creating hostfiles for all combinations...")
@@ -39,30 +39,33 @@ class ExecoWorkload(Engine):
             #     with open(hostfile_filename, 'w') as hostfile:
             #         for node in nodes[:int(nbr_node)]:
             #             print>>hostfile, node.address
-            spack_command = 'spack install -v chameleon@trunk+starpu+fxt ^starpu@svn-trunk+fxt'
 
+            spack_command = 'spack install -v chameleon@trunk+starpu+fxt ^starpu@svn-trunk+fxt'
+            # spack_process = Remote(spack_command, nodes)
             logger.info("Starting StarPU installation...")
-            spack_process = Process(spack_command).start()
+            spack_process = Process(spack_command).start()            
 
             spack_process.wait()
             logger.info("StarPU installation DONE...")
-            if (not spack_process.ok):
-                logger.info("Error : {}".format(spack_process.error_reason))
-                logger.info("Spack stdout : {}".format(spack_process.stdout));
-
+            if  (not spack_process.ok):
+                logger.info("Error : " + spack_process.error_reason)
+            else:
+                logger.info("spac stdout: {}".format(spack_process.stdout));
             spack_process.kill()
 
             # Pilotage
-
+        except:
+            traceback.print_exc()
         finally:
-            logger.info("Delete job: {}".format(jobs))
-            oardel(jobs)
+	        logger.info("Fin...")
+            # logger.info("Delete job: {}".format(jobs))
+            # oardel(jobs)
 
 if __name__ == "__main__":
-    _site = (sys.argv)[1]
-    _jobID = int((sys.argv)[2])
-    _nbrNodes = int((sys.argv)[3])
-    _walltime = (sys.argv)[4]
+    _site = "grenoble"
+    _jobID = 0
+    _nbrNodes = 1
+    _walltime = "1:00:00"
 
     execo = ExecoWorkload()
     execo.start()

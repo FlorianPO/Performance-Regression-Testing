@@ -17,9 +17,9 @@ trap 'save_env' INT TERM EXIT
 source "${__ROOT_DIRECTORY__}/bash_env" 2> /dev/null || true
 
 # Log cmd
-echo cat\ /home/bepo/Bureau/debian8/default/chroot/steps/data/skel/.bashrc >> "${__ROOT_DIRECTORY__}/bash_history"
+echo true >> "${__ROOT_DIRECTORY__}/bash_history"
 
 
 
-cat /home/bepo/Bureau/debian8/default/chroot/steps/data/skel/.bashrc
+true
 

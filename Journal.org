@@ -1039,3 +1039,49 @@
 
   -> le problème vient de =$job_id= qui est nulle ! -> utilisation d'un
      fichier inter-contexte
+* Mardi 05/07
+  Premier lancement de Spack dans Execo :
+
+  #+RESULTS
+  #+begin_example
+  [in] 2016-07-05 10:22:20,655 INFO: command line arguments: ['execo_script.py', 'grenoble', '1711869', '1', '1:00:00']
+  [in] 2016-07-05 10:22:20,655 INFO: command line: execo_script.py grenoble 1711869 1 1:00:00
+  [in] 2016-07-05 10:22:20,655 INFO: run in directory /root/kameleon_workdir/custom_debian_g5k/results_2016-07-05--10-22-20
+  [in] 2016-07-05 10:37:20,684 INFO: Starting StarPU installation...
+  [in] 2016-07-05 10:37:20,684 INFO: StarPU installation DONE...
+  [in] 2016-07-05 10:37:20,694 WARNING: terminated: <Process('spack install -v chameleon@trunk+starpu+fxt ^starpu@svn-trunk+fxt', name=spack install -v chameleon@trunk+sta..., started=True, start_date=2016-07-05 10:37:20+00:00, ended=True, end_date=2016-07-05 10:37:20+00:00, killed=False, error=True, error_reason=[Errno 2] No such file or directory, timeouted=False, expect_fail=False, write_error=False, exit_code=None, ok=False, pid=None)>
+  [in] stdout:
+  [in] 
+  [in] stderr:
+  [in] 
+  [in] 2016-07-05 10:37:20,700 INFO: Delete job: [(1711869, 'grenoble')]
+  #+end_example
+
+  -> erreur d'installation (voir le warning)
+
+  Plutôt que d'attendre 20 minutes à chaque fois, création d'un script
+  execo local (sans tenir compte de la gestion de Grid5000)
+
+  -> un des package n'existait plus (l'utilisation de =apt-get -m= dans le
+     recipe kameleon ne fonctionne pas ! Solution : individualiser
+     l'installation des packages)
+
+  Besoin de récupérer la sortie standard de Spack dans Execo.
+  Michael : utiliser =stdout= et =stdout_handler=
+
+  #+RESULTS
+  #+begin_example
+  [in] 2016-07-05 15:12:50,547 INFO: command line arguments: ['execo_script.py', 'grenoble', '1711875', '1', '1:00:00']
+  [in] 2016-07-05 15:12:50,547 INFO: command line: execo_script.py grenoble 1711875 1 1:00:00
+  [in] 2016-07-05 15:12:50,547 INFO: run in directory /root/kameleon_workdir/custom_debian_g5k/results_2016-07-05--15-12-50
+  [in] 2016-07-05 15:27:50,576 INFO: Starting StarPU installation...
+  [in] 2016-07-05 15:27:50,586 WARNING: terminated: <Process('spack install -v chameleon@trunk+starpu+fxt ^starpu@svn-trunk+fxt', name=spack install -v chameleon@trunk+sta..., started=True, start_date=2016-07-05 15:27:50+00:00, ended=True, end_date=2016-07-05 15:27:50+00:00, killed=False, error=True, error_reason=[Errno 2] No such file or directory, timeouted=False, expect_fail=False, write_error=False, exit_code=None, ok=False, pid=None)>
+  [in] stdout:
+  [in] 
+  [in] stderr:
+  [in] 
+  [in] 2016-07-05 15:27:50,592 INFO: StarPU installation DONE...
+  [in] 2016-07-05 15:27:50,592 INFO: Error : [Errno 2] No such file or directory
+  [in] 2016-07-05 15:27:50,592 INFO: Spack stdout : 
+  [in] 2016-07-05 15:27:50,592 INFO: Delete job: [(1711875, 'grenoble')]
+  #+end_example

@@ -1,0 +1,36 @@
+cat ${KAMELEON_WORKDIR}/pipe-cat_home_bepo_bureau_ | cat >/home/bepo/Bureau/custom/build/custom_debian_g5k/g5k_machine && rm ${KAMELEON_WORKDIR}/pipe-cat_home_bepo_bureau_
+mkdir -p $(dirname /home/bepo/Bureau/custom/build/custom_debian_g5k/ssh_config);
+cat >>/home/bepo/Bureau/custom/build/custom_debian_g5k/ssh_config <<EOF
+Host custom_debian_g5k
+  User root
+  ProxyCommand ssh -F /home/bepo/Bureau/custom/build/custom_debian_g5k/ssh_config grenoble "nc -q 1 `cat /home/bepo/Bureau/custom/build/custom_debian_g5k/g5k_machine | awk '{print $NF}'` %p"
+EOF
+cat execo_script.py
+mkdir -p $(dirname /home/bepo/Bureau/custom/build/custom_debian_g5k/custom_debian_g5k.yaml);
+cat >/home/bepo/Bureau/custom/build/custom_debian_g5k/custom_debian_g5k.yaml <<EOF
+#
+# Kameleon generated based on kadeploy description file
+#
+
+name: custom_debian_g5k
+
+version: 1
+
+os: linux
+
+image:
+  file: custom_debian_g5k.tar.gz
+  kind: tar
+  compression: gzip
+
+postinstalls:
+  - archive: server:///grid5000/postinstalls/debian-x64-base-2.6-post.tgz
+    compression: gzip
+    script: traitement.ash /rambin
+
+boot:
+  kernel: /vmlinuz
+  initrd: /initrd.img
+
+filesystem: ext4
+EOF

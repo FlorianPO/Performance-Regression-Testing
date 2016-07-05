@@ -446,7 +446,7 @@ steps:
 
 '
 - setup/first_step/some_packages:
-    identifier: b208d48c98b1
+    identifier: 9515b0242fb6
     cmds:
     - exec_in: |-
         apt-get update
@@ -456,7 +456,7 @@ steps:
         apt-get install -y git subversion mercurial
         apt-get install -y build-essential gfortran
         apt-get install -y autoconf automake cmake cmake-data doxygen texinfo
-        apt-get install -y libtool libtool-bin
+        apt-get install -y libtool
         apt-get install -y libboost-dev
         apt-get install -y gawk
         apt-get install -y bison flex
@@ -466,7 +466,7 @@ steps:
         apt-get install -y environment-modules
         apt-get install -y hwloc libhwloc-dev
 - setup/first_step/spack_execo:
-    identifier: aa8de13ad781
+    identifier: 5dd3ffdef2e1
     cmds:
     - pipe:
       - exec_local: cat execo_script.py
@@ -479,14 +479,14 @@ steps:
         \         \n\npip install --user execo\n\nexport job_id=`cat job_id`\npython
         execo_script.py grenoble $job_id 1 1:00:00\n"
 - setup/_clean_setup/_clean_2_clean_udev:
-    identifier: 8dacbfb28484
+    identifier: 26bfef6f230e
     cmds:
     - exec_in: rm -rf /etc/udev/rules.d/70-persistent-net.rules
     - exec_in: mkdir /etc/udev/rules.d/70-persistent-net.rules
     - exec_in: rm -rf  /lib/udev/rules.d/75-persistent-net-generator.rules
     - exec_in: rm -rf /dev/.udev/ /var/lib/dhcp/*
 - setup/_clean_setup/_clean_1_clean_apt_repository:
-    identifier: 549735e36312
+    identifier: 3fb18ca1f2c6
     cmds:
     - exec_in: apt-get -y --force-yes autoremove
     - exec_in: apt-get -y --force-yes autoclean
@@ -494,13 +494,13 @@ steps:
     - exec_in: apt-get -y --force-yes purge
     - exec_in: rm -rf /var/lib/apt/lists/*
 - setup/_clean_setup/_clean_0_update_repositories:
-    identifier: 8fc0cad77adf
+    identifier: 70426a2af51c
     cmds:
     - exec_in: apt-get -y --force-yes autoclean
     - exec_in: apt-get -y --force-yes clean
     - exec_in: apt-get -y --force-yes autoremove
 - export/g5k_custom/kadeploy_file:
-    identifier: 72e6ce8a6a35
+    identifier: b3b5fee4e9f0
     cmds:
     - exec_local: |-
         mkdir -p $(dirname /home/bepo/Bureau/debian8/build/debian_g5k/debian_g5k.yaml);
