@@ -17,7 +17,7 @@ global:
   my_g5k_property: -p \"gpu='YES'\"
   my_g5k_nodes: 1
   my_g5k_walltime: "1:00:00"
-  my_g5k_env: ../../imageIDcin.env 
+  my_g5k_env: ~/imageIDcin.env 
 
 bootstrap:
   - "@base"
@@ -44,14 +44,14 @@ setup:
           apt-get install -y hwloc libhwloc-dev
     - spack_execo:
       - pipe: # copy execo file in node
-        - exec_local: cat execo_script.py
+        - exec_local: cat ../../execo_script.py
         - exec_in: cat > execo_script.py
       - pipe: # retrieve job_id
         - exec_out: cat job_id
         - exec_in: cat > job_id
       - exec_in: |
           git clone https://github.com/fpruvost/spack
-          export SPACK_ROOT=/home/$${my_g5k_user}/kameleon_workdir/$${kameleon_recipe_name}/spack/
+          export SPACK_ROOT=$PWD/spack/
           export PATH=$SPACK_ROOT/bin:$PATH          
           cd spack/
           git checkout morse
@@ -61,6 +61,7 @@ setup:
 
           export job_id=`cat job_id`
           python execo_script.py $${my_g5k_site} $job_id $${my_g5k_nodes} $${my_g5k_walltime}
+      - breakpoint: "Breakpoint..."
 
 export:
   - g5k_custom:

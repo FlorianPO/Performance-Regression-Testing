@@ -1,0 +1,42 @@
+#==============================================================================
+# vim: softtabstop=2 shiftwidth=2 expandtab fenc=utf-8 cc=81 tw=80
+#==============================================================================
+#
+# DESCRIPTION: <MY RECIPE DESCRIPTION>
+#
+#==============================================================================
+
+---
+extend: default/grid5000/debian8.yaml
+
+global:
+  # You can see the base template `default/grid5000/debian8.yaml` to know the
+  # variables that you can override
+  my_g5k_site: grenoble # digitalis
+  my_g5k_user: fpopek
+  my_g5k_property: -p \"gpu='YES'\"
+  my_g5k_nodes: 1
+  my_g5k_walltime: "1:00:00"
+  my_g5k_env: ../../imageIDcin.env 
+
+bootstrap:
+
+setup:
+  - first_step:
+    - spack_execo:
+      - exec_local: |
+          echo $PWD
+
+          git clone https://github.com/fpruvost/spack
+          export SPACK_ROOT=$PWD/spack/
+          export PATH=$SPACK_ROOT/bin:$PATH          
+          cd spack/
+          git checkout morse
+          cd ../          
+        
+          pip install --user execo
+
+          python ../../execo_script.py grenoble 0 1 "1:00:00"
+      - breakpoint: "break"
+
+export:

@@ -78,7 +78,7 @@ global:
   g5k_property: -p "gpu='YES'"
   g5k_nodes: '1'
   g5k_walltime: '1:00:00'
-  g5k_env: "../../imageIDcin.env"
+  g5k_env: "~/imageIDcin.env"
   ssh_config_file: "/home/bepo/Bureau/custom/build/custom_debian_g5k/ssh_config"
   out_cwd: "/home/fpopek/kameleon_workdir/custom_debian_g5k"
   in_cwd: "/root/kameleon_workdir/custom_debian_g5k"
@@ -87,7 +87,7 @@ global:
   my_g5k_property: -p \"gpu='YES'\"
   my_g5k_nodes: 1
   my_g5k_walltime: '1:00:00'
-  my_g5k_env: "../../imageIDcin.env"
+  my_g5k_env: "~/imageIDcin.env"
   persistent_cache: 'false'
   kameleon_uuid: fc6a83b0-52b2-4815-b2a3-d7c379dee39f
   kameleon_short_uuid: d7c379dee39f
@@ -222,7 +222,7 @@ steps:
         #  ProxyCommand ssh -F /home/bepo/Bureau/custom/build/custom_debian_g5k/ssh_config grenoble -W %h:%p
         EOF
 - bootstrap/g5k_reserv/deploy_image:
-    identifier: d2ff7ac0c2f4
+    identifier: 99fd101a7022
     cmds:
     - exec_out: echo "Deploying image  with kadeploy"
     - exec_out: sleep 1
@@ -244,14 +244,14 @@ steps:
     - exec_out: echo "Getting the machine name"
     - exec_out: export machine=`oarstat -fu fpopek | grep assigned_hostnames | tail
         -n 1 | cut -d ' ' -f 7`
-    - exec_out: echo "Deploying environment ../../imageIDcin.env on $machine"
-    - exec_out: kadeploy3 -a ../../imageIDcin.env -m $machine -k
+    - exec_out: echo "Deploying environment ~/imageIDcin.env on $machine"
+    - exec_out: kadeploy3 -a ~/imageIDcin.env -m $machine -k
     - pipe:
       - exec_out: echo $machine
       - exec_local: cat >/home/bepo/Bureau/custom/build/custom_debian_g5k/g5k_machine
     - exec_out: sleep 1
 - bootstrap/g5k_reserv/create_out_ssh_config:
-    identifier: b624e1842f2b
+    identifier: 92af3585b3f4
     cmds:
     - exec_out: |-
         mkdir -p $(dirname /home/fpopek/kameleon_workdir/custom_debian_g5k/ssh_config);
@@ -267,7 +267,7 @@ steps:
           Protocol 2
         EOF
 - bootstrap/g5k_reserv/append_ssh_node_config:
-    identifier: 7386910f9d93
+    identifier: c662d6616560
     cmds:
     - exec_local: |-
         mkdir -p $(dirname /home/bepo/Bureau/custom/build/custom_debian_g5k/ssh_config);
@@ -277,7 +277,7 @@ steps:
           ProxyCommand ssh -F /home/bepo/Bureau/custom/build/custom_debian_g5k/ssh_config grenoble "nc -q 1 `cat /home/bepo/Bureau/custom/build/custom_debian_g5k/g5k_machine | awk '{print $NF}'` %p"
         EOF
 - setup/first_step/some_packages:
-    identifier: 85b706b59964
+    identifier: 27a9d2be3fad
     cmds:
     - exec_in: |-
         apt-get update
@@ -297,20 +297,21 @@ steps:
         apt-get install -y environment-modules
         apt-get install -y hwloc libhwloc-dev
 - setup/first_step/spack_execo:
-    identifier: e0320456531e
+    identifier: 3bb79f352147
     cmds:
     - pipe:
-      - exec_local: cat execo_script.py
+      - exec_local: cat ../../execo_script.py
       - exec_in: cat > execo_script.py
     - pipe:
       - exec_out: cat job_id
       - exec_in: cat > job_id
-    - exec_in: "git clone https://github.com/fpruvost/spack\nexport SPACK_ROOT=/home/fpopek/kameleon_workdir/custom_debian_g5k/spack/\nexport
+    - exec_in: "git clone https://github.com/fpruvost/spack\nexport SPACK_ROOT=$PWD/spack/\nexport
         PATH=$SPACK_ROOT/bin:$PATH          \ncd spack/\ngit checkout morse\ncd ../
         \         \n\npip install --user execo\n\nexport job_id=`cat job_id`\npython
         execo_script.py grenoble $job_id 1 1:00:00\n"
+    - breakpoint: Breakpoint...
 - export/g5k_custom/kadeploy_file:
-    identifier: 3b5da3a09fa3
+    identifier: 8520ae69d0fe
     cmds:
     - exec_local: |-
         mkdir -p $(dirname /home/bepo/Bureau/custom/build/custom_debian_g5k/custom_debian_g5k.yaml);

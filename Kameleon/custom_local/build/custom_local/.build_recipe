@@ -1,0 +1,203 @@
+---
+name: custom_local
+path: "/home/bepo/Bureau/custom_local/custom_local.yaml"
+base_recipes_files:
+- "/home/bepo/Bureau/custom_local/custom_local.yaml"
+- "/home/bepo/Bureau/custom_local/default/grid5000/debian8.yaml"
+- "/home/bepo/Bureau/custom_local/default/chroot/debian8.yaml"
+- "/home/bepo/Bureau/custom_local/default/chroot/debian7.yaml"
+- "/home/bepo/Bureau/custom_local/default/chroot/base.yaml"
+step_files:
+- "/home/bepo/Bureau/custom_local/default/grid5000/steps/global/grid5000_options.yaml"
+- "/home/bepo/Bureau/custom_local/default/chroot/steps/aliases/defaults.yaml"
+env_files:
+- "/home/bepo/Bureau/custom_local/default/chroot/steps/env/bashrc"
+- "/home/bepo/Bureau/custom_local/default/chroot/steps/env/functions.sh"
+data_files: []
+global:
+  kameleon_recipe_name: custom_local
+  kameleon_recipe_dir: "/home/bepo/Bureau/custom_local"
+  kameleon_cwd: "/home/bepo/Bureau/custom_local/build/custom_local"
+  in_context:
+    cmd: ssh -A -t -F /home/bepo/Bureau/custom_local/build/custom_local/ssh_config
+      custom_local /bin/bash
+    proxy_cache: 127.0.0.1
+    workdir: "/root/kameleon_workdir/custom_local"
+    interactive_cmd: ssh -A -t -F /home/bepo/Bureau/custom_local/build/custom_local/ssh_config
+      custom_local /bin/bash
+  out_context:
+    cmd: ssh -A -t -F /home/bepo/Bureau/custom_local/build/custom_local/ssh_config
+      grenoble /bin/bash
+    proxy_cache: 127.0.0.1
+    workdir: "/home/fpopek/kameleon_workdir/custom_local"
+    interactive_cmd: ssh -A -t -F /home/bepo/Bureau/custom_local/build/custom_local/ssh_config
+      grenoble /bin/bash
+  proxy_local: ''
+  proxy_out: ''
+  proxy_in: ''
+  user_name: kameleon
+  user_password: kameleon
+  root_password: kameleon
+  user_groups: sudo
+  default_keyboard_layout: us,fr,de
+  default_locales: POSIX C en_US fr_FR de_DE
+  default_lang: en_US.UTF-8
+  default_timezone: UTC
+  appliance_tar_compression_level: '9'
+  rootfs_archive_url: http://kameleon.imag.fr/rootfs/x86_64/debian8.tar.xz
+  rootfs_archive_download_path: "/home/bepo/Bureau/custom_local/build/custom_local/rootfs.tar.xz"
+  rootfs: "/home/bepo/Bureau/custom_local/build/custom_local/rootfs"
+  arch: x86_64
+  hostname: kameleon-debian
+  filesystem_type: ext4
+  image_size: 10G
+  image_format: qcow2
+  image_disk: "/home/bepo/Bureau/custom_local/build/custom_local/base_custom_local"
+  appliance_formats: qcow2 tar.gz
+  appliance_filename: "/home/bepo/Bureau/custom_local/build/custom_local/custom_local"
+  appliance_tar_excludes: "./etc/fstab ./root/.bash_history ./root/kameleon_workdir
+    ./root/.ssh ./var/tmp/* ./tmp/* ./var/log/* ./dev/* ./proc/* ./run/* ./sys/*"
+  include_steps:
+  - debian/jessie
+  - debian
+  kernel_args: quiet net.ifnames=0 biosdevname=0
+  distrib: debian
+  release: jessie
+  release_number: 8
+  kernel_arch: amd64
+  apt_repository: http://ftp.debian.org/debian/
+  apt_enable_contrib: true
+  apt_enable_nonfree: true
+  setup_packages: sudo vim bash-completion curl resolvconf bzip2 bsdutils ca-certificates
+    locales man-db less libui-dialog-perl dialog isc-dhcp-client ifupdown iptables
+    iputils-ping iproute2 netbase net-tools psmisc openssh-server acpid acpi-support-base
+    sysvinit systemd systemd-sysv pciutils
+  g5k_user: fpopek
+  g5k_site: grenoble
+  g5k_property: -p "gpu='YES'"
+  g5k_nodes: '1'
+  g5k_walltime: '1:00:00'
+  g5k_env: "../../imageIDcin.env"
+  ssh_config_file: "/home/bepo/Bureau/custom_local/build/custom_local/ssh_config"
+  out_cwd: "/home/fpopek/kameleon_workdir/custom_local"
+  in_cwd: "/root/kameleon_workdir/custom_local"
+  my_g5k_site: grenoble
+  my_g5k_user: fpopek
+  my_g5k_property: -p \"gpu='YES'\"
+  my_g5k_nodes: 1
+  my_g5k_walltime: '1:00:00'
+  my_g5k_env: "../../imageIDcin.env"
+  persistent_cache: 'false'
+  kameleon_uuid: 2b5d4700-43c3-472f-bf32-7af65eaa6595
+  kameleon_short_uuid: 7af65eaa6595
+aliases:
+  write_local:
+  - exec_local: |
+      mkdir -p $(dirname @1);
+      cat >@1 <<EOF
+      @2
+      EOF
+  write_in:
+  - exec_in: |
+      mkdir -p $(dirname @1);
+      cat >@1 <<EOF
+      @2
+      EOF
+  write_out:
+  - exec_out: |
+      mkdir -p $(dirname @1);
+      cat >@1 <<EOF
+      @2
+      EOF
+  append_local:
+  - exec_local: |
+      mkdir -p $(dirname @1);
+      cat >>@1 <<EOF
+      @2
+      EOF
+  append_in:
+  - exec_in: |
+      mkdir -p $(dirname @1);
+      cat >>@1 <<EOF
+      @2
+      EOF
+  append_out:
+  - exec_out: |
+      mkdir -p $(dirname @1);
+      cat >>@1 <<EOF
+      @2
+      EOF
+  local2out:
+  - exec_out: 'mkdir -p $(dirname @2)
+
+'
+  - pipe:
+    - exec_local: cat @1
+    - exec_out: cat > @2
+  local2in:
+  - exec_in: mkdir -p $(dirname @2)
+  - pipe:
+    - exec_local: cat @1
+    - exec_in: cat > @2
+  out2local:
+  - exec_local: mkdir -p $(dirname @2)
+  - pipe:
+    - exec_out: cat @1
+    - exec_local: cat > @2
+  out2in:
+  - exec_in: mkdir -p $(dirname @2)
+  - pipe:
+    - exec_out: cat @1
+    - exec_in: cat > @2
+  in2local:
+  - exec_local: mkdir -p $(dirname @2)
+  - pipe:
+    - exec_in: cat @1
+    - exec_local: cat > @2
+  in2out:
+  - exec_out: mkdir -p $(dirname @2)
+  - pipe:
+    - exec_in: cat @1
+    - exec_out: cat > @2
+  check_cmd_out:
+  - rescue:
+    - exec_out: command -V @1 2> /dev/null
+    - breakpoint: "@1 is missing from out_context"
+  check_cmd_local:
+  - rescue:
+    - exec_local: command -V @1 2> /dev/null
+    - breakpoint: "@1 is missing from local_context"
+  check_cmd_in:
+  - rescue:
+    - exec_in: command -V @1 2> /dev/null
+    - breakpoint: "@1 is missing from in_context"
+  umount_out:
+  - exec_out: 'echo "try umount @1..." ; mountpoint -q "@1" && umount -f -l "@1" ||
+      true
+
+'
+  umount_local:
+  - exec_local: 'echo "try umount @1..." ; mountpoint -q "@1" && umount -f -l "@1"
+      || true
+
+'
+  umount_in:
+  - exec_in: 'echo "try umount @1..." ; mountpoint -q "@1" && umount -f -l "@1" ||
+      true
+
+'
+  download_file_in:
+  - exec_in: __download "@1" "@2"
+  download_file_out:
+  - exec_out: __download "@1" "@2"
+  download_file_local:
+  - exec_local: __download "@1" "@2"
+steps:
+- setup/first_step/spack_execo:
+    identifier: ac6502008062
+    cmds:
+    - exec_local: "echo $PWD\n\ngit clone https://github.com/fpruvost/spack\nexport
+        SPACK_ROOT=$PWD/spack/\nexport PATH=$SPACK_ROOT/bin:$PATH          \ncd spack/\ngit
+        checkout morse\ncd ../          \n\npip install --user execo\n\npython ../../execo_script.py
+        grenoble 0 1 \"1:00:00\"\n"
+    - breakpoint: break

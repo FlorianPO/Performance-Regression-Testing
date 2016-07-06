@@ -1085,3 +1085,45 @@
   [in] 2016-07-05 15:27:50,592 INFO: Spack stdout : 
   [in] 2016-07-05 15:27:50,592 INFO: Delete job: [(1711875, 'grenoble')]
   #+end_example
+
+* Mercredi 06/07
+  L'erreur semble provenir de Python et non de Spack :
+  http://stackoverflow.com/questions/15725273/python-oserror-errno-2-no-such-file-or-directoryq
+
+  Utiliser : =python ./execo_script= ou =os.path.abspath()=
+  -> ne marche toujours pas
+  -> création d'un recipe local
+
+  -> problème venant de l'utilisation de Spack dans Execo
+  -> problème de variable d'environnement -> facile à régler (ouf !)
+
+  HS : avertissement Grid5000 (175% of daily allowance) -> il serait
+  temps que cela marche :)
+
+  Installation de Spack dans Execo -> ça marche !
+
+  Mise en place d'un breakpoint pour vérifier les installations :
+  #+RESULTS
+  #+begin_example
+  IN_CONTEXT :
+    Kameleon_working_dir : /home/root/kamaleon_workdir/
+    Recipe deployed : /home/root/kameleon_workdir/custom_debian_g5k/ (custom_debian_g5k est le nom du recipe) -> default in_context
+    Spack : /home/root/kameleon_workdir/custom_debian_g5k/spack/
+    Execo : /home/root/kameleon_workdir/custom_debian_g5k/
+  
+  OUT_CONTEXT:
+    Kameleon_working_dir : /home/fpopek/kamaleon_workdir/
+    Recipe deployed : /home/fpopek/kameleon_workdir/custom_debian_g5k/ (custom_debian_g5k est le nom du recipe) -> default out_context
+      -> info OAR
+      -> dans kameleon_scripts/out/ : toutes les commandes utilisées
+
+  LOCAL_CONTEXT:
+    Kameleon_working_dir : /home/bepo/Bureau/custom/
+    Recipe deployed : /home/bepo/Bureau/custom/build/custom_debian_g5k (custom_debian_g5k est le nom du recipe) -> default local_context
+  #+end_example
+  
+  La recipe G5K de base ne nettoie pas les réservations ! (d'où
+  l'avertissement) -> l'ajouter, puis pull request dans le git de
+  Kameleon ou envoyer le code à Michael.
+
+  Les variables d'environnement du contexte OUT sont elles préservées ?
