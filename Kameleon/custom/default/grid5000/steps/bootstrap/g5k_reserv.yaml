@@ -32,6 +32,8 @@
       echo "Retrieving job ID"
       export jobid=`oarstat -u | tail -n 1 | grep -o -E '[0-9]+' | head -n 1`
       echo $jobid > job_id
+  - on_export_clean:
+    - exec_out: oardel `cat job_id`
   - exec_out: |
       echo -n "Waiting for the reservation to be ready"
       until $(oarstat -fu $$g5k_user | grep -q "state = Running")
@@ -49,9 +51,6 @@
       - exec_out: echo $machine
       - exec_local: cat >$$kameleon_cwd/g5k_machine
   - exec_out: sleep 1
-
-- on_clean:
-  - exec_out: oardel `cat job_id` # $jobid
 
 - create_out_ssh_config:
   - write_out:

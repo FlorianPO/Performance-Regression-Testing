@@ -28,7 +28,7 @@ class ExecoWorkload(Engine):
         # Go to the result folder before everything
         os.chdir(self.result_dir)
 
-	# print("lol1")
+        # print("lol1")
         # jobs = [(_jobID, _site)]
         # Get nodes
 	    # print("lol2")
@@ -49,7 +49,7 @@ class ExecoWorkload(Engine):
         logger.info("StarPU installation DONE...")
         if (not spack_process.ok):
             logger.info("Error : {}".format(spack_process.error_reason))
-        logger.info("Spack stdout : {}".format(spack_process.stdout));
+            logger.info("Spack stdout : {}".format(spack_process.stdout));
 
         spack_process.kill()
 

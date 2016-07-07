@@ -15,9 +15,6 @@ Host g5kaccess
 Host grenoble
   User fpopek
   ProxyCommand ssh -F /home/bepo/Bureau/custom/build/custom_debian_g5k/ssh_config g5kaccess -W %h:%p
-# Host grenoble
-#  User fpopek
-#  ProxyCommand ssh -F /home/bepo/Bureau/custom/build/custom_debian_g5k/ssh_config grenoble -W %h:%p
 Host custom_debian_g5k
   User root
-  ProxyCommand ssh -F /home/bepo/Bureau/custom/build/custom_debian_g5k/ssh_config grenoble "nc -q 1 adonis-2.grenoble.grid5000.fr %p"
+  ProxyCommand ssh -F /home/bepo/Bureau/custom/build/custom_debian_g5k/ssh_config grenoble "nc -q 1 adonis-5.grenoble.grid5000.fr %p"

@@ -195,7 +195,7 @@ aliases:
   - exec_local: __download "@1" "@2"
 steps:
 - bootstrap/g5k_reserv/create_local_ssh_config_base:
-    identifier: afd4f5a2eb4f
+    identifier: 03bfdb54b6c7
     cmds:
     - exec_local: |-
         mkdir -p $(dirname /home/bepo/Bureau/custom/build/custom_debian_g5k/ssh_config);
@@ -217,12 +217,9 @@ steps:
         Host grenoble
           User fpopek
           ProxyCommand ssh -F /home/bepo/Bureau/custom/build/custom_debian_g5k/ssh_config g5kaccess -W %h:%p
-        # Host grenoble
-        #  User fpopek
-        #  ProxyCommand ssh -F /home/bepo/Bureau/custom/build/custom_debian_g5k/ssh_config grenoble -W %h:%p
         EOF
 - bootstrap/g5k_reserv/deploy_image:
-    identifier: 99fd101a7022
+    identifier: 3b32e0e5f84c
     cmds:
     - exec_out: echo "Deploying image  with kadeploy"
     - exec_out: sleep 1
@@ -231,7 +228,8 @@ steps:
         -t deploy "sleep 1000000"
     - exec_out: |-
         echo "Retrieving job ID"
-        oarstat -u | tail -n 1 | grep -o -E '[0-9]+' | head -n 1 > job_id
+        export jobid=`oarstat -u | tail -n 1 | grep -o -E '[0-9]+' | head -n 1`
+        echo $jobid > job_id
     - exec_out: |-
         echo -n "Waiting for the reservation to be ready"
         until $(oarstat -fu fpopek | grep -q "state = Running")
@@ -251,7 +249,7 @@ steps:
       - exec_local: cat >/home/bepo/Bureau/custom/build/custom_debian_g5k/g5k_machine
     - exec_out: sleep 1
 - bootstrap/g5k_reserv/create_out_ssh_config:
-    identifier: 92af3585b3f4
+    identifier: 715c17d62a9a
     cmds:
     - exec_out: |-
         mkdir -p $(dirname /home/fpopek/kameleon_workdir/custom_debian_g5k/ssh_config);
@@ -267,7 +265,7 @@ steps:
           Protocol 2
         EOF
 - bootstrap/g5k_reserv/append_ssh_node_config:
-    identifier: c662d6616560
+    identifier: 0a124d60bdb6
     cmds:
     - exec_local: |-
         mkdir -p $(dirname /home/bepo/Bureau/custom/build/custom_debian_g5k/ssh_config);
@@ -277,7 +275,7 @@ steps:
           ProxyCommand ssh -F /home/bepo/Bureau/custom/build/custom_debian_g5k/ssh_config grenoble "nc -q 1 `cat /home/bepo/Bureau/custom/build/custom_debian_g5k/g5k_machine | awk '{print $NF}'` %p"
         EOF
 - setup/first_step/some_packages:
-    identifier: 27a9d2be3fad
+    identifier: 832027f8c44a
     cmds:
     - exec_in: |-
         apt-get update
@@ -297,7 +295,7 @@ steps:
         apt-get install -y environment-modules
         apt-get install -y hwloc libhwloc-dev
 - setup/first_step/spack_execo:
-    identifier: 3bb79f352147
+    identifier: 4f5f7803afd6
     cmds:
     - pipe:
       - exec_local: cat ../../execo_script.py
@@ -309,36 +307,31 @@ steps:
         PATH=$SPACK_ROOT/bin:$PATH          \ncd spack/\ngit checkout morse\ncd ../
         \         \n\npip install --user execo\n\nexport job_id=`cat job_id`\npython
         execo_script.py grenoble $job_id 1 1:00:00\n"
-    - breakpoint: Breakpoint...
-- export/g5k_custom/kadeploy_file:
-    identifier: 8520ae69d0fe
+- export/g5k_custom/in_to_local:
+    identifier: fffe045a0fca
     cmds:
+    - exec_in: 'tar -cvf kameleon_scripts_in.tar kameleon_scripts/in/
+
+'
+    - pipe:
+      - exec_in: cat kameleon_scripts_in.tar
+      - exec_local: cat > kameleon_scripts_in.tar
     - exec_local: |-
-        mkdir -p $(dirname /home/bepo/Bureau/custom/build/custom_debian_g5k/custom_debian_g5k.yaml);
-        cat >/home/bepo/Bureau/custom/build/custom_debian_g5k/custom_debian_g5k.yaml <<EOF
-        #
-        # Kameleon generated based on kadeploy description file
-        #
+        tar -xvf kameleon_scripts_in.tar
+        rm kameleon_scripts_in.tar
+- export/g5k_custom/out_to_local:
+    identifier: 874a89459fa7
+    cmds:
+    - exec_out: 'tar -cvf kameleon_scripts_out.tar kameleon_scripts/out/
 
-        name: custom_debian_g5k
-
-        version: 1
-
-        os: linux
-
-        image:
-          file: custom_debian_g5k.tar.gz
-          kind: tar
-          compression: gzip
-
-        postinstalls:
-          - archive: server:///grid5000/postinstalls/debian-x64-base-2.6-post.tgz
-            compression: gzip
-            script: traitement.ash /rambin
-
-        boot:
-          kernel: /vmlinuz
-          initrd: /initrd.img
-
-        filesystem: ext4
-        EOF
+'
+    - pipe:
+      - exec_out: cat kameleon_scripts_out.tar
+      - exec_local: cat > kameleon_scripts_out.tar
+    - exec_local: |-
+        tar -xvf kameleon_scripts_out.tar
+        rm kameleon_scripts_out.tar
+- export/_clean_export/_clean_0_deploy_image:
+    identifier: 3e6589ba7ac8
+    cmds:
+    - exec_out: oardel $jobid

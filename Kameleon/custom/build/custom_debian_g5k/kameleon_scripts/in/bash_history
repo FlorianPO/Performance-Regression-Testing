@@ -1,0 +1,12 @@
+git clone https://github.com/fpruvost/spack
+export SPACK_ROOT=$PWD/spack/
+export PATH=$SPACK_ROOT/bin:$PATH          
+cd spack/
+git checkout morse
+cd ../          
+
+pip install --user execo
+
+export job_id=`cat job_id`
+python execo_script.py grenoble $job_id 1 1:00:00
+tar -cvf kameleon_scripts_in.tar kameleon_scripts/in/

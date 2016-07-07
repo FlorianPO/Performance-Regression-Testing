@@ -59,41 +59,27 @@ setup:
         
           pip install --user execo
 
-          export job_id=`cat job_id`
-          python execo_script.py $${my_g5k_site} $job_id $${my_g5k_nodes} $${my_g5k_walltime}
-      - breakpoint: "Breakpoint..."
+          python execo_script.py $${my_g5k_site} `cat job_id` $${my_g5k_nodes} $${my_g5k_walltime}
 
 export:
   - g5k_custom:
-    - kadeploy_file:
-      - write_local:
-        - $$kameleon_cwd/$$kameleon_recipe_name.yaml
-        - |
-          #
-          # Kameleon generated based on kadeploy description file
-          #
-          ---
-          name: $$kameleon_recipe_name
+    - in_to_local:
+      - exec_in: |
+          tar -cvf kameleon_scripts_in.tar kameleon_scripts/in/
+      - pipe:
+        - exec_in: cat kameleon_scripts_in.tar
+        - exec_local: cat > kameleon_scripts_in.tar
+      - exec_local: |
+          tar -xvf kameleon_scripts_in.tar
+          rm kameleon_scripts_in.tar
 
-          version: 1
-
-          os: linux
-
-          image:
-            file: $$kameleon_recipe_name.tar.gz
-            kind: tar
-            compression: gzip
-
-          postinstalls:
-            - archive: server:///grid5000/postinstalls/debian-x64-base-2.6-post.tgz
-              compression: gzip
-              script: traitement.ash /rambin
-
-          boot:
-            kernel: /vmlinuz
-            initrd: /initrd.img
-
-          filesystem: $$filesystem_type
-
-
+    - out_to_local:
+      - exec_out: |
+          tar -cvf kameleon_scripts_out.tar kameleon_scripts/out/
+      - pipe:
+        - exec_out: cat kameleon_scripts_out.tar
+        - exec_local: cat > kameleon_scripts_out.tar
+      - exec_local: |
+          tar -xvf kameleon_scripts_out.tar
+          rm kameleon_scripts_out.tar
 

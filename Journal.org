@@ -1127,3 +1127,38 @@
   Kameleon ou envoyer le code à Michael.
 
   Les variables d'environnement du contexte OUT sont elles préservées ?
+* Jeudi 07/07
+  Ajout d'un hook dans le recipe kameleon pour nettoyer la réservation
+  G5k -> ça marche bien !
+
+  Conservation des variables d'environnement dans le context IN :
+  parfois buggué 
+
+  Conservation des variables d'environnement dans le
+  context OUT : ok
+
+  Problème de hook : =on_export_clean= intervient peu après le boostrap
+  -> envoie d'un mail à Michael -> fausse alerte
+
+  Report du bug de contexte IN à Michael -> ajout d'une issue dans
+  Github : https://github.com/oar-team/kameleon/issues/86
+
+** A faire
+   Récupérer les données dans le contexte local
+
+   #+RESULTS
+   #+begin_example
+   Dans IN :
+   Récupérer =kameleon_scripts/= -> fait
+   Récupérer =results_XXX/= (ex : =results_2016-07-07--11-34-18/=) -> créer un dossier execo
+  
+   Dans OUT :
+   Récupérer =kameleon_scripts/= -> fait
+   Récupérer les infos de réservations :
+   =OAR.d7c379dee39f.1711919.stdout=
+   =OAR.d7c379dee39f.1711919.stderr=
+   =ssh_config=
+   #+end_example
+   
+   Utiliser les pipes (comment passer en dossier par le pipe ?) ->
+   passer par tar.gz
