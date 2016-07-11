@@ -10,7 +10,7 @@ BASH_VERSINFO=([0]="4" [1]="3" [2]="11" [3]="1" [4]="release" [5]="x86_64-pc-lin
 BASH_VERSION='4.3.11(1)-release'
 CLUTTER_BACKEND=x11
 COLORTERM=gnome-terminal
-DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-G3vjQpuNq1,guid=06f1d2049a672fca362e6f88577e1e54
+DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-SqJ6lW9mO3,guid=eb10599e7849ebbcaaa67f4d578367c0
 DEBIAN_FRONTEND=noninteractive
 DEFAULTS_PATH=/usr/share/gconf/cinnamon.default.path
 DESKTOP_SESSION=cinnamon
@@ -21,9 +21,9 @@ FUNCNAME=([0]="save_state_handler")
 GDMSESSION=cinnamon
 GDM_XSERVER_LOCATION=local
 GNOME_DESKTOP_SESSION_ID=this-is-deprecated
-GNOME_KEYRING_CONTROL=/run/user/1000/keyring-JjknDi
-GNOME_KEYRING_PID=2484
-GPG_AGENT_INFO=/run/user/1000/keyring-JjknDi/gpg:0:1
+GNOME_KEYRING_CONTROL=/run/user/1000/keyring-FM1xPS
+GNOME_KEYRING_PID=2499
+GPG_AGENT_INFO=/run/user/1000/keyring-FM1xPS/gpg:0:1
 GROUPS=()
 HISTFILE=/home/bepo/Bureau/custom/build/custom_debian_g5k/kameleon_scripts/local/bash_history
 HOME=/home/bepo
@@ -55,16 +55,16 @@ OPTIND=1
 OSTYPE=linux-gnu
 PATH=/usr/bin:/usr/sbin:/bin:/sbin:/usr/bin:/usr/sbin:/bin:/sbin:/usr/bin:/usr/sbin:/bin:/sbin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games
 PIPESTATUS=([0]="0")
-PPID=6315
+PPID=9794
 PS4='+ '
 PWD=/home/bepo/Bureau/custom/build/custom_debian_g5k
 QT_STYLE_OVERRIDE=gtk
-SESSION_MANAGER=local/bepo-HP-Z800-Workstation:@/tmp/.ICE-unix/2495,unix/bepo-HP-Z800-Workstation:/tmp/.ICE-unix/2495
+SESSION_MANAGER=local/bepo-HP-Z800-Workstation:@/tmp/.ICE-unix/2510,unix/bepo-HP-Z800-Workstation:/tmp/.ICE-unix/2510
 SHELL=/bin/bash
 SHELLOPTS=braceexpand:hashall:interactive-comments
 SHLVL=3
-SSH_AGENT_PID=2622
-SSH_AUTH_SOCK=/run/user/1000/keyring-JjknDi/ssh
+SSH_AGENT_PID=2637
+SSH_AUTH_SOCK=/run/user/1000/keyring-FM1xPS/ssh
 TERM=xterm
 TEXTDOMAIN=im-config
 TEXTDOMAINDIR=/usr/share/locale/
@@ -73,18 +73,18 @@ UID=1000
 USER=bepo
 USERNAME=bepo
 VTE_VERSION=3409
-WINDOWID=46137352
-WINDOWPATH=8
+WINDOWID=48329708
+WINDOWPATH=7
 XAUTHORITY=/home/bepo/.Xauthority
 XDG_CONFIG_DIRS=/etc/xdg/xdg-cinnamon:/etc/xdg
 XDG_CURRENT_DESKTOP=X-Cinnamon
 XDG_DATA_DIRS=/usr/share/cinnamon:/usr/share/gnome:/usr/local/share/:/usr/share/:/usr/share/mdm/
 XDG_RUNTIME_DIR=/run/user/1000
 XDG_SEAT=seat0
-XDG_SESSION_COOKIE=143f8ed1e0f777530ac25c5956d94edb-1467883091.265720-252090591
+XDG_SESSION_COOKIE=143f8ed1e0f777530ac25c5956d94edb-1468229567.787086-348987603
 XDG_SESSION_DESKTOP=cinnamon
 XDG_SESSION_ID=c2
-XDG_VTNR=8
+XDG_VTNR=7
 _='Saved ENV in /home/bepo/Bureau/custom/build/custom_debian_g5k/kameleon_scripts/local/bash_env file'
 	declare -fx __download
 	declare -fx __find_free_port

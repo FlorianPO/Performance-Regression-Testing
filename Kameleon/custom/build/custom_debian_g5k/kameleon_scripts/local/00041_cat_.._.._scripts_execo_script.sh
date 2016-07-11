@@ -17,11 +17,9 @@ trap 'save_env' INT TERM EXIT
 source "${__ROOT_DIRECTORY__}/bash_env" 2> /dev/null || true
 
 # Log cmd
-echo tar\ -xvf\ kameleon_scripts_out.tar'
-'rm\ kameleon_scripts_out.tar >> "${__ROOT_DIRECTORY__}/bash_history"
+echo cat\ ../../scripts/execo_script.py >> "${__ROOT_DIRECTORY__}/bash_history"
 
 
 
-tar -xvf kameleon_scripts_out.tar
-rm kameleon_scripts_out.tar
+cat ../../scripts/execo_script.py
 

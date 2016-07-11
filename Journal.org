@@ -1149,16 +1149,47 @@
    #+RESULTS
    #+begin_example
    Dans IN :
-   Récupérer =kameleon_scripts/= -> fait
-   Récupérer =results_XXX/= (ex : =results_2016-07-07--11-34-18/=) -> créer un dossier execo
+   Récupérer kameleon_scripts/ -> fait
+   Récupérer results_XXX/ (ex : results_2016-07-07--11-34-18/) -> créer un dossier execo
   
    Dans OUT :
-   Récupérer =kameleon_scripts/= -> fait
-   Récupérer les infos de réservations :
-   =OAR.d7c379dee39f.1711919.stdout=
-   =OAR.d7c379dee39f.1711919.stderr=
-   =ssh_config=
+   Récupérer kameleon_scripts/ -> fait
+   Récupérer les infos de réservations : -> fait
+   OAR.d7c379dee39f.1711919.stdout
+   OAR.d7c379dee39f.1711919.stderr
+   ssh_config
    #+end_example
    
    Utiliser les pipes (comment passer en dossier par le pipe ?) ->
    passer par tar.gz
+* Lundi 11/07
+  Récupération des infos générées par Kameleon
+
+  Récupération des infos machines (linker à StarPU)
+
+  Phase finale : lancer StarPU / récupérer ses infos
+  http://starpu.gforge.inria.fr/testing/morse/trunk/morse.html
+
+  - Trouver comment Spack gère les emplacements d'installation
+    https://groups.google.com/forum/#!msg/spack/-4DvgF3QKTE/wQQvDb26DAAJ
+
+    Le script à exécuter se trouve dans : {StarPU installation}/lib/chameleon/timing/
+  - Trouver comment installer StarPU / Simgrid >:(
+    http://morse.gforge.inria.fr/spack/spack.html#sec-2-1-1-7-2
+
+    -> impossible !
+
+    Genre d'erreurs obtenues :
+    #+RESULTS
+    #+begin_example
+    core/simgrid.c:224:2: error: too many arguments to function 'xbt_cfg_set_int'
+    xbt_cfg_set_int(_sg_cfg_set, "contexts/stack_size", stack_size);
+    #+end_example
+
+    Cette fonction ne prend que deux arguments !
+    http://simgrid.gforge.inria.fr/simgrid/3.13/doc/group__XBT__cfg__use.html#ga6940aacb7b28c261e5468a5500758679
+    http://simgrid.gforge.inria.fr/simgrid/3.14/doc/group__XBT__cfg__use.html
+
+    Luka et Florent n'y arrivent pas non plus. Arnaud : laisser tomber
+
+  Ecriture du programme Execo exécutant StarPU (à tester)
