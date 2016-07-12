@@ -1193,3 +1193,23 @@
     Luka et Florent n'y arrivent pas non plus. Arnaud : laisser tomber
 
   Ecriture du programme Execo exécutant StarPU (à tester)
+* Mardi 12/07
+  Problème avec G5k -> ssh anormalement long -> tester execo pas
+  possible :(
+
+  Après quelques minutes -> lancement
+
+  Quelques soucis supplémentaires : 
+
+  #+RESULTS
+  #+begin_example
+  [in] Err http://ftp.fr.debian.org wheezy Release.gpg
+  [in]   Could not connect to proxy:3128 (172.16.31.113). - connect (113: No route to host)
+  [in] Err http://security.debian.org wheezy/updates Release.gpg
+  [in]   Could not connect to proxy:3128 (172.16.31.113). - connect (113: No route to host)
+  #+end_example
+
+  Michael : pas besoin des proxys sur G5k dorénavant -> je n'en
+  utilisais pas. Problème G5k ? voir Bastien
+
+  Ecriture d'un sweeper python
