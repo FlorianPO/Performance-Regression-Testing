@@ -1218,3 +1218,60 @@
 * Lundi 18/07
   Séparation de Kameleon et de Execo : Kameleon crée une image .tgz,
   Execo déploie l'image
+
+  Execo doit être lancé depuis la frontale, sinon il faut modifier son
+  .ssh et son .execo.conf.py -> utiliser une deuxième recette Kameleon
+  ?
+
+  Création d'une deuxième recette Kameleon pour Execo
+
+  Le fichier .env crée par la première recette n'est pas exact !
+
+  Fatal error :
+  #+RESULTS:
+  #+begin_example
+  Error : undefined method `read_nonblock' for nil:NilClass
+  Unfortunately, a fatal error has occurred : undefined method `read_nonblock' for nil:NilClass.
+  #+end_example
+
+  Ce que dit le mode debug :
+  #+RESULTS:
+  #+begin_example
+  Error : undefined method `read_nonblock' for nil:NilClass
+  /var/lib/gems/1.9.1/gems/kameleon-builder-2.7.3/lib/kameleon/shell.rb:273:in `read_io': undefined method `read_nonblock' for nil:NilClass (NoMethodError)
+	from /var/lib/gems/1.9.1/gems/kameleon-builder-2.7.3/lib/kameleon/shell.rb:102:in `init_shell_cmd'
+	from /var/lib/gems/1.9.1/gems/kameleon-builder-2.7.3/lib/kameleon/shell.rb:86:in `send_file'
+	from /var/lib/gems/1.9.1/gems/kameleon-builder-2.7.3/lib/kameleon/context.rb:152:in `send_file'
+	from /var/lib/gems/1.9.1/gems/kameleon-builder-2.7.3/lib/kameleon/context.rb:109:in `pipe'
+	from /var/lib/gems/1.9.1/gems/kameleon-builder-2.7.3/lib/kameleon/engine.rb:294:in `exec_cmd'
+	from /var/lib/gems/1.9.1/gems/kameleon-builder-2.7.3/lib/kameleon/engine.rb:247:in `safe_exec_cmd'
+	from /var/lib/gems/1.9.1/gems/kameleon-builder-2.7.3/lib/kameleon/engine.rb:231:in `block (3 levels) in do_steps'
+	from /var/lib/gems/1.9.1/gems/kameleon-builder-2.7.3/lib/kameleon/engine.rb:230:in `each'
+	from /var/lib/gems/1.9.1/gems/kameleon-builder-2.7.3/lib/kameleon/engine.rb:230:in `block (2 levels) in do_steps'
+	from /var/lib/gems/1.9.1/gems/kameleon-builder-2.7.3/lib/kameleon/step.rb:195:in `block in sequence'
+	from /var/lib/gems/1.9.1/gems/kameleon-builder-2.7.3/lib/kameleon/step.rb:195:in `each'
+	from /var/lib/gems/1.9.1/gems/kameleon-builder-2.7.3/lib/kameleon/step.rb:195:in `sequence'
+	from /var/lib/gems/1.9.1/gems/kameleon-builder-2.7.3/lib/kameleon/engine.rb:202:in `block in do_steps'
+	from /var/lib/gems/1.9.1/gems/kameleon-builder-2.7.3/lib/kameleon/step.rb:227:in `block in sequence'
+	from /var/lib/gems/1.9.1/gems/kameleon-builder-2.7.3/lib/kameleon/step.rb:227:in `each'
+	from /var/lib/gems/1.9.1/gems/kameleon-builder-2.7.3/lib/kameleon/step.rb:227:in `sequence'
+	from /var/lib/gems/1.9.1/gems/kameleon-builder-2.7.3/lib/kameleon/engine.rb:191:in `do_steps'
+	from /var/lib/gems/1.9.1/gems/kameleon-builder-2.7.3/lib/kameleon/engine.rb:526:in `block in build'
+	from /var/lib/gems/1.9.1/gems/kameleon-builder-2.7.3/lib/kameleon/engine.rb:525:in `each'
+	from /var/lib/gems/1.9.1/gems/kameleon-builder-2.7.3/lib/kameleon/engine.rb:525:in `build'
+	from /var/lib/gems/1.9.1/gems/kameleon-builder-2.7.3/lib/kameleon/cli.rb:314:in `build'
+	from /var/lib/gems/1.9.1/gems/thor-0.19.1/lib/thor/command.rb:27:in `run'
+	from /var/lib/gems/1.9.1/gems/thor-0.19.1/lib/thor/invocation.rb:126:in `invoke_command'
+	from /var/lib/gems/1.9.1/gems/thor-0.19.1/lib/thor.rb:359:in `dispatch'
+	from /var/lib/gems/1.9.1/gems/thor-0.19.1/lib/thor/base.rb:440:in `start'
+	from /var/lib/gems/1.9.1/gems/kameleon-builder-2.7.3/lib/kameleon/cli.rb:357:in `start'
+	from /var/lib/gems/1.9.1/gems/kameleon-builder-2.7.3/bin/kameleon:18:in `<top (required)>'
+	from /usr/local/bin/kameleon:23:in `load'
+	from /usr/local/bin/kameleon:23:in `<main>'
+  #+end_example
+
+  Problème de gem : https://github.com/bundler/bundler/issues/2915
+
+  Il va falloir générer une nouvelle image ne comportant pas ce bug...
+
+  Solution à tester : passer à Debian7

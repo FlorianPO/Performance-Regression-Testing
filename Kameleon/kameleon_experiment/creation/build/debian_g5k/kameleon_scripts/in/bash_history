@@ -1,0 +1,42 @@
+cat ${KAMELEON_WORKDIR}/pipe-cat_root_.pythonrc.py | cat > /root/.pythonrc.py && rm ${KAMELEON_WORKDIR}/pipe-cat_root_.pythonrc.py
+useradd -m kameleon -s /bin/bash
+echo -n 'kameleon:kameleon' | chpasswd
+usermod -G "$(echo sudo | tr ' ' ',')" kameleon
+apt-get update
+apt-get install -y python2.7-dev python-httplib2 python-pip
+apt-get install -y vim emacs
+apt-get install -y curl patch
+apt-get install -y git subversion mercurial
+apt-get install -y build-essential gfortran
+apt-get install -y autoconf automake cmake cmake-data doxygen texinfo
+apt-get install -y libtool
+apt-get install -y libboost-dev
+apt-get install -y gawk
+apt-get install -y bison flex
+apt-get install -y binutils-dev libelf-dev libiberty-dev
+apt-get install -y libz-dev
+apt-get install -y libqt4-dev freeglut3-dev
+apt-get install -y environment-modules
+apt-get install -y hwloc libhwloc-dev
+# SPACK
+git clone https://github.com/fpruvost/spack
+export SPACK_ROOT=$PWD/spack/
+export PATH=$SPACK_ROOT/bin:$PATH          
+cd spack/
+git checkout morse
+
+# EXECO
+pip install --user execo
+rm -rf /etc/udev/rules.d/70-persistent-net.rules
+mkdir /etc/udev/rules.d/70-persistent-net.rules
+rm -rf  /lib/udev/rules.d/75-persistent-net-generator.rules
+rm -rf /dev/.udev/ /var/lib/dhcp/*
+apt-get -y --force-yes autoremove
+apt-get -y --force-yes autoclean
+apt-get -y --force-yes clean
+apt-get -y --force-yes purge
+rm -rf /var/lib/apt/lists/*
+apt-get -y --force-yes autoclean
+apt-get -y --force-yes clean
+apt-get -y --force-yes autoremove
+tar -cvf kameleon_scripts_in.tar kameleon_scripts/in/                   # Kameleon scripts

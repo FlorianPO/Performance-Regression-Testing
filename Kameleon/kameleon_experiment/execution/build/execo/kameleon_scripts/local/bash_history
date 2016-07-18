@@ -1,0 +1,8 @@
+cat ${KAMELEON_WORKDIR}/pipe-cat_home_bepo_bureau_ | cat >/home/bepo/Bureau/debian8/execution/build/execo/g5k_machine && rm ${KAMELEON_WORKDIR}/pipe-cat_home_bepo_bureau_
+mkdir -p $(dirname /home/bepo/Bureau/debian8/execution/build/execo/ssh_config);
+cat >>/home/bepo/Bureau/debian8/execution/build/execo/ssh_config <<EOF
+Host execo
+  User root
+  ProxyCommand ssh -F /home/bepo/Bureau/debian8/execution/build/execo/ssh_config grenoble "nc -q 1 `cat /home/bepo/Bureau/debian8/execution/build/execo/g5k_machine | awk '{print $NF}'` %p"
+EOF
+cat ../../scripts/execo_script.py

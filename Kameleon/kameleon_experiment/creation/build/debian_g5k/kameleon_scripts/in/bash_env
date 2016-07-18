@@ -1,0 +1,54 @@
+BASH_ALIASES=()
+BASH_ARGC=()
+BASH_ARGV=()
+BASH=/bin/bash
+BASH_CMDS=()
+BASH_LINENO=([0]="1" [1]="0")
+BASHOPTS=cmdhist:complete_fullquote:extquote:force_fignore:hostcomplete:interactive_comments:progcomp:promptvars:sourcepath
+BASH_SOURCE=([0]="/root/kameleon_workdir/debian_g5k/kameleon_scripts/in/00153_apt_get_y_force_yes_autoremove.sh" [1]="/root/kameleon_workdir/debian_g5k/kameleon_scripts/in/00153_apt_get_y_force_yes_autoremove.sh")
+BASH_VERSINFO=([0]="4" [1]="3" [2]="30" [3]="1" [4]="release" [5]="x86_64-pc-linux-gnu")
+BASH_VERSION='4.3.30(1)-release'
+DEBIAN_FRONTEND=noninteractive
+	declare -fx __download
+	declare -fx fail
+	declare -fx __find_free_port
+	declare -fx __find_linux_boot_device
+	declare -fx save_env
+DIRSTACK=()
+EUID=0
+FUNCNAME=([0]="save_env" [1]="main")
+GROUPS=([0]="0")
+HISTFILE=/root/kameleon_workdir/debian_g5k/kameleon_scripts/in/bash_history
+HOME=/root
+HOSTNAME=adonis-9.grenoble.grid5000.fr
+HOSTTYPE=x86_64
+IFS=$' \t\n'
+KAMELEON_CONTEXT_NAME=in_context
+KAMELEON_WORKDIR=/root
+LANG=en_US.UTF-8
+LANGUAGE=en_US:en
+LC_ALL=en_US.UTF-8
+LOGNAME=root
+MACHTYPE=x86_64-pc-linux-gnu
+MAIL=/var/mail/root
+OLDPWD=/root/kameleon_workdir/debian_g5k
+OPTERR=1
+OPTIND=1
+OSTYPE=linux-gnu
+PATH=/root/kameleon_workdir/debian_g5k/spack//bin:/usr/bin:/usr/sbin:/bin:/sbin:/usr/bin:/usr/sbin:/bin:/sbin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+PIPESTATUS=([0]="0")
+PPID=7289
+PS4='+ '
+PWD=/root/kameleon_workdir/debian_g5k/spack
+__ROOT_DIRECTORY__=/root/kameleon_workdir/debian_g5k/kameleon_scripts/in
+SHELL=/bin/bash
+SHELLOPTS=allexport:braceexpand:hashall:interactive-comments:pipefail
+SHLVL=2
+SPACK_ROOT=/root/kameleon_workdir/debian_g5k/spack/
+SSH_AUTH_SOCK=/tmp/ssh-8sGcCNpbU2/agent.664
+SSH_CLIENT='172.16.31.101 58805 22'
+SSH_CONNECTION='172.16.31.101 58805 172.16.18.9 22'
+TERM=dumb
+UID=0
+USER=root
+_=+x
