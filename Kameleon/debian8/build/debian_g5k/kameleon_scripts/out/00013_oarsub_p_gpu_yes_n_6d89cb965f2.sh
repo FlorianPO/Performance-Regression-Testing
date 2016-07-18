@@ -17,9 +17,9 @@ trap 'save_env' INT TERM EXIT
 source "${__ROOT_DIRECTORY__}/bash_env" 2> /dev/null || true
 
 # Log cmd
-echo true >> "${__ROOT_DIRECTORY__}/bash_history"
+echo oarsub\ -p\ \"gpu\=\'YES\'\"\ -n\ \"6d89cb965f2a\"\ -l\ nodes\=1,walltime\=1:00:00\ -t\ deploy\ \"sleep\ 1000000\" >> "${__ROOT_DIRECTORY__}/bash_history"
 
 
 
-true
+oarsub -p "gpu='YES'" -n "6d89cb965f2a" -l nodes=1,walltime=1:00:00 -t deploy "sleep 1000000"
 

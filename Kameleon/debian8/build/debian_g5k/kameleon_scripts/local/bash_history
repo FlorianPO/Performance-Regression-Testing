@@ -1,30 +1,5 @@
-true
-cat execo_script.py
-mkdir -p $(dirname /home/bepo/Bureau/debian8/build/debian_g5k/debian_g5k.yaml);
-cat >/home/bepo/Bureau/debian8/build/debian_g5k/debian_g5k.yaml <<EOF
-#
-# Kameleon generated based on kadeploy description file
-#
-
-name: debian_g5k
-
-version: 1
-
-os: linux
-
-image:
-  file: debian_g5k.tar.gz
-  kind: tar
-  compression: gzip
-
-postinstalls:
-  - archive: server:///grid5000/postinstalls/debian-x64-base-2.6-post.tgz
-    compression: gzip
-    script: traitement.ash /rambin
-
-boot:
-  kernel: /vmlinuz
-  initrd: /initrd.img
-
-filesystem: ext4
-EOF
+cat ${KAMELEON_WORKDIR}/pipe-cat_ssh_config_out | cat > ssh_config_out && rm ${KAMELEON_WORKDIR}/pipe-cat_ssh_config_out
+tar -xvf kameleon_scripts_out.tar
+rm kameleon_scripts_out.tar
+tar -xvf OAR_logs.tar
+rm OAR_logs.tar

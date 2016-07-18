@@ -14,9 +14,9 @@ from execo.report import Report
 
 # defined in __main__
 _site = None
-_jobID = None
 _nbrNodes = None
 _walltime = None
+_properties = None
 
 script_path = os.path.dirname(os.path.realpath(__file__))
 
@@ -50,10 +50,10 @@ class ExecoWorkload(Engine):
             oardel(jobs)
 
 if __name__ == "__main__":
-    _site = (sys.argv)[0]
-    _jobID = (sys.argv)[1]
+    _site = (sys.argv)[1]
     _nbrNodes = (sys.argv)[2]
     _walltime = (sys.argv)[3]
+    _properties = (sys.argv)[4]
 
     execo = ExecoWorkload()
     execo.start()

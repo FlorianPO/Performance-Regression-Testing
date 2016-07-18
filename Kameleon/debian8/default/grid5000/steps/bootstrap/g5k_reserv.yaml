@@ -30,7 +30,10 @@
       oarsub $${g5k_property} -n "$${kameleon_short_uuid}" -l nodes=$${g5k_nodes},walltime=$${g5k_walltime} -t deploy "sleep 1000000"
   - exec_out: |
       echo "Retrieving job ID"
-      oarstat -u | tail -n 1 | grep -o -E '[0-9]+' | head -n 1 > job_id
+      export jobid=`oarstat -u | tail -n 1 | grep -o -E '[0-9]+' | head -n 1`
+      echo $jobid > job_id
+  - on_export_clean:
+    - exec_out: oardel `cat job_id`
   - exec_out: |
       echo -n "Waiting for the reservation to be ready"
       until $(oarstat -fu $$g5k_user | grep -q "state = Running")

@@ -1213,3 +1213,8 @@
   utilisais pas. Problème G5k ? voir Bastien
 
   Ecriture d'un sweeper python
+* Mercredi 13/07
+  A rattraper...
+* Lundi 18/07
+  Séparation de Kameleon et de Execo : Kameleon crée une image .tgz,
+  Execo déploie l'image

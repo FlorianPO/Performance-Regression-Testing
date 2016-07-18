@@ -6,14 +6,14 @@ export LC_ALL=${LC_ALL:-"POSIX"}
 
 export DEBIAN_FRONTEND=noninteractive
 
-mkdir -p $(dirname /home/florian/Bureau/debian8/build/debian_g5k/kameleon_scripts/local/bash_history) ; touch "/home/florian/Bureau/debian8/build/debian_g5k/kameleon_scripts/local/bash_history"
-mkdir -p $(dirname /home/florian/Bureau/debian8/build/debian_g5k/kameleon_scripts/local/bash_env) ; touch "/home/florian/Bureau/debian8/build/debian_g5k/kameleon_scripts/local/bash_env"
-mkdir -p $(dirname /home/florian/Bureau/debian8/build/debian_g5k/kameleon_scripts/local/bash_status) ; touch "/home/florian/Bureau/debian8/build/debian_g5k/kameleon_scripts/local/bash_status"
+mkdir -p $(dirname /root/kameleon_workdir/debian_g5k/kameleon_scripts/in/bash_history) ; touch "/root/kameleon_workdir/debian_g5k/kameleon_scripts/in/bash_history"
+mkdir -p $(dirname /root/kameleon_workdir/debian_g5k/kameleon_scripts/in/bash_env) ; touch "/root/kameleon_workdir/debian_g5k/kameleon_scripts/in/bash_env"
+mkdir -p $(dirname /root/kameleon_workdir/debian_g5k/kameleon_scripts/in/bash_status) ; touch "/root/kameleon_workdir/debian_g5k/kameleon_scripts/in/bash_status"
 
 source /etc/bash.bashrc 2> /dev/null
 
-export KAMELEON_CONTEXT_NAME="local_context"
-export HISTFILE="/home/florian/Bureau/debian8/build/debian_g5k/kameleon_scripts/local/bash_history"
+export KAMELEON_CONTEXT_NAME="in_context"
+export HISTFILE="/root/kameleon_workdir/debian_g5k/kameleon_scripts/in/bash_history"
 
 ## functions
 
@@ -27,7 +27,7 @@ export -f fail
 ## aliases
 if [ -t 1 ] ; then
 # restore previous env
-source "/home/florian/Bureau/debian8/build/debian_g5k/kameleon_scripts/local/bash_env"  2> /dev/null
+source "/root/kameleon_workdir/debian_g5k/kameleon_scripts/in/bash_env"  2> /dev/null
 export TERM=xterm
 # for fast typing
 alias h='history'
@@ -205,12 +205,12 @@ function __find_linux_boot_device() {
 
 export -f __find_linux_boot_device
 function save_state_handler {
-  echo "Saved ENV in /home/florian/Bureau/debian8/build/debian_g5k/kameleon_scripts/local/bash_env file"
-  (comm -3 <(declare | sort) <(declare -f | sort)) > /home/florian/Bureau/debian8/build/debian_g5k/kameleon_scripts/local/bash_env
+  echo "Saved ENV in /root/kameleon_workdir/debian_g5k/kameleon_scripts/in/bash_env file"
+  (comm -3 <(declare | sort) <(declare -f | sort)) > /root/kameleon_workdir/debian_g5k/kameleon_scripts/in/bash_env
 }
 trap save_state_handler EXIT
 
-mkdir -p /home/florian/Bureau/debian8/build/debian_g5k && cd /home/florian/Bureau/debian8/build/debian_g5k
+mkdir -p /root/kameleon_workdir/debian_g5k && cd /root/kameleon_workdir/debian_g5k
 #====================================================
 # Begin content of user script 'bashrc'
 #====================================================
