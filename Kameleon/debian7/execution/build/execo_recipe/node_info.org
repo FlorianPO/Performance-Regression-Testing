@@ -1,0 +1,377 @@
+#+TITLE: Experiment results
+#+DATE: Tue Jul 19 15:15:02 UTC 2016
+#+AUTHOR: root
+#+MACHINE: adonis-9.grenoble.grid5000.fr
+#+FILE: node_info.org
+ 
+* MACHINE INFO:
+** PEOPLE LOGGED WHEN EXPERIMENT STARTED:
+############################################
+** ENVIRONMENT VARIABLES:
+HOSTNAME=adonis-9.grenoble.grid5000.fr
+IFS= 	
+
+SHELL=/bin/bash
+TERM=dumb
+SSH_CLIENT=172.16.31.101 56602 22
+BASH=/bin/bash
+LC_ALL=en_US.UTF-8
+USER=root
+SSH_AUTH_SOCK=/tmp/ssh-etQZmYm4pQ/agent.3178
+HOSTTYPE=x86_64
+MAIL=/var/mail/root
+PATH=/usr/bin:/usr/sbin:/bin:/sbin:/usr/bin:/usr/sbin:/bin:/sbin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/bin/X11
+OPTIND=1
+OPTERR=1
+PWD=/root/kameleon_workdir/execo_recipe
+LANG=en_US.UTF-8
+KAMELEON_CONTEXT_NAME=in_context
+__ROOT_DIRECTORY__=/root/kameleon_workdir/execo_recipe/kameleon_scripts/in
+SHLVL=3
+HOME=/root
+PS4=+ 
+LANGUAGE=en_US:en
+OSTYPE=linux-gnu
+LOGNAME=root
+MACHTYPE=x86_64-pc-linux-gnu
+SSH_CONNECTION=172.16.31.101 56602 172.16.18.9 22
+DEBIAN_FRONTEND=noninteractive
+KAMELEON_WORKDIR=/root
+HISTFILE=/root/kameleon_workdir/execo_recipe/kameleon_scripts/in/bash_history
+BASH_VERSION=4.2.37(1)-release
+BASH_FUNC_fail()=() {  echo $@ 1>&2;
+ false
+}
+BASH_FUNC_save_env()=() {  ( comm -3 <(declare | sort) <(declare -f | sort) ) > "${__ROOT_DIRECTORY__}/bash_env"
+}
+BASH_FUNC___find_linux_boot_device()=() {  local PDEVICE=`stat -c %04D /boot`;
+ for file in $(find /dev -type b 2>/dev/null);
+ do
+ local CURRENT_DEVICE=$(stat -c "%02t%02T" $file);
+ if [ $CURRENT_DEVICE = $PDEVICE ]; then
+ ROOTDEVICE="$file";
+ break;
+ fi;
+ done;
+ echo "$ROOTDEVICE"
+}
+BASH_FUNC___download()=() {  echo "Downloading: $1...";
+ if which wget > /dev/null; then
+ wget --retry-connrefused --progress=bar:force "$1" -O "$2" 2>&1;
+ else
+ echo "wget is missing, trying with curl...";
+ if which curl > /dev/null; then
+ curl --fail -# -L --retry 999 --retry-max-time 0 "$1" -o "$2" 2>&1;
+ else
+ echo "curl is missing, trying with python...";
+ if which python > /dev/null; then
+ python -c "
+import sys
+import time
+if sys.version_info >= (3,):
+    import urllib.request as urllib
+else:
+    import urllib
+
+
+def reporthook(count, block_size, total_size):
+    global start_time
+    if count == 0:
+        start_time = time.time()
+        return
+    duration = time.time() - start_time
+    progress_size = float(count * block_size)
+    if duration != 0:
+        if total_size == -1:
+            total_size = block_size
+            percent = 'Unknown size, '
+        else:
+            percent = '%.0f%%, ' % float(count * block_size * 100 / total_size)
+        speed = int(progress_size / (1024 * duration))
+        sys.stdout.write('\r%s%.2f MB, %d KB/s, %d seconds passed'
+                         % (percent, progress_size / (1024 * 1024), speed, duration))
+        sys.stdout.flush()
+
+urllib.urlretrieve('$1', '$2', reporthook=reporthook)
+print('\n')
+";
+ true;
+ else
+ fail "Cannot download $1";
+ fi;
+ fi;
+ fi
+}
+BASH_FUNC___find_free_port()=() {  local begin_port=$1;
+ local end_port=$2;
+ local port=$begin_port;
+ local ret=$(nc -z 127.0.0.1 $port && echo in use || echo free);
+ while [ $port -le $end_port ] && [ "$ret" == "in use" ]; do
+ local port=$[$port+1];
+ local ret=$(nc -z 127.0.0.1 $port && echo in use || echo free);
+ done;
+ if [[ $port -gt $end_port ]]; then
+ fail "No free port available between $begin_port and $end_port";
+ fi;
+ echo $port
+}
+_=/usr/bin/env
+############################################
+** HOSTNAME:
+adonis-9.grenoble.grid5000.fr
+############################################
+** MEMORY HIERARCHY:
+Machine (24GB)
+  NUMANode L#0 (P#0 12GB) + Socket L#0 + L3 L#0 (8192KB)
+    L2 L#0 (256KB) + L1 L#0 (32KB) + Core L#0 + PU L#0 (P#0)
+    L2 L#1 (256KB) + L1 L#1 (32KB) + Core L#1 + PU L#1 (P#1)
+    L2 L#2 (256KB) + L1 L#2 (32KB) + Core L#2 + PU L#2 (P#2)
+    L2 L#3 (256KB) + L1 L#3 (32KB) + Core L#3 + PU L#3 (P#3)
+  NUMANode L#1 (P#1 12GB) + Socket L#1 + L3 L#1 (8192KB)
+    L2 L#4 (256KB) + L1 L#4 (32KB) + Core L#4 + PU L#4 (P#4)
+    L2 L#5 (256KB) + L1 L#5 (32KB) + Core L#5 + PU L#5 (P#5)
+    L2 L#6 (256KB) + L1 L#6 (32KB) + Core L#6 + PU L#6 (P#6)
+    L2 L#7 (256KB) + L1 L#7 (32KB) + Core L#7 + PU L#7 (P#7)
+  HostBridge L#0
+    PCIBridge
+      PCI 8086:10c9
+        Net L#0 "eth0"
+      PCI 8086:10c9
+        Net L#1 "eth1"
+    PCIBridge
+      PCI 15b3:673c
+        Net L#2 "ib0"
+        OpenFabrics L#3 "mlx4_0"
+    PCIBridge
+      PCIBridge
+        PCIBridge
+          PCIBridge
+            PCIBridge
+              PCI 10de:05e7
+            PCIBridge
+              PCI 10de:05e7
+    PCIBridge
+      PCI 102b:0532
+    PCI 8086:3a22
+      Block L#4 "sda"
+############################################
+** CPU INFO:
+processor	: 0
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 26
+model name	: Intel(R) Xeon(R) CPU           E5520  @ 2.27GHz
+stepping	: 5
+microcode	: 0x11
+cpu MHz		: 2268.000
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 4
+core id		: 0
+cpu cores	: 4
+apicid		: 0
+initial apicid	: 0
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 11
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf pni dtes64 monitor ds_cpl vmx est tm2 ssse3 cx16 xtpr pdcm dca sse4_1 sse4_2 popcnt lahf_lm ida dtherm tpr_shadow vnmi flexpriority ept vpid
+bogomips	: 4533.10
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 40 bits physical, 48 bits virtual
+power management:
+
+processor	: 1
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 26
+model name	: Intel(R) Xeon(R) CPU           E5520  @ 2.27GHz
+stepping	: 5
+microcode	: 0x11
+cpu MHz		: 2268.000
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 4
+core id		: 1
+cpu cores	: 4
+apicid		: 2
+initial apicid	: 2
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 11
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf pni dtes64 monitor ds_cpl vmx est tm2 ssse3 cx16 xtpr pdcm dca sse4_1 sse4_2 popcnt lahf_lm ida dtherm tpr_shadow vnmi flexpriority ept vpid
+bogomips	: 4533.34
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 40 bits physical, 48 bits virtual
+power management:
+
+processor	: 2
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 26
+model name	: Intel(R) Xeon(R) CPU           E5520  @ 2.27GHz
+stepping	: 5
+microcode	: 0x11
+cpu MHz		: 2268.000
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 4
+core id		: 2
+cpu cores	: 4
+apicid		: 4
+initial apicid	: 4
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 11
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf pni dtes64 monitor ds_cpl vmx est tm2 ssse3 cx16 xtpr pdcm dca sse4_1 sse4_2 popcnt lahf_lm ida dtherm tpr_shadow vnmi flexpriority ept vpid
+bogomips	: 4533.34
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 40 bits physical, 48 bits virtual
+power management:
+
+processor	: 3
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 26
+model name	: Intel(R) Xeon(R) CPU           E5520  @ 2.27GHz
+stepping	: 5
+microcode	: 0x11
+cpu MHz		: 2268.000
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 4
+core id		: 3
+cpu cores	: 4
+apicid		: 6
+initial apicid	: 6
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 11
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf pni dtes64 monitor ds_cpl vmx est tm2 ssse3 cx16 xtpr pdcm dca sse4_1 sse4_2 popcnt lahf_lm ida dtherm tpr_shadow vnmi flexpriority ept vpid
+bogomips	: 4533.35
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 40 bits physical, 48 bits virtual
+power management:
+
+processor	: 4
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 26
+model name	: Intel(R) Xeon(R) CPU           E5520  @ 2.27GHz
+stepping	: 5
+microcode	: 0x11
+cpu MHz		: 2268.000
+cache size	: 8192 KB
+physical id	: 1
+siblings	: 4
+core id		: 0
+cpu cores	: 4
+apicid		: 16
+initial apicid	: 16
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 11
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf pni dtes64 monitor ds_cpl vmx est tm2 ssse3 cx16 xtpr pdcm dca sse4_1 sse4_2 popcnt lahf_lm ida dtherm tpr_shadow vnmi flexpriority ept vpid
+bogomips	: 4533.38
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 40 bits physical, 48 bits virtual
+power management:
+
+processor	: 5
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 26
+model name	: Intel(R) Xeon(R) CPU           E5520  @ 2.27GHz
+stepping	: 5
+microcode	: 0x11
+cpu MHz		: 2268.000
+cache size	: 8192 KB
+physical id	: 1
+siblings	: 4
+core id		: 1
+cpu cores	: 4
+apicid		: 18
+initial apicid	: 18
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 11
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf pni dtes64 monitor ds_cpl vmx est tm2 ssse3 cx16 xtpr pdcm dca sse4_1 sse4_2 popcnt lahf_lm ida dtherm tpr_shadow vnmi flexpriority ept vpid
+bogomips	: 4533.38
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 40 bits physical, 48 bits virtual
+power management:
+
+processor	: 6
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 26
+model name	: Intel(R) Xeon(R) CPU           E5520  @ 2.27GHz
+stepping	: 5
+microcode	: 0x11
+cpu MHz		: 2268.000
+cache size	: 8192 KB
+physical id	: 1
+siblings	: 4
+core id		: 2
+cpu cores	: 4
+apicid		: 20
+initial apicid	: 20
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 11
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf pni dtes64 monitor ds_cpl vmx est tm2 ssse3 cx16 xtpr pdcm dca sse4_1 sse4_2 popcnt lahf_lm ida dtherm tpr_shadow vnmi flexpriority ept vpid
+bogomips	: 4533.35
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 40 bits physical, 48 bits virtual
+power management:
+
+processor	: 7
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 26
+model name	: Intel(R) Xeon(R) CPU           E5520  @ 2.27GHz
+stepping	: 5
+microcode	: 0x11
+cpu MHz		: 2268.000
+cache size	: 8192 KB
+physical id	: 1
+siblings	: 4
+core id		: 3
+cpu cores	: 4
+apicid		: 22
+initial apicid	: 22
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 11
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf pni dtes64 monitor ds_cpl vmx est tm2 ssse3 cx16 xtpr pdcm dca sse4_1 sse4_2 popcnt lahf_lm ida dtherm tpr_shadow vnmi flexpriority ept vpid
+bogomips	: 4533.37
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 40 bits physical, 48 bits virtual
+power management:
+
+############################################
+** CPU GOVERNOR:
+performance
+############################################
+** CPU FREQUENCY:
+2268000
+############################################
+** LINUX AND GCC VERSIONS:
+Linux version 3.2.0-4-amd64 (debian-kernel@lists.debian.org) (gcc version 4.6.3 (Debian 4.6.3-14) ) #1 SMP Debian 3.2.81-1
+############################################
+* CODE REVISIONS:

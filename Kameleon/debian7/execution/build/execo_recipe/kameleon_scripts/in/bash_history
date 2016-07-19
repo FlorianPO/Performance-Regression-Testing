@@ -1,0 +1,10 @@
+cat ${KAMELEON_WORKDIR}/pipe-cat_get_info.sh | cat > get_info.sh && rm ${KAMELEON_WORKDIR}/pipe-cat_get_info.sh
+# NODE INFO
+bash get_info.sh node_info.org
+
+export SPACK_ROOT=$PWD/../debian_g5k/spack/
+export PATH=$SPACK_ROOT/bin:$PATH
+
+python execo_script.py
+tar -cvf kameleon_scripts_in.tar kameleon_scripts/in/                   # Kameleon scripts
+tar -cvf starpu_results.tar results_*                                   # StarPU results

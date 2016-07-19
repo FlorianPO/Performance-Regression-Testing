@@ -1,0 +1,36 @@
+echo The 'out_context' has been initialized
+echo "Deploying image ~/kameleon_workdir/debian_g5k/kameleonImage.env with kadeploy"
+sleep 1
+echo "Submitting a job for deployment"
+oarsub -p "gpu='YES'" -n "6ed62522cb5d" -l nodes=1,walltime=1:00:00 -t deploy "sleep 1000000"
+echo "Retrieving job ID"
+export jobid=`oarstat -u | tail -n 1 | grep -o -E '[0-9]+' | head -n 1`
+echo $jobid > job_id
+echo -n "Waiting for the reservation to be ready"
+until $(oarstat -fu fpopek | grep -q "state = Running")
+do
+  echo -n .
+  sleep 2
+done
+sleep 1
+echo " ~> OK"
+echo "Getting the machine name"
+export machine=`oarstat -fu fpopek | grep assigned_hostnames | tail -n 1 | cut -d ' ' -f 7`
+echo "Deploying environment ~/kameleon_workdir/debian_g5k/kameleonImage.env on $machine"
+kadeploy3 -a ~/kameleon_workdir/debian_g5k/kameleonImage.env -m $machine -k
+echo $machine
+sleep 1
+mkdir -p $(dirname /home/fpopek/kameleon_workdir/execo_recipe/ssh_config);
+cat >/home/fpopek/kameleon_workdir/execo_recipe/ssh_config <<EOF
+Host execo_recipe
+  User root
+  Hostname $machine
+  UserKnownHostsFile /dev/null
+  StrictHostKeyChecking no
+  ConnectTimeout 2
+  LogLevel FATAL
+  ForwardAgent yes
+  Protocol 2
+EOF
+tar -cvf kameleon_scripts_out.tar kameleon_scripts/out/                 # Kameleon scripts
+tar -cvf OAR_logs.tar $(find . -name "OAR.*.$(cat job_id).*")           # OAR logs

@@ -1275,3 +1275,159 @@
   Il va falloir générer une nouvelle image ne comportant pas ce bug...
 
   Solution à tester : passer à Debian7
+* Mardi 19/07
+  Passage à Debian7 : même erreur...
+
+  -> problème de pipe : ne pas appeller un pipe en 1ère commande :
+  https://github.com/oar-team/kameleon/issues/89
+
+  Comportement singulier (pas une erreur) :
+  #+RESULTS:
+  #+begin_example
+  OpenSSH_6.6.1, OpenSSL 1.0.1f 6 Jan 2014
+  debug1: Reading configuration data /home/bepo/Bureau/debian7/execution/build/execo_recipe/ssh_config
+  debug1: /home/bepo/Bureau/debian7/execution/build/execo_recipe/ssh_config line 1: Applying options for *
+  debug1: /home/bepo/Bureau/debian7/execution/build/execo_recipe/ssh_config line 15: Applying options for grenoble
+  debug1: auto-mux: Trying existing master
+  debug2: fd 3 setting O_NONBLOCK
+  debug2: mux_client_hello_exchange: master version 4
+  debug3: mux_client_forwards: request forwardings: 0 local, 0 remote
+  debug3: mux_client_request_session: entering
+  debug3: mux_client_request_alive: entering
+  debug3: mux_client_request_alive: done pid = 5299
+  debug3: mux_client_request_session: session request sent
+  debug1: mux_client_request_session: master session id: 4
+  #+end_example
+
+  Spack : =spack location= ne marche pas. Utiliser =spack location -i=
+  (Vinìcius)
+
+  Execo : le répertoire courant revient à sa valeur par défaut entre
+  deux process -> faire de grande commandes
+
+  Premiers résultats de StarPU :
+  #+RESULTS
+  #+begin_example
+  #
+  # CHAMELEON 0.9.1, ./timing/time_spotrf_tile
+  # Nb threads: 9
+  # Nb GPUs:    3
+  # NB:         960
+  # IB:         96
+  # eps:        5.960464e-08
+  #
+  #     M       N  K/NRHS   seconds   Gflop/s Deviation
+  48000   48000       1   256.229    143.88 +-   0.00
+  #+end_example
+
+  Ajout des lignes de codes dans Kameleon permettant de récupérer ces
+  résultats
+
+  Un peu léger non ? Non, c'est ça. 143 Gflop/s c'est très nul (~2000
+  sur http://starpu.gforge.inria.fr/testing/morse/trunk/morse.html)
+
+  Deuxième lancemement, problème d'installation (WTF !) :
+  #+RESULTS
+  #+begin_example
+  [in] c.satisfies('+magma'):
+  [in]      89                   # Enable MAGMA here.
+  [in]      90                   cmake_args.extend(["-DCHAMELEON_USE_MAGMA=ON"])
+  [in]      91               if spec.satisfies('+fxt'):
+  [in]      92                   # Enable FxT here.
+  [in]      93                   if spec.satisfies('chameleon@0.9.0:0.9.1'):
+  [in]      94                       cmake_args.extend(["-DCHAMELEON_USE_FXT=ON"])
+  [in]      95                   else:
+  [in]      96                       cmake_args.extend(["-DCHAMELEON_ENABLE_TRACING=ON"])
+  [in]      97               if spec.satisfies('+simu'):
+  [in]      98                   # Enable SimGrid here.
+  [in]      99                   cmake_args.extend(["-DCHAMELEON_SIMULATION=ON"])
+  [in]      100              if spec.satisfies('+quark') and spec.satisfies('+starpu'):
+  [in]      101                  raise RuntimeError('variant +quark and +starpu are mutually exclusive, please choose one.')
+  [in]      102              if spec.satisfies('~quark') and spec.satisfies('~starpu'):
+  [in]      103                  raise RuntimeError('Chameleon requires a runtime system to be enabled, either +quark or +starpu, please choose one.')
+  [in]      104              if spec.satisfies('+quark'):
+  [in]      105                  # Enable Quark here.
+  [in]      106                  cmake_args.extend(["-DCHAMELEON_SCHED_QUARK=ON"])
+  [in]      107              else:
+  [in]      108                  cmake_args.extend(["-DCHAMELEON_SCHED_QUARK=OFF"])
+  [in]      109              if spec.satisfies('+starpu'):
+  [in]      110                  # Enable StarPU here.
+  [in]      111                  starpu = self.spec['starpu']
+  [in]      112                  cmake_args.extend(["-DCHAMELEON_SCHED_STARPU=ON"])
+  [in]      113                  cmake_args.extend(['-DSTARPU_DIR=%s' % starpu.prefix])
+  [in]      114              else:
+  [in]      115                  cmake_args.extend(["-DCHAMELEON_SCHED_STARPU=OFF"])
+  [in]      116  
+  [in]      117              if spec.satisfies('~simu'):
+  [in]      118                  blas = self.spec['blas']
+  [in]      119                  cblas = self.spec['cblas']
+  [in]      120                  lapack = self.spec['lapack']
+  [in]      121                  lapacke
+  [in] stderr:
+  [in] ==> Error: Command exited with status 2:
+  [in] ==> Error: Installation process had nonzero exit code.
+  #+end_example
+
+  Troisième lancement : OK -> bizarre
+
+** A faire
+   Récupérer les sorties standards de TOUS les process (installation,
+   etc...) -> modifier le scipt Execo -> Fait
+
+   Le script de Luka ne semble pas récupérer d'informations sur les
+   GPU
+
+   Trouver pourquoi les résultats sont si bas, peut-être un manque de
+   configuration ?
+   http://starpu.gforge.inria.fr/testing/morse/trunk/plafrim-trunk-plafrim-morse_trunk_chameleon_HEAD_seq.sl.o233738
+   #+RESULTS
+   #+begin_example
+   config.status: executing executable-scripts commands
+   configure:
+   
+	CPUs   enabled: yes
+	CUDA   enabled: yes
+	OpenCL enabled: yes
+	SCC    enabled: no
+	MIC    enabled: no
+   
+	Compile-time limits
+	(change these with --enable-maxcpus, --enable-maxcudadev,
+	--enable-maxopencldev, --enable-maxmicdev, --enable-maxnodes,
+        --enable-maxbuffers)
+        (Note these numbers do not represent the number of detected
+	devices, but the maximum number of devices StarPU can manage)
+   
+	Maximum number of CPUs:           64
+	Maximum number of CUDA devices:   4
+	Maximum number of OpenCL devices: 8
+	Maximum number of SCC devices:    0
+	Maximum number of MIC threads:    0
+	Maximum number of memory nodes:   16
+	Maximum number of task buffers:   8
+   
+	GPU-GPU transfers: yes
+	Allocation cache:  yes
+   
+	Magma enabled:     no
+	BLAS library:      mkl
+	hwloc:             yes
+	FxT trace enabled: no
+	StarPU-Top:        no
+   
+        Documentation:     no
+        Examples:          no
+   
+	StarPU Extensions:
+	       MPI enabled:                                 yes
+	       MPI test suite:                              yes
+	       FFT Support:                                 yes
+	       GCC plug-in:                                 no
+	       GCC plug-in test suite (requires GNU Guile): no
+	       OpenMP runtime support enabled:              no
+	       SOCL enabled:                                no
+               SOCL test suite:                             no
+               Scheduler Hypervisor:                        yes
+               simgrid enabled:                             no
+               ayudame enabled:                             no
+   #+end_example

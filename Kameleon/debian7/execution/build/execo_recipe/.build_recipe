@@ -1,0 +1,346 @@
+---
+name: execo_recipe
+path: "/home/bepo/Bureau/debian7/execution/execo_recipe.yaml"
+base_recipes_files:
+- "/home/bepo/Bureau/debian7/execution/execo_recipe.yaml"
+- "/home/bepo/Bureau/debian7/execution/default/grid5000/debian7.yaml"
+- "/home/bepo/Bureau/debian7/execution/default/chroot/debian7.yaml"
+- "/home/bepo/Bureau/debian7/execution/default/chroot/base.yaml"
+step_files:
+- "/home/bepo/Bureau/debian7/execution/default/grid5000/steps/global/grid5000_options.yaml"
+- "/home/bepo/Bureau/debian7/execution/default/chroot/steps/aliases/defaults.yaml"
+- "/home/bepo/Bureau/debian7/execution/default/grid5000/steps/bootstrap/g5k_reserv.yaml"
+env_files:
+- "/home/bepo/Bureau/debian7/execution/default/chroot/steps/env/bashrc"
+- "/home/bepo/Bureau/debian7/execution/default/chroot/steps/env/functions.sh"
+data_files: []
+global:
+  kameleon_recipe_name: execo_recipe
+  kameleon_recipe_dir: "/home/bepo/Bureau/debian7/execution"
+  kameleon_cwd: "/home/bepo/Bureau/debian7/execution/build/execo_recipe"
+  in_context:
+    cmd: ssh -A -t -F /home/bepo/Bureau/debian7/execution/build/execo_recipe/ssh_config
+      execo_recipe /bin/bash
+    proxy_cache: 127.0.0.1
+    workdir: "/root/kameleon_workdir/execo_recipe"
+    interactive_cmd: ssh -A -t -F /home/bepo/Bureau/debian7/execution/build/execo_recipe/ssh_config
+      execo_recipe /bin/bash
+  out_context:
+    cmd: ssh -A -t -F /home/bepo/Bureau/debian7/execution/build/execo_recipe/ssh_config
+      grenoble /bin/bash
+    proxy_cache: 127.0.0.1
+    workdir: "/home/fpopek/kameleon_workdir/execo_recipe"
+    interactive_cmd: ssh -A -t -F /home/bepo/Bureau/debian7/execution/build/execo_recipe/ssh_config
+      grenoble /bin/bash
+  proxy_local: ''
+  proxy_out: ''
+  proxy_in: ''
+  user_name: kameleon
+  user_password: kameleon
+  root_password: kameleon
+  user_groups: sudo
+  default_keyboard_layout: us,fr,de
+  default_locales: POSIX C en_US fr_FR de_DE
+  default_lang: en_US.UTF-8
+  default_timezone: UTC
+  appliance_tar_compression_level: '9'
+  rootfs_archive_url: http://kameleon.imag.fr/rootfs/x86_64/debian7.tar.xz
+  rootfs_archive_download_path: "/home/bepo/Bureau/debian7/execution/build/execo_recipe/rootfs.tar.xz"
+  rootfs: "/home/bepo/Bureau/debian7/execution/build/execo_recipe/rootfs"
+  arch: x86_64
+  hostname: kameleon-debian
+  filesystem_type: ext4
+  image_size: 10G
+  image_format: qcow2
+  image_disk: "/home/bepo/Bureau/debian7/execution/build/execo_recipe/base_execo_recipe"
+  appliance_formats: qcow2 tar.gz
+  appliance_filename: "/home/bepo/Bureau/debian7/execution/build/execo_recipe/execo_recipe"
+  appliance_tar_excludes: "./etc/fstab ./root/.bash_history ./root/kameleon_workdir
+    ./root/.ssh ./var/tmp/* ./tmp/* ./var/log/* ./dev/* ./proc/* ./run/* ./sys/*"
+  include_steps:
+  - debian/wheezy
+  - debian
+  kernel_args: quiet net.ifnames=0 biosdevname=0
+  distrib: debian
+  release: wheezy
+  release_number: 7
+  kernel_arch: amd64
+  apt_repository: http://ftp.debian.org/debian/
+  apt_enable_contrib: true
+  apt_enable_nonfree: true
+  setup_packages: bsdutils ca-certificates locales man-db less libui-dialog-perl dialog
+    isc-dhcp-client ifupdown iptables iputils-ping iproute netbase net-tools psmisc
+    openssh-server acpid acpi-support-base sysvinit bzip2 wget apt-utils pciutils
+    curl sudo vim bash-completion curl resolvconf
+  g5k_user: fpopek
+  g5k_site: grenoble
+  g5k_property: -p "gpu='YES'"
+  g5k_nodes: '1'
+  g5k_walltime: '1:00:00'
+  g5k_env: "~/kameleon_workdir/debian_g5k/kameleonImage.env"
+  ssh_config_file: "/home/bepo/Bureau/debian7/execution/build/execo_recipe/ssh_config"
+  out_cwd: "/home/fpopek/kameleon_workdir/execo_recipe"
+  in_cwd: "/root/kameleon_workdir/execo_recipe"
+  my_g5k_site: grenoble
+  my_g5k_user: fpopek
+  my_g5k_property: -p \"gpu='YES'\"
+  my_g5k_nodes: 1
+  my_g5k_walltime: '1:00:00'
+  my_g5k_env: "~/kameleon_workdir/debian_g5k/kameleonImage.env"
+  persistent_cache: 'false'
+  kameleon_uuid: b2f9e92b-5ebb-4daf-87d8-6ed62522cb5d
+  kameleon_short_uuid: 6ed62522cb5d
+aliases:
+  write_local:
+  - exec_local: |
+      mkdir -p $(dirname @1);
+      cat >@1 <<EOF
+      @2
+      EOF
+  write_in:
+  - exec_in: |
+      mkdir -p $(dirname @1);
+      cat >@1 <<EOF
+      @2
+      EOF
+  write_out:
+  - exec_out: |
+      mkdir -p $(dirname @1);
+      cat >@1 <<EOF
+      @2
+      EOF
+  append_local:
+  - exec_local: |
+      mkdir -p $(dirname @1);
+      cat >>@1 <<EOF
+      @2
+      EOF
+  append_in:
+  - exec_in: |
+      mkdir -p $(dirname @1);
+      cat >>@1 <<EOF
+      @2
+      EOF
+  append_out:
+  - exec_out: |
+      mkdir -p $(dirname @1);
+      cat >>@1 <<EOF
+      @2
+      EOF
+  local2out:
+  - exec_out: 'mkdir -p $(dirname @2)
+
+'
+  - pipe:
+    - exec_local: cat @1
+    - exec_out: cat > @2
+  local2in:
+  - exec_in: mkdir -p $(dirname @2)
+  - pipe:
+    - exec_local: cat @1
+    - exec_in: cat > @2
+  out2local:
+  - exec_local: mkdir -p $(dirname @2)
+  - pipe:
+    - exec_out: cat @1
+    - exec_local: cat > @2
+  out2in:
+  - exec_in: mkdir -p $(dirname @2)
+  - pipe:
+    - exec_out: cat @1
+    - exec_in: cat > @2
+  in2local:
+  - exec_local: mkdir -p $(dirname @2)
+  - pipe:
+    - exec_in: cat @1
+    - exec_local: cat > @2
+  in2out:
+  - exec_out: mkdir -p $(dirname @2)
+  - pipe:
+    - exec_in: cat @1
+    - exec_out: cat > @2
+  check_cmd_out:
+  - rescue:
+    - exec_out: command -V @1 2> /dev/null
+    - breakpoint: "@1 is missing from out_context"
+  check_cmd_local:
+  - rescue:
+    - exec_local: command -V @1 2> /dev/null
+    - breakpoint: "@1 is missing from local_context"
+  check_cmd_in:
+  - rescue:
+    - exec_in: command -V @1 2> /dev/null
+    - breakpoint: "@1 is missing from in_context"
+  umount_out:
+  - exec_out: 'echo "try umount @1..." ; mountpoint -q "@1" && umount -f -l "@1" ||
+      true
+
+'
+  umount_local:
+  - exec_local: 'echo "try umount @1..." ; mountpoint -q "@1" && umount -f -l "@1"
+      || true
+
+'
+  umount_in:
+  - exec_in: 'echo "try umount @1..." ; mountpoint -q "@1" && umount -f -l "@1" ||
+      true
+
+'
+  download_file_in:
+  - exec_in: __download "@1" "@2"
+  download_file_out:
+  - exec_out: __download "@1" "@2"
+  download_file_local:
+  - exec_local: __download "@1" "@2"
+steps:
+- bootstrap/g5k_reserv/create_local_ssh_config_base:
+    identifier: 7e0b7ce1f5a4
+    cmds:
+    - exec_local: |-
+        mkdir -p $(dirname /home/bepo/Bureau/debian7/execution/build/execo_recipe/ssh_config);
+        cat >/home/bepo/Bureau/debian7/execution/build/execo_recipe/ssh_config <<EOF
+        Host *
+          UserKnownHostsFile /dev/null
+          StrictHostKeyChecking no
+          ConnectTimeout 2
+          LogLevel FATAL
+          ForwardAgent yes
+          Protocol 2
+          ControlPath /tmp/6ed62522cb5d%r@%h:%p
+          ControlMaster auto
+          ControlPersist yes
+          Compression yes
+        Host g5kaccess
+          User fpopek
+          Hostname access.grid5000.fr
+        Host grenoble
+          User fpopek
+          ProxyCommand ssh -F /home/bepo/Bureau/debian7/execution/build/execo_recipe/ssh_config g5kaccess -W %h:%p
+        EOF
+- bootstrap/g5k_reserv/deploy_image:
+    identifier: 6ebafbf97234
+    cmds:
+    - exec_out: echo "Deploying image ~/kameleon_workdir/debian_g5k/kameleonImage.env
+        with kadeploy"
+    - exec_out: sleep 1
+    - exec_out: echo "Submitting a job for deployment"
+    - exec_out: oarsub -p "gpu='YES'" -n "6ed62522cb5d" -l nodes=1,walltime=1:00:00
+        -t deploy "sleep 1000000"
+    - exec_out: |-
+        echo "Retrieving job ID"
+        export jobid=`oarstat -u | tail -n 1 | grep -o -E '[0-9]+' | head -n 1`
+        echo $jobid > job_id
+    - exec_out: |-
+        echo -n "Waiting for the reservation to be ready"
+        until $(oarstat -fu fpopek | grep -q "state = Running")
+        do
+          echo -n .
+          sleep 2
+        done
+        sleep 1
+        echo " ~> OK"
+    - exec_out: echo "Getting the machine name"
+    - exec_out: export machine=`oarstat -fu fpopek | grep assigned_hostnames | tail
+        -n 1 | cut -d ' ' -f 7`
+    - exec_out: echo "Deploying environment ~/kameleon_workdir/debian_g5k/kameleonImage.env
+        on $machine"
+    - exec_out: kadeploy3 -a ~/kameleon_workdir/debian_g5k/kameleonImage.env -m $machine
+        -k
+    - pipe:
+      - exec_out: echo $machine
+      - exec_local: cat >/home/bepo/Bureau/debian7/execution/build/execo_recipe/g5k_machine
+    - exec_out: sleep 1
+- bootstrap/g5k_reserv/create_out_ssh_config:
+    identifier: 1a69ef19e886
+    cmds:
+    - exec_out: |-
+        mkdir -p $(dirname /home/fpopek/kameleon_workdir/execo_recipe/ssh_config);
+        cat >/home/fpopek/kameleon_workdir/execo_recipe/ssh_config <<EOF
+        Host execo_recipe
+          User root
+          Hostname $machine
+          UserKnownHostsFile /dev/null
+          StrictHostKeyChecking no
+          ConnectTimeout 2
+          LogLevel FATAL
+          ForwardAgent yes
+          Protocol 2
+        EOF
+- bootstrap/g5k_reserv/append_ssh_node_config:
+    identifier: 002b68a09997
+    cmds:
+    - exec_local: |-
+        mkdir -p $(dirname /home/bepo/Bureau/debian7/execution/build/execo_recipe/ssh_config);
+        cat >>/home/bepo/Bureau/debian7/execution/build/execo_recipe/ssh_config <<EOF
+        Host execo_recipe
+          User root
+          ProxyCommand ssh -vvv -F /home/bepo/Bureau/debian7/execution/build/execo_recipe/ssh_config grenoble "nc -q 1 `cat /home/bepo/Bureau/debian7/execution/build/execo_recipe/g5k_machine | awk '{print $NF}'` %p"
+        EOF
+- setup/first_step/null_step:
+    identifier: 4ff4effe11af
+    cmds:
+    - exec_in: echo "null_step"
+- setup/first_step/execo_step:
+    identifier: a5cb8a181667
+    cmds:
+    - pipe:
+      - exec_local: cat ../../scripts/execo_script.py
+      - exec_in: cat > execo_script.py
+    - pipe:
+      - exec_local: cat ../../scripts/get_info.sh
+      - exec_in: cat > get_info.sh
+    - exec_in: |-
+        # NODE INFO
+        bash get_info.sh node_info.org
+
+        export SPACK_ROOT=$PWD/../debian_g5k/spack/
+        export PATH=$SPACK_ROOT/bin:$PATH
+
+        python execo_script.py
+- export/g5k_custom/in_to_local:
+    identifier: c7012ccf13f2
+    cmds:
+    - exec_in: |-
+        tar -cvf kameleon_scripts_in.tar kameleon_scripts/in/                   # Kameleon scripts
+        tar -cvf starpu_results.tar results_*                                   # StarPU results
+    - pipe:
+      - exec_in: cat kameleon_scripts_in.tar
+      - exec_local: cat > kameleon_scripts_in.tar
+    - pipe:
+      - exec_in: cat starpu_results.tar
+      - exec_local: cat > starpu_results.tar
+    - pipe:
+      - exec_in: cat node_info.org
+      - exec_local: cat > node_info.org
+    - exec_local: |-
+        tar -xvf kameleon_scripts_in.tar
+        rm kameleon_scripts_in.tar
+        tar -xvf starpu_results.tar
+        rm starpu_results.tar
+- export/g5k_custom/out_to_local:
+    identifier: 07be7dc2f5bc
+    cmds:
+    - exec_out: |-
+        tar -cvf kameleon_scripts_out.tar kameleon_scripts/out/                 # Kameleon scripts
+        tar -cvf OAR_logs.tar $(find . -name "OAR.*.$(cat job_id).*")           # OAR logs
+    - pipe:
+      - exec_out: cat kameleon_scripts_out.tar
+      - exec_local: cat > kameleon_scripts_out.tar
+    - pipe:
+      - exec_out: cat OAR_logs.tar
+      - exec_local: cat > OAR_logs.tar
+    - pipe:
+      - exec_out: cat ssh_config
+      - exec_local: cat > ssh_config_out
+    - exec_local: |-
+        tar -xvf kameleon_scripts_out.tar
+        rm kameleon_scripts_out.tar
+        tar -xvf OAR_logs.tar
+        rm OAR_logs.tar
+    - exec_out: |-
+        rm kameleon_scripts_out.tar
+        rm OAR_logs.tar
+- export/_clean_export/_clean_0_deploy_image:
+    identifier: c6382abe19a4
+    cmds:
+    - exec_out: oardel `cat job_id`
