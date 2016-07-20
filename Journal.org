@@ -757,7 +757,7 @@
   https://github.com/oar-team/kameleon/issues/84
 
   Problème de build avec spack :
-  #+RESULTS
+  
   #+begin_example
   [in] Traceback (most recent call last):
   [in]   File "/root/kameleon_workdir/debian_g5k/spack/lib/spack/spack/build_environment.py", line 406, in fork
@@ -787,7 +787,7 @@
   http://morse.gforge.inria.fr/chameleon/tuto_chameleon/chameleon-tutorial-2015-12-16-inria.html#sec-1-2-1)
 
   Nouveau problème : 
-  #+RESULTS
+  
   #+begin_example
   [in] checking glpk.h usability... no
   [in] checking glpk.h presence... no==> Error: Command exited with status 1:
@@ -812,7 +812,7 @@
   -> modification de =g5k_reserv.yaml=
   
   Problème :
-  #+RESULTS
+  
   #+begin_example
   [out] Deploying environment jessie-x64-base on grimage-9.grenoble.grid5000.fr
   [out] Resource not found /environments
@@ -1031,7 +1031,7 @@
 
   Problème avec le walltime donné à execo :
 
-  #+RESULTS
+  
   #+begin_example
   install --user execo\npython execo_script.py lyon $job_id 1
   >   1:00:00\n"
@@ -1042,7 +1042,7 @@
 * Mardi 05/07
   Premier lancement de Spack dans Execo :
 
-  #+RESULTS
+  
   #+begin_example
   [in] 2016-07-05 10:22:20,655 INFO: command line arguments: ['execo_script.py', 'grenoble', '1711869', '1', '1:00:00']
   [in] 2016-07-05 10:22:20,655 INFO: command line: execo_script.py grenoble 1711869 1 1:00:00
@@ -1069,7 +1069,7 @@
   Besoin de récupérer la sortie standard de Spack dans Execo.
   Michael : utiliser =stdout= et =stdout_handler=
 
-  #+RESULTS
+  
   #+begin_example
   [in] 2016-07-05 15:12:50,547 INFO: command line arguments: ['execo_script.py', 'grenoble', '1711875', '1', '1:00:00']
   [in] 2016-07-05 15:12:50,547 INFO: command line: execo_script.py grenoble 1711875 1 1:00:00
@@ -1103,7 +1103,7 @@
   Installation de Spack dans Execo -> ça marche !
 
   Mise en place d'un breakpoint pour vérifier les installations :
-  #+RESULTS
+  
   #+begin_example
   IN_CONTEXT :
     Kameleon_working_dir : /home/root/kamaleon_workdir/
@@ -1146,7 +1146,7 @@
 ** A faire
    Récupérer les données dans le contexte local
 
-   #+RESULTS
+   
    #+begin_example
    Dans IN :
    Récupérer kameleon_scripts/ -> fait
@@ -1180,7 +1180,7 @@
     -> impossible !
 
     Genre d'erreurs obtenues :
-    #+RESULTS
+    
     #+begin_example
     core/simgrid.c:224:2: error: too many arguments to function 'xbt_cfg_set_int'
     xbt_cfg_set_int(_sg_cfg_set, "contexts/stack_size", stack_size);
@@ -1201,7 +1201,7 @@
 
   Quelques soucis supplémentaires : 
 
-  #+RESULTS
+  
   #+begin_example
   [in] Err http://ftp.fr.debian.org wheezy Release.gpg
   [in]   Could not connect to proxy:3128 (172.16.31.113). - connect (113: No route to host)
@@ -1306,7 +1306,7 @@
   deux process -> faire de grande commandes
 
   Premiers résultats de StarPU :
-  #+RESULTS
+  
   #+begin_example
   #
   # CHAMELEON 0.9.1, ./timing/time_spotrf_tile
@@ -1327,7 +1327,7 @@
   sur http://starpu.gforge.inria.fr/testing/morse/trunk/morse.html)
 
   Deuxième lancemement, problème d'installation (WTF !) :
-  #+RESULTS
+  
   #+begin_example
   [in] c.satisfies('+magma'):
   [in]      89                   # Enable MAGMA here.
@@ -1380,7 +1380,7 @@
    Trouver pourquoi les résultats sont si bas, peut-être un manque de
    configuration ?
    http://starpu.gforge.inria.fr/testing/morse/trunk/plafrim-trunk-plafrim-morse_trunk_chameleon_HEAD_seq.sl.o233738
-   #+RESULTS
+   
    #+begin_example
    config.status: executing executable-scripts commands
    configure:
