@@ -244,7 +244,7 @@
       ssh fpopek@access.grid5000.fr
       #+end_src
 
-      #+RESULTS:
+      
       #+begin_example
 
       Linux access-south.grid5000.fr 3.2.0-4-amd64 #1 SMP Debian 3.2.73-2+deb7u3 x86_64
@@ -280,7 +280,7 @@
       ssh grenoble
       #+end_src
 
-      #+RESULTS:
+      
       #+begin_example
       ----- Grid'5000 - Grenoble - fgrenoble.grenoble.grid5000.fr -----
 
@@ -424,7 +424,7 @@
 
    La branche morse peut (sous quelles conditions ?) ne pas marcher :
 
-   #+RESULTS:
+   
    #+begin_example
    Traceback (most recent call last):
      File "/root/spack//bin/spack", line 50, in <module>
@@ -470,7 +470,7 @@
   spack install -v chameleon@trunk~quark+simu+examples+fxt+starpu ^starpu@svn-trunk+simgrid+fxt ^simgrid@starpumpi (pour la simulationg, ne marche pas)
   #+end_src
 
-  #+RESULTS:
+  
   #+begin_example
   ==> Successfully installed simgrid
   Fetch: 11.83s.  Build: 45.30s.  Total: 57.12s.
@@ -500,7 +500,7 @@
 
   Solution : remplacer =spec= par =dep_spec=
 
-  #+RESULTS:
+  
   #+begin_example
   ==> 'make' '-j16'
   Making all in src
@@ -539,7 +539,7 @@
   spack install -v chameleon@trunk~quark+simu+examples+fxt+starpu cflags=\"-posix\" ^starpu@svn-trunk+simgrid+fxt ^simgrid@starpumpi
   #+end_src
 
-  #+RESULTS:
+  
   #+begin_example
   /tmp/root/spack-stage/spack-stage-NiynFP/cmake-3.5.2/Source/kwsys/ProcessUNIX.c:189:53: error: unknown type name ‘siginfo_t’
   /tmp/root/spack-stage/spack-stage-NiynFP/cmake-3.5.2/Source/kwsys/ProcessUNIX.c: In function ‘cmsysProcess_AddCommand’:
@@ -566,7 +566,7 @@
   spack install -v chameleon@trunk~quark+simu+examples+fxt+starpu cflags=\"-D_POSIX_C_SOURCE=200112L -D_GNU_SOURCE\" ^starpu@svn-trunk+simgrid+fxt ^simgrid@starpumpi
   #+end_src
 
-  #+RESULTS:
+  
   #+begin_example
   core/perfmodel/perfmodel_history.c: In function ‘_starpu_perfmodel_realloc’:
   core/perfmodel/perfmodel_history.c:662:2: error: ‘LONG_MAX’ undeclared (first use in this function)
@@ -585,7 +585,7 @@
   spack install -v chameleon@trunk~quark+simu+examples+fxt+starpu cflags=\"-D_POSIX_C_SOURCE=200112L -D_GNU_SOURCE -include limits.h\" ^starpu@svn-trunk+simgrid+fxt ^simgrid@starpumpi
   #+end_src
 
-  #+RESULTS:
+  
   #+begin_example
   CMake Error at tools/cmake/CompleteInFiles.cmake:117 (message):
   Failed to find Boost libraries.Did you install libboost-dev and
@@ -647,7 +647,7 @@
   (voir le warning) pour le mode non simulé -> quoiqu'il en soit
   l'installation avec Spack est maîtrisée
 
-  #+RESULTS:
+  
   #+begin_example
   ./timing/time_spotrf_tile --warmup --gpus=3 --threads=9 --nb=960 --ib=96 --n_range=48000:48000:9600
   [starpu][starpu_initialize] Warning: StarPU was configured with --with-fxt, which slows down a bit
@@ -882,7 +882,7 @@
   (espérer que oui) -> OUI
 
   Problème d'installation d'environnement :
-  #+RESULTS:
+  
   #+begin_example
   [in] Installing new version of config file /etc/init.d/nscd ...
   [in] 
@@ -914,7 +914,7 @@
   utilisation des variables d'environnement dans Kameleon pour alléger
   les recipes.
 
-  #+RESULTS:
+  
   #+begin_example
   [in] E: dpkg was interrupted, you must manually run 'dpkg --configure -a' to correct the problem. 
   [in] Fetched 21.3 MB in 3s (6,288 kB/s)
@@ -979,7 +979,7 @@
   #+begin_src sh :session foo :results output :exports both 
   useradd -m kameleon -s /bin/bash
   #+end_src
-  #+RESULTS:
+  
   #+begin_example
   [in] useradd: cannot create directory /home/kameleon
   #+end_example
@@ -991,7 +991,7 @@
   basée sur un .tgz
 
   Problème avec HWLOC :
-  #+RESULTS:
+  
   #+begin_example
   [in] checking for FFTW... checking for FFTWF... checking for FFTWL... checking for HWLOC... configure: error: libhwloc was not found on your system. If the target machine is hyperthreaded the performance may be impacted a lot.  It is strongly recommended to install libhwloc. However, if you really want to use StarPU without enabling libhwloc, please restart configure by speci==> Error: Command exited with status 1:
   [in] ==> Error: Installation process had nonzero exit code.
@@ -1004,7 +1004,7 @@
 * Lundi 04/07
   Récupérer le _dernier_ jobID
 
-  #+RESULTS:
+  
   #+begin_example
   Job id     Name           User           Submission Date     S Queue
   ---------- -------------- -------------- ------------------- - ----------
@@ -1228,14 +1228,14 @@
   Le fichier .env crée par la première recette n'est pas exact !
 
   Fatal error :
-  #+RESULTS:
+  
   #+begin_example
   Error : undefined method `read_nonblock' for nil:NilClass
   Unfortunately, a fatal error has occurred : undefined method `read_nonblock' for nil:NilClass.
   #+end_example
 
   Ce que dit le mode debug :
-  #+RESULTS:
+  
   #+begin_example
   Error : undefined method `read_nonblock' for nil:NilClass
   /var/lib/gems/1.9.1/gems/kameleon-builder-2.7.3/lib/kameleon/shell.rb:273:in `read_io': undefined method `read_nonblock' for nil:NilClass (NoMethodError)
@@ -1282,7 +1282,7 @@
   https://github.com/oar-team/kameleon/issues/89
 
   Comportement singulier (pas une erreur) :
-  #+RESULTS:
+  
   #+begin_example
   OpenSSH_6.6.1, OpenSSL 1.0.1f 6 Jan 2014
   debug1: Reading configuration data /home/bepo/Bureau/debian7/execution/build/execo_recipe/ssh_config
