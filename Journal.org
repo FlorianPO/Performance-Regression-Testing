@@ -1431,3 +1431,32 @@
                simgrid enabled:                             no
                ayudame enabled:                             no
    #+end_example
+* Mercredi 20/07
+  Pour récupérer à partir d'une révision SVN :
+  http://software.llnl.gov/spack/spack.html?highlight=git#spack.fetch_strategy.SvnFetchStrategy
+
+  Doc : http://software.llnl.gov/spack/packaging_guide.html
+
+  Il faut re-écrire le package StarPU pour accepter les différentes
+  révisions SVN
+
+  Un fichier CSV contient les révisions à tester (on pourra y mettre
+  également un jeu d'options de compilation à tester). A partir de ce
+  fichier CSV, on génère le package Spack correspondant (avec un
+  script python), enfin on
+  l'utilise dans Execo.
+
+  Création des générateurs de packages Chameleon et StarPU, et du
+  fichier CSV
+
+  Import de ces fichiers dans la recette Execo
+
+  -> ça marche ! (facile)
+
+** Exploitation des données
+   Exploiter les données avec :
+   http://rmarkdown.rstudio.com/flexdashboard/ 
+   (il faut juste récupérer les Gflop/s)
+
+   -> Installation de RStudio
+  

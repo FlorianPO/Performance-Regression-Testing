@@ -1,23 +1,23 @@
 #+TITLE: Experiment results
-#+DATE: Tue Jul 19 15:15:02 UTC 2016
+#+DATE: Wed Jul 20 13:56:55 UTC 2016
 #+AUTHOR: root
-#+MACHINE: adonis-9.grenoble.grid5000.fr
+#+MACHINE: adonis-3.grenoble.grid5000.fr
 #+FILE: node_info.org
  
 * MACHINE INFO:
 ** PEOPLE LOGGED WHEN EXPERIMENT STARTED:
 ############################################
 ** ENVIRONMENT VARIABLES:
-HOSTNAME=adonis-9.grenoble.grid5000.fr
+HOSTNAME=adonis-3.grenoble.grid5000.fr
 IFS= 	
 
 SHELL=/bin/bash
 TERM=dumb
-SSH_CLIENT=172.16.31.101 56602 22
+SSH_CLIENT=172.16.31.101 47473 22
 BASH=/bin/bash
 LC_ALL=en_US.UTF-8
 USER=root
-SSH_AUTH_SOCK=/tmp/ssh-etQZmYm4pQ/agent.3178
+SSH_AUTH_SOCK=/tmp/ssh-zAYts3SRHq/agent.3164
 HOSTTYPE=x86_64
 MAIL=/var/mail/root
 PATH=/usr/bin:/usr/sbin:/bin:/sbin:/usr/bin:/usr/sbin:/bin:/sbin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/bin/X11
@@ -34,7 +34,7 @@ LANGUAGE=en_US:en
 OSTYPE=linux-gnu
 LOGNAME=root
 MACHTYPE=x86_64-pc-linux-gnu
-SSH_CONNECTION=172.16.31.101 56602 172.16.18.9 22
+SSH_CONNECTION=172.16.31.101 47473 172.16.18.3 22
 DEBIAN_FRONTEND=noninteractive
 KAMELEON_WORKDIR=/root
 HISTFILE=/root/kameleon_workdir/execo_recipe/kameleon_scripts/in/bash_history
@@ -118,7 +118,7 @@ BASH_FUNC___find_free_port()=() {  local begin_port=$1;
 _=/usr/bin/env
 ############################################
 ** HOSTNAME:
-adonis-9.grenoble.grid5000.fr
+adonis-3.grenoble.grid5000.fr
 ############################################
 ** MEMORY HIERARCHY:
 Machine (24GB)
@@ -176,7 +176,7 @@ fpu_exception	: yes
 cpuid level	: 11
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf pni dtes64 monitor ds_cpl vmx est tm2 ssse3 cx16 xtpr pdcm dca sse4_1 sse4_2 popcnt lahf_lm ida dtherm tpr_shadow vnmi flexpriority ept vpid
-bogomips	: 4533.10
+bogomips	: 4532.62
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 40 bits physical, 48 bits virtual
@@ -228,7 +228,7 @@ fpu_exception	: yes
 cpuid level	: 11
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf pni dtes64 monitor ds_cpl vmx est tm2 ssse3 cx16 xtpr pdcm dca sse4_1 sse4_2 popcnt lahf_lm ida dtherm tpr_shadow vnmi flexpriority ept vpid
-bogomips	: 4533.34
+bogomips	: 4533.33
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 40 bits physical, 48 bits virtual
@@ -280,7 +280,7 @@ fpu_exception	: yes
 cpuid level	: 11
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf pni dtes64 monitor ds_cpl vmx est tm2 ssse3 cx16 xtpr pdcm dca sse4_1 sse4_2 popcnt lahf_lm ida dtherm tpr_shadow vnmi flexpriority ept vpid
-bogomips	: 4533.38
+bogomips	: 4533.37
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 40 bits physical, 48 bits virtual
@@ -306,7 +306,7 @@ fpu_exception	: yes
 cpuid level	: 11
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf pni dtes64 monitor ds_cpl vmx est tm2 ssse3 cx16 xtpr pdcm dca sse4_1 sse4_2 popcnt lahf_lm ida dtherm tpr_shadow vnmi flexpriority ept vpid
-bogomips	: 4533.38
+bogomips	: 4533.39
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 40 bits physical, 48 bits virtual
@@ -332,7 +332,7 @@ fpu_exception	: yes
 cpuid level	: 11
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf pni dtes64 monitor ds_cpl vmx est tm2 ssse3 cx16 xtpr pdcm dca sse4_1 sse4_2 popcnt lahf_lm ida dtherm tpr_shadow vnmi flexpriority ept vpid
-bogomips	: 4533.35
+bogomips	: 4533.39
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 40 bits physical, 48 bits virtual
@@ -358,7 +358,7 @@ fpu_exception	: yes
 cpuid level	: 11
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf pni dtes64 monitor ds_cpl vmx est tm2 ssse3 cx16 xtpr pdcm dca sse4_1 sse4_2 popcnt lahf_lm ida dtherm tpr_shadow vnmi flexpriority ept vpid
-bogomips	: 4533.37
+bogomips	: 4533.39
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 40 bits physical, 48 bits virtual

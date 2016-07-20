@@ -17,4 +17,4 @@ Host grenoble
   ProxyCommand ssh -F /home/bepo/Bureau/debian7/execution/build/execo_recipe/ssh_config g5kaccess -W %h:%p
 Host execo_recipe
   User root
-  ProxyCommand ssh -vvv -F /home/bepo/Bureau/debian7/execution/build/execo_recipe/ssh_config grenoble "nc -q 1 adonis-9.grenoble.grid5000.fr %p"
+  ProxyCommand ssh -vvv -F /home/bepo/Bureau/debian7/execution/build/execo_recipe/ssh_config grenoble "nc -q 1 adonis-3.grenoble.grid5000.fr %p"

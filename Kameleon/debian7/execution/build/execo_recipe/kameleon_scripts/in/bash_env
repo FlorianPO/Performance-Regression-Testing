@@ -5,7 +5,7 @@ BASH=/bin/bash
 BASH_CMDS=()
 BASH_LINENO=([0]="1" [1]="0")
 BASHOPTS=cmdhist:extquote:force_fignore:hostcomplete:interactive_comments:progcomp:promptvars:sourcepath
-BASH_SOURCE=([0]="/root/kameleon_workdir/execo_recipe/kameleon_scripts/in/00049_node_info_bash_get_info.sh_nod.sh" [1]="/root/kameleon_workdir/execo_recipe/kameleon_scripts/in/00049_node_info_bash_get_info.sh_nod.sh")
+BASH_SOURCE=([0]="/root/kameleon_workdir/execo_recipe/kameleon_scripts/in/00061_node_info_bash_get_info.sh_nod.sh" [1]="/root/kameleon_workdir/execo_recipe/kameleon_scripts/in/00061_node_info_bash_get_info.sh_nod.sh")
 BASH_VERSINFO=([0]="4" [1]="2" [2]="37" [3]="1" [4]="release" [5]="x86_64-pc-linux-gnu")
 BASH_VERSION='4.2.37(1)-release'
 DEBIAN_FRONTEND=noninteractive
@@ -16,12 +16,11 @@ DEBIAN_FRONTEND=noninteractive
 	declare -fx save_env
 DIRSTACK=()
 EUID=0
-_=execo_script.py
 FUNCNAME=([0]="save_env" [1]="main")
 GROUPS=([0]="0")
 HISTFILE=/root/kameleon_workdir/execo_recipe/kameleon_scripts/in/bash_history
 HOME=/root
-HOSTNAME=adonis-9.grenoble.grid5000.fr
+HOSTNAME=adonis-3.grenoble.grid5000.fr
 HOSTTYPE=x86_64
 IFS=$' \t\n'
 KAMELEON_CONTEXT_NAME=in_context
@@ -38,17 +37,18 @@ OPTIND=1
 OSTYPE=linux-gnu
 PATH=/root/kameleon_workdir/execo_recipe/../debian_g5k/spack//bin:/usr/bin:/usr/sbin:/bin:/sbin:/usr/bin:/usr/sbin:/bin:/sbin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/bin/X11
 PIPESTATUS=([0]="0")
-PPID=3355
+PPID=3498
 PS4='+ '
 PWD=/root/kameleon_workdir/execo_recipe
+_=revisions.csv
 __ROOT_DIRECTORY__=/root/kameleon_workdir/execo_recipe/kameleon_scripts/in
 SHELL=/bin/bash
 SHELLOPTS=allexport:braceexpand:hashall:interactive-comments:pipefail
 SHLVL=2
 SPACK_ROOT=/root/kameleon_workdir/execo_recipe/../debian_g5k/spack/
-SSH_AUTH_SOCK=/tmp/ssh-etQZmYm4pQ/agent.3178
-SSH_CLIENT='172.16.31.101 56602 22'
-SSH_CONNECTION='172.16.31.101 56602 172.16.18.9 22'
+SSH_AUTH_SOCK=/tmp/ssh-zAYts3SRHq/agent.3164
+SSH_CLIENT='172.16.31.101 47473 22'
+SSH_CONNECTION='172.16.31.101 47473 172.16.18.3 22'
 TERM=dumb
 UID=0
 USER=root

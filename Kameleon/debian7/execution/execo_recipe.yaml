@@ -16,7 +16,7 @@ global:
   my_g5k_user: fpopek
   my_g5k_property: -p \"gpu='YES'\"
   my_g5k_nodes: 1
-  my_g5k_walltime: "1:00:00" 
+  my_g5k_walltime: "2:00:00" 
   my_g5k_env: ~/kameleon_workdir/debian_g5k/kameleonImage.env
 
 bootstrap:
@@ -27,12 +27,21 @@ setup:
     - null_step: # fatal error otherwise
       - exec_in: echo "null_step"
     - execo_step:
-      - pipe: # copy execo file in node
+      - pipe:                                                     # copy execo file in node
         - exec_local: cat ../../scripts/execo_script.py
         - exec_in: cat > execo_script.py
-      - pipe: # copy data info script in node
+      - pipe:                                                     # copy data info script in node
         - exec_local: cat ../../scripts/get_info.sh
         - exec_in: cat > get_info.sh
+      - pipe:                                                     # copy chameleon spack package builder
+        - exec_local: cat ../../scripts/chameleon_package_builder.py
+        - exec_in: cat > chameleon_package_builder.py
+      - pipe:                                                     # copy starpu spack package builder
+        - exec_local: cat ../../scripts/starpu_package_builder.py
+        - exec_in: cat > starpu_package_builder.py
+      - pipe:                                                     # copy csv file
+        - exec_local: cat ../../scripts/revisions.csv
+        - exec_in: cat > revisions.csv
       - exec_in: |
           # NODE INFO
           bash get_info.sh node_info.org
@@ -40,7 +49,10 @@ setup:
           export SPACK_ROOT=$PWD/../debian_g5k/spack/
           export PATH=$SPACK_ROOT/bin:$PATH
 
-          python execo_script.py
+          python chameleon_package_builder.py revisions.csv $SPACK_ROOT
+          python starpu_package_builder.py revisions.csv $SPACK_ROOT
+
+          python execo_script.py revisions.csv
 
 export:
   - g5k_custom:
