@@ -5,7 +5,7 @@ Host *
   LogLevel FATAL
   ForwardAgent yes
   Protocol 2
-  ControlPath /tmp/6ed62522cb5d%r@%h:%p
+  ControlPath /tmp/e8cc30f8aeec%r@%h:%p
   ControlMaster auto
   ControlPersist yes
   Compression yes
@@ -17,4 +17,4 @@ Host grenoble
   ProxyCommand ssh -F /home/bepo/Bureau/debian7/execution/build/execo_recipe/ssh_config g5kaccess -W %h:%p
 Host execo_recipe
   User root
-  ProxyCommand ssh -vvv -F /home/bepo/Bureau/debian7/execution/build/execo_recipe/ssh_config grenoble "nc -q 1 adonis-3.grenoble.grid5000.fr %p"
+  ProxyCommand ssh -vvv -F /home/bepo/Bureau/debian7/execution/build/execo_recipe/ssh_config grenoble "nc -q 1 adonis-10.grenoble.grid5000.fr %p"

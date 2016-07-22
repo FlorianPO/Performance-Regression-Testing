@@ -1460,3 +1460,14 @@
 
    -> Installation de RStudio
   
+* Jeudi 21/07
+  Peaufinnage : le fichier CSV contient un header, un module python
+  (CSVHeader) permet de gérer cela facilement entre tous les scripts
+  utilisant le header
+
+  -> utilisation d'un .tar pour passer tous les scripts
+  -> recipe plus propre
+
+  PS: la commande tar est une horreur
+
+  Création d'un script récupérant les données calculées en CSV

@@ -26,32 +26,32 @@ setup:
   - first_step:
     - null_step: # fatal error otherwise
       - exec_in: echo "null_step"
-    - execo_step:
-      - pipe:                                                     # copy execo file in node
-        - exec_local: cat ../../scripts/execo_script.py
-        - exec_in: cat > execo_script.py
-      - pipe:                                                     # copy data info script in node
-        - exec_local: cat ../../scripts/get_info.sh
-        - exec_in: cat > get_info.sh
-      - pipe:                                                     # copy chameleon spack package builder
-        - exec_local: cat ../../scripts/chameleon_package_builder.py
-        - exec_in: cat > chameleon_package_builder.py
-      - pipe:                                                     # copy starpu spack package builder
-        - exec_local: cat ../../scripts/starpu_package_builder.py
-        - exec_in: cat > starpu_package_builder.py
-      - pipe:                                                     # copy csv file
-        - exec_local: cat ../../scripts/revisions.csv
-        - exec_in: cat > revisions.csv
+    - scripts_transfer:                                                           # Copy every scripts and data files from local to in
+      - exec_local: |
+          export DIRECTORY=$PWD
+          cd ../../scripts/
+          tar -cvf $DIRECTORY/scripts.tar *
+      - pipe:
+        - exec_local: cat scripts.tar
+        - exec_in: cat > scripts.tar
+      - exec_local: rm scripts.tar
       - exec_in: |
-          # NODE INFO
-          bash get_info.sh node_info.org
-      
+          tar -xvf scripts.tar
+          rm scripts.tar
+    - execo_step:                                                                 # Main experiment
+      - exec_in: |
+          # SPACK ENVIRONMENT
           export SPACK_ROOT=$PWD/../debian_g5k/spack/
           export PATH=$SPACK_ROOT/bin:$PATH
 
+          # NODE INFO
+          bash get_info.sh node_info.org
+
+          # SPACK PACKAGES
           python chameleon_package_builder.py revisions.csv $SPACK_ROOT
           python starpu_package_builder.py revisions.csv $SPACK_ROOT
 
+          # EXECO
           python execo_script.py revisions.csv
 
 export:
@@ -59,7 +59,7 @@ export:
     - in_to_local:
       - exec_in: |
           tar -cvf kameleon_scripts_in.tar kameleon_scripts/in/                   # Kameleon scripts
-          tar -cvf starpu_results.tar results_*                                   # StarPU results
+          tar -cvf starpu_results.tar starpu_results/                             # StarPU results
       - pipe:                                                                     # PIPE Kameleon scripts
         - exec_in: cat kameleon_scripts_in.tar
         - exec_local: cat > kameleon_scripts_in.tar
@@ -96,3 +96,6 @@ export:
       - exec_out: |
           rm kameleon_scripts_out.tar
           rm OAR_logs.tar
+
+    - data_csv:                                                                   # Retrieving StarPU data in a CSV file
+      - exec_local: python ../../scripts/data_csv.py ../../scripts/revisions.csv starpu_results/

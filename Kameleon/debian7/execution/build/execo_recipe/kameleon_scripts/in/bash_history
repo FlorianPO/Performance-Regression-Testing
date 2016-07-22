@@ -1,13 +1,18 @@
-cat ${KAMELEON_WORKDIR}/pipe-cat_revisions.csv | cat > revisions.csv && rm ${KAMELEON_WORKDIR}/pipe-cat_revisions.csv
-# NODE INFO
-bash get_info.sh node_info.org
-
+cat ${KAMELEON_WORKDIR}/pipe-cat_scripts.tar | cat > scripts.tar && rm ${KAMELEON_WORKDIR}/pipe-cat_scripts.tar
+tar -xvf scripts.tar
+rm scripts.tar
+# SPACK ENVIRONMENT
 export SPACK_ROOT=$PWD/../debian_g5k/spack/
 export PATH=$SPACK_ROOT/bin:$PATH
 
+# NODE INFO
+bash get_info.sh node_info.org
+
+# SPACK PACKAGES
 python chameleon_package_builder.py revisions.csv $SPACK_ROOT
 python starpu_package_builder.py revisions.csv $SPACK_ROOT
 
+# EXECO
 python execo_script.py revisions.csv
 tar -cvf kameleon_scripts_in.tar kameleon_scripts/in/                   # Kameleon scripts
 tar -cvf starpu_results.tar results_*                                   # StarPU results

@@ -3,22 +3,23 @@
 import os
 import sys
 import csv
+from csv_header import CSVHeader
 
 package_folder = 'chameleon'
-
-name_column = 0
-branch_column = 1
-revision_column = 2
-
 result_file = None
 
 def build_from_csv(name):
     f_csv = open(name, 'r')
     csv_reader = csv.reader(f_csv, delimiter=',')
+    header = CSVHeader(csv_reader.next())
 
     result_file.write('\n')
-    for row in csv_reader:
-        result_file.write("    version('%s', svn='%s', revision='%s')\n" % (row[name_column], row[branch_column], row[revision_column]))
+    while True:
+        try:
+            row = csv_reader.next()
+            result_file.write("    version('%s', svn='%s', revision='%s')\n" % (row[header.name], row[header.chameleon_branch], row[header.chameleon_revision]))
+        except StopIteration:
+            break;
 
 if __name__ == "__main__":
     csv_file = (sys.argv)[1]
