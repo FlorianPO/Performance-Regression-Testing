@@ -99,3 +99,4 @@ export:
 
     - data_csv:                                                                   # Retrieving StarPU data in a CSV file
       - exec_local: python ../../scripts/data_csv.py ../../scripts/revisions.csv starpu_results/
+

@@ -88,8 +88,8 @@ global:
   my_g5k_walltime: '2:00:00'
   my_g5k_env: "~/kameleon_workdir/debian_g5k/kameleonImage.env"
   persistent_cache: 'false'
-  kameleon_uuid: 9bb6599c-6e3f-470c-88fe-e8cc30f8aeec
-  kameleon_short_uuid: e8cc30f8aeec
+  kameleon_uuid: b68cef6c-e48a-49bf-bade-9ca2edca2a4e
+  kameleon_short_uuid: 9ca2edca2a4e
 aliases:
   write_local:
   - exec_local: |
@@ -194,7 +194,7 @@ aliases:
   - exec_local: __download "@1" "@2"
 steps:
 - bootstrap/g5k_reserv/create_local_ssh_config_base:
-    identifier: 6550f3e3eaa5
+    identifier: 430e83bcb845
     cmds:
     - exec_local: |-
         mkdir -p $(dirname /home/bepo/Bureau/debian7/execution/build/execo_recipe/ssh_config);
@@ -206,7 +206,7 @@ steps:
           LogLevel FATAL
           ForwardAgent yes
           Protocol 2
-          ControlPath /tmp/e8cc30f8aeec%r@%h:%p
+          ControlPath /tmp/9ca2edca2a4e%r@%h:%p
           ControlMaster auto
           ControlPersist yes
           Compression yes
@@ -218,13 +218,13 @@ steps:
           ProxyCommand ssh -F /home/bepo/Bureau/debian7/execution/build/execo_recipe/ssh_config g5kaccess -W %h:%p
         EOF
 - bootstrap/g5k_reserv/deploy_image:
-    identifier: 7be780a2bfb7
+    identifier: 04794379d770
     cmds:
     - exec_out: echo "Deploying image ~/kameleon_workdir/debian_g5k/kameleonImage.env
         with kadeploy"
     - exec_out: sleep 1
     - exec_out: echo "Submitting a job for deployment"
-    - exec_out: oarsub -p "gpu='YES'" -n "e8cc30f8aeec" -l nodes=1,walltime=2:00:00
+    - exec_out: oarsub -p "gpu='YES'" -n "9ca2edca2a4e" -l nodes=1,walltime=2:00:00
         -t deploy "sleep 1000000"
     - exec_out: |-
         echo "Retrieving job ID"
@@ -251,7 +251,7 @@ steps:
       - exec_local: cat >/home/bepo/Bureau/debian7/execution/build/execo_recipe/g5k_machine
     - exec_out: sleep 1
 - bootstrap/g5k_reserv/create_out_ssh_config:
-    identifier: f32d36e1f773
+    identifier: 88465367a1a0
     cmds:
     - exec_out: |-
         mkdir -p $(dirname /home/fpopek/kameleon_workdir/execo_recipe/ssh_config);
@@ -267,7 +267,7 @@ steps:
           Protocol 2
         EOF
 - bootstrap/g5k_reserv/append_ssh_node_config:
-    identifier: eee2760076bb
+    identifier: 8f37a1e7a4d1
     cmds:
     - exec_local: |-
         mkdir -p $(dirname /home/bepo/Bureau/debian7/execution/build/execo_recipe/ssh_config);
@@ -277,11 +277,11 @@ steps:
           ProxyCommand ssh -vvv -F /home/bepo/Bureau/debian7/execution/build/execo_recipe/ssh_config grenoble "nc -q 1 `cat /home/bepo/Bureau/debian7/execution/build/execo_recipe/g5k_machine | awk '{print $NF}'` %p"
         EOF
 - setup/first_step/null_step:
-    identifier: 59329a1b82d5
+    identifier: e52b2efa7290
     cmds:
     - exec_in: echo "null_step"
 - setup/first_step/scripts_transfer:
-    identifier: ceb80fbbeeeb
+    identifier: c7bd17fcf687
     cmds:
     - exec_local: |-
         export DIRECTORY=$PWD
@@ -295,7 +295,7 @@ steps:
         tar -xvf scripts.tar
         rm scripts.tar
 - setup/first_step/execo_step:
-    identifier: 0a9a5b823628
+    identifier: 53f606ab935a
     cmds:
     - exec_in: |-
         # SPACK ENVIRONMENT
@@ -312,11 +312,11 @@ steps:
         # EXECO
         python execo_script.py revisions.csv
 - export/g5k_custom/in_to_local:
-    identifier: 4f27c61bd03a
+    identifier: 18624f5a92b6
     cmds:
     - exec_in: |-
         tar -cvf kameleon_scripts_in.tar kameleon_scripts/in/                   # Kameleon scripts
-        tar -cvf starpu_results.tar results_*                                   # StarPU results
+        tar -cvf starpu_results.tar starpu_results/                             # StarPU results
     - pipe:
       - exec_in: cat kameleon_scripts_in.tar
       - exec_local: cat > kameleon_scripts_in.tar
@@ -332,7 +332,7 @@ steps:
         tar -xvf starpu_results.tar
         rm starpu_results.tar
 - export/g5k_custom/out_to_local:
-    identifier: e933c75322ea
+    identifier: e4b9c70dc1cd
     cmds:
     - exec_out: |-
         tar -cvf kameleon_scripts_out.tar kameleon_scripts/out/                 # Kameleon scripts
@@ -354,7 +354,11 @@ steps:
     - exec_out: |-
         rm kameleon_scripts_out.tar
         rm OAR_logs.tar
+- export/g5k_custom/data_csv:
+    identifier: ad67ada89323
+    cmds:
+    - exec_local: python ../../scripts/data_csv.py ../../scripts/revisions.csv starpu_results/
 - export/_clean_export/_clean_0_deploy_image:
-    identifier: a007cea607d2
+    identifier: d5344f57d603
     cmds:
     - exec_out: oardel `cat job_id`

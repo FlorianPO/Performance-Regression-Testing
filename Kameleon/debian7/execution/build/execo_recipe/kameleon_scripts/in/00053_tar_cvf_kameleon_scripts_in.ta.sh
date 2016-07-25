@@ -18,10 +18,10 @@ source "${__ROOT_DIRECTORY__}/bash_env" 2> /dev/null || true
 
 # Log cmd
 echo tar\ -cvf\ kameleon_scripts_in.tar\ kameleon_scripts/in/\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \#\ Kameleon\ scripts'
-'tar\ -cvf\ starpu_results.tar\ results_\*\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \#\ StarPU\ results >> "${__ROOT_DIRECTORY__}/bash_history"
+'tar\ -cvf\ starpu_results.tar\ starpu_results/\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \#\ StarPU\ results >> "${__ROOT_DIRECTORY__}/bash_history"
 
 
 
 tar -cvf kameleon_scripts_in.tar kameleon_scripts/in/                   # Kameleon scripts
-tar -cvf starpu_results.tar results_*                                   # StarPU results
+tar -cvf starpu_results.tar starpu_results/                             # StarPU results
 

@@ -1471,3 +1471,28 @@
   PS: la commande tar est une horreur
 
   Création d'un script récupérant les données calculées en CSV
+* Lundi 25/07
+  Fin de l'écriture du script
+
+  Ajout des fermetures de fichier avec =close()= dans les scripts python
+  (plus propre)
+
+  Installation manuelle de R 3.2.5 (les packages par défaut ne
+  déppassent pas 3.0.2) -> long
+
+  #+begin_example
+  Télécharger l'archive .tar..gz
+  Exécuter : ./configuration --enable-R-shrlib=yes
+  Exécuter : make
+  Remplacer le binaire à l'endroit donné par =which R=
+  #+end_example
+
+  Première utilisation de flexdashboard : long à charger
+  http://rmarkdown.rstudio.com/authoring_shiny.html#deployment
+  http://rmarkdown.rstudio.com/flexdashboard/shiny.html
+
+  Le mieux est encore de regarder le code source des exemples :
+  http://rmarkdown.rstudio.com/flexdashboard/examples.html
+
+  Pour des courbes :
+  https://beta.rstudioconnect.com/jjallaire/htmlwidgets-ggplotly-geoms/#geom_density

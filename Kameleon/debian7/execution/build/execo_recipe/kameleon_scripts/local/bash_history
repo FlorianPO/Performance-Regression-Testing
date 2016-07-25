@@ -3,3 +3,4 @@ tar -xvf kameleon_scripts_out.tar
 rm kameleon_scripts_out.tar
 tar -xvf OAR_logs.tar
 rm OAR_logs.tar
+python ../../scripts/data_csv.py ../../scripts/revisions.csv starpu_results/

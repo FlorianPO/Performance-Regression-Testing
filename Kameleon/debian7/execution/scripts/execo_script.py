@@ -79,6 +79,8 @@ class ExecoWorkload(Engine):
 
             except StopIteration:
                 break;
+
+        f_csv.close();
             
 if __name__ == "__main__":
     csv_file = (sys.argv)[1]

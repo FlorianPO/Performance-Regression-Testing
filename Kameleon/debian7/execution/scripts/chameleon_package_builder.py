@@ -20,6 +20,7 @@ def build_from_csv(name):
             result_file.write("    version('%s', svn='%s', revision='%s')\n" % (row[header.name], row[header.chameleon_branch], row[header.chameleon_revision]))
         except StopIteration:
             break;
+    f_csv.close()
 
 if __name__ == "__main__":
     csv_file = (sys.argv)[1]
@@ -27,3 +28,4 @@ if __name__ == "__main__":
 
     result_file = open(spack_path + '/var/spack/repos/builtin/packages/' + package_folder + '/package.py', 'a')
     build_from_csv(csv_file)
+    result_file.close()

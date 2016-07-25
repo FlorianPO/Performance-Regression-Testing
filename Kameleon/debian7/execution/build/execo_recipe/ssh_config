@@ -5,7 +5,7 @@ Host *
   LogLevel FATAL
   ForwardAgent yes
   Protocol 2
-  ControlPath /tmp/e8cc30f8aeec%r@%h:%p
+  ControlPath /tmp/9ca2edca2a4e%r@%h:%p
   ControlMaster auto
   ControlPersist yes
   Compression yes
