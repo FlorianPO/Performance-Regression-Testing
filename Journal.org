@@ -1496,3 +1496,30 @@
 
   Pour des courbes :
   https://beta.rstudioconnect.com/jjallaire/htmlwidgets-ggplotly-geoms/#geom_density
+* Mardi 26/07
+  Création du Markdown
+
+  Dépendances (celles utilisées dans les exemples flashdashboard):
+  - ggplot2
+  - plotly (nécessite =apt-get install libssl-dev libcurl4-openssl-dev=)
+  - plyr
+  - flexdashboard
+
+  X11 introuvable -> pour Debian : =apt-get install xorg-dev=
+
+  Librairie readline introuvable : =apt-get install libreadline-dev=
+
+  -> recompilation de R -> ça marche
+
+  Première visualisation des résultats : ça marche bien !
+
+  Pour rendre ça joli : http://docs.ggplot2.org/0.9.2.1/theme.html
+
+  Utiliser Shiny pour rendre ça encore plus interactif
+
+  A lire :
+  - http://starpu-simgrid.gforge.inria.fr/misc/SIGOPS_paper.pdf
+  - Git Scott Shacon -> youtube
+  - Webinar 4
+  - http://orgmode.org/worg/org-contrib/org-git-link.html
+  

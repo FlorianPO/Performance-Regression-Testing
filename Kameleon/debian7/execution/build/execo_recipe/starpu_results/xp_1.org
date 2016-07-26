@@ -1,0 +1,45 @@
+#+TITLE: Experiment results
+#+DATE: Mon Jul 25 09:40:22 UTC 2016
+#+AUTHOR: root
+#+MACHINE: adonis-10.grenoble.grid5000.fr
+
+* Host information
+[[file:../node_info.org]]
+* Software revisions
+** StarPU
+#+BEGIN_EXAMPLE
+starpu_rev: 3213524620135246320
+#+END_EXAMPLE
+** Chameleon
+#+BEGIN_EXAMPLE
+chameleon_rev: 3213524620135246320
+#+END_EXAMPLE
+* Compilation
+[[file:StarPU_installation_svn_1]]
+* Experimental Results
+** XP1
+*** Command
+#+begin_src sh :results output :exports both
+NBLOCK=120 ; STARPU_=skdjfsd;; run
+#+end_src
+*** Standard Ouput
+    #+BEGIN_EXAMPLE
+#
+# CHAMELEON 0.9.1, ./timing/time_spotrf_tile
+# Nb threads: 9
+# Nb GPUs:    3
+# NB:         960
+# IB:         96
+# eps:        5.960464e-08
+#
+#     M       N  K/NRHS   seconds   Gflop/s Deviation
+  48000   48000       1   259.449    142.09 +-   0.00  
+    #+END_EXAMPLE
+*** Standard Error
+    #+BEGIN_EXAMPLE
+    
+    #+END_EXAMPLE
+*** Result
+#+BEGIN_EXAMPLE
+XP1_Flops: 142.09
+#+END_EXAMPLE
