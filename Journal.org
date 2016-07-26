@@ -1523,3 +1523,4 @@
   - Webinar 4
   - http://orgmode.org/worg/org-contrib/org-git-link.html
   
+ Générer un nom d'expérience approprié / briser les dépendances
