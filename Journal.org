@@ -1524,3 +1524,18 @@
   - http://orgmode.org/worg/org-contrib/org-git-link.html
   
  Générer un nom d'expérience approprié / briser les dépendances
+* Mercredi 27/07
+  Modification script Execo : si une expérience foire, le reste est
+  quand même testé
+
+  Les résultats contiennent désormais les révisions dans leur nom,
+  ex : =experiment_monexperience_c1234_s454=
+
+  Chaque expérience est maintenant placée dans un répertoire qui lui
+  est propre : =monexperience_c1234_s454/=
+
+  Problème d'installation avec Spack (?) -> 3x le même -> très très bizarre
+
+  Maintenant ça marche (je n'ai rien changé) -> WTF
+
+  Piste : problème de checksum (il n'y en a pas pour les révisions) ?

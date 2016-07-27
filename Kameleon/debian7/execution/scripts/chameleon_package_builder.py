@@ -17,7 +17,8 @@ def build_from_csv(name):
     while True:
         try:
             row = csv_reader.next()
-            result_file.write("    version('%s', svn='%s', revision='%s')\n" % (row[header.name], row[header.chameleon_branch], row[header.chameleon_revision]))
+            name = row[header.name] + '_' + row[header.chameleon_revision]
+            result_file.write("    version('%s', svn='%s', revision='%s')\n" % (name, row[header.chameleon_branch], row[header.chameleon_revision]))
         except StopIteration:
             break;
     f_csv.close()

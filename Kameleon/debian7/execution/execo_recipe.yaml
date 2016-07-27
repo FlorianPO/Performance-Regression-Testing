@@ -53,6 +53,7 @@ setup:
 
           # EXECO
           python execo_script.py revisions.csv
+      - breakpoint: "Breakpoint..."
 
 export:
   - g5k_custom:

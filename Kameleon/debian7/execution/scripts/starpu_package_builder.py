@@ -17,7 +17,8 @@ def build_from_csv(name):
     while True:
         try:
             row = csv_reader.next()
-            result_file.write("    version('%s', svn='%s', revision='%s')\n" % (row[header.name], row[header.starpu_branch], row[header.starpu_revision]))
+            name = row[header.name] + '_' + row[header.starpu_revision]
+            result_file.write("    version('%s', svn='%s', revision='%s')\n" % (name, row[header.starpu_branch], row[header.starpu_revision]))
         except StopIteration:
             break;
     f_csv.close()

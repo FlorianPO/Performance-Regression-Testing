@@ -14,5 +14,6 @@ python starpu_package_builder.py revisions.csv $SPACK_ROOT
 
 # EXECO
 python execo_script.py revisions.csv
+true
 tar -cvf kameleon_scripts_in.tar kameleon_scripts/in/                   # Kameleon scripts
 tar -cvf starpu_results.tar starpu_results/                             # StarPU results
