@@ -16,12 +16,12 @@
       Host g5kaccess
         User $$g5k_user
         Hostname access.grid5000.fr
-      Host $$g5k_site
+      Host grenoble
         User $$g5k_user
         ProxyCommand ssh -F $$ssh_config_file g5kaccess -W %h:%p
-      # Host $$g5k_site
-      #  User $$g5k_user
-      #  ProxyCommand ssh -F $$ssh_config_file grenoble -W %h:%p
+      Host $$g5k_site
+        User $$g5k_user
+        ProxyCommand ssh -F $$ssh_config_file grenoble -W %h:%p
 
 - deploy_image:
   - exec_out: echo "Deploying image $$kenv with kadeploy"

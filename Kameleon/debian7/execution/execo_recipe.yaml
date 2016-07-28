@@ -26,6 +26,11 @@ setup:
   - first_step:
     - null_step: # fatal error otherwise
       - exec_in: echo "null_step"
+    - local_scripts:                                                              # Local scripts
+      - exec_local: |
+          python ../../scripts_local/csv_filler.py ../../input_data/revisions.csv ../../input_data/commands.csv ../../input_data/branches.csv
+          cp ../../input_data/revisions.csv ../../scripts/revisions_abstract.csv
+          cp ../../scripts_local/csv_reader.py ../../scripts/csv_reader.py
     - scripts_transfer:                                                           # Copy every scripts and data files from local to in
       - exec_local: |
           export DIRECTORY=$PWD
@@ -34,10 +39,16 @@ setup:
       - pipe:
         - exec_local: cat scripts.tar
         - exec_in: cat > scripts.tar
-      - exec_local: rm scripts.tar
+      - exec_local: |                                                             # Clean local
+          rm scripts.tar
+          rm ../../scripts/revisions.csv
+          rm ../../scripts/revisions_abstract.csv
+          rm ../../scripts/csv_reader.py
+          rm ../../scripts_local/csv_reader.pyc
       - exec_in: |
           tar -xvf scripts.tar
-          rm scripts.tar
+          rm scripts.tar      
+
     - execo_step:                                                                 # Main experiment
       - exec_in: |
           # SPACK ENVIRONMENT
@@ -48,11 +59,11 @@ setup:
           bash get_info.sh node_info.org
 
           # SPACK PACKAGES
-          python chameleon_package_builder.py revisions.csv $SPACK_ROOT
-          python starpu_package_builder.py revisions.csv $SPACK_ROOT
+          python chameleon_package_builder.py revisions.csv revisions_abstract.csv $SPACK_ROOT
+          python starpu_package_builder.py revisions.csv revisions_abstract.csv $SPACK_ROOT
 
           # EXECO
-          python execo_script.py revisions.csv
+          python execo_script.py revisions.csv revisions_abstract.csv
       - breakpoint: "Breakpoint..."
 
 export:
@@ -67,14 +78,14 @@ export:
       - pipe:                                                                     # StarPU results
         - exec_in: cat starpu_results.tar
         - exec_local: cat > starpu_results.tar
-      - pipe:                                                                     # PIPE Node info
-        - exec_in: cat node_info.org
-        - exec_local: cat > node_info.org
       - exec_local: |
           tar -xvf kameleon_scripts_in.tar
           rm kameleon_scripts_in.tar
           tar -xvf starpu_results.tar
           rm starpu_results.tar
+      - pipe:                                                                     # PIPE Node info
+        - exec_in: cat node_info.org
+        - exec_local: cat > starpu_results/node_info.org
 
     - out_to_local:
       - exec_out: |
@@ -99,5 +110,5 @@ export:
           rm OAR_logs.tar
 
     - data_csv:                                                                   # Retrieving StarPU data in a CSV file
-      - exec_local: python ../../scripts/data_csv.py ../../scripts/revisions.csv starpu_results/
+      - exec_local: python ../../scripts/org_builder.py ../../scripts/revisions.csv ../../scripts_local/revisions.csv starpu_results/
 

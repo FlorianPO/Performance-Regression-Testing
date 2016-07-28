@@ -1539,3 +1539,23 @@
   Maintenant ça marche (je n'ai rien changé) -> WTF
 
   Piste : problème de checksum (il n'y en a pas pour les révisions) ?
+* Jeudi 28/07
+  Modification du script récupérant l'ensemble des données (celles-ci
+  étaient placées dans des répertoires qui leur sont propres)
+  
+  Ajout de la commande exécutée dans le fichier CSV
+
+  Modification du fichier CSV : si une case est identique à celle d'au
+  dessus, on peut la laisser vide -> allège le CSV (les commandes sont
+  très grosses) -> refonte du module CSVHeader (devient CSVReader)
+
+  Création du script générant les org-files
+
+  Erreur de checksum :
+  #+begin_example
+  [in] ==> Warning: There is no checksum on file to fetch starpu@svn_1_18010 safely.
+  [in] ==> Error: Will not fetch starpu@svn_1_18010
+  [in] ==> Error: Installation process had nonzero exit code.
+  #+end_example
+
+  Arnaud : placer les commandes dans un autre fichier

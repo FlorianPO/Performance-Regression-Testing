@@ -2,14 +2,14 @@
 
 import sys
 import os
-import csv
-from csv_header import CSVHeader
+from csv_reader import RevisionsReader
 
 from execo import Process
 from execo_engine import Engine, logger
 
 script_path = os.path.dirname(os.path.realpath(__file__))
 csv_file = None
+csv_file_abstract = None
 
 class ExecoWorkload(Engine):
     def setup_result_dir(self):
@@ -23,21 +23,24 @@ class ExecoWorkload(Engine):
         return True
 
     def run(self):
-        f_csv = open(csv_file, 'r')
-        csv_reader = csv.reader(f_csv, delimiter=',')
-        header = CSVHeader(csv_reader.next())
+        cvsr = RevisionsReader(csv_file) # Launch CSV reader
+        cvsr_abstract = RevisionsReader(csv_file_abstract)
 
         os.chdir(self.result_dir) # Go to result directory before everything
 
         while True:
             try:
-                row = csv_reader.next()
-                
-                logger.info("Starting experiment %s with Chameleon@%s and StarPU@%s..." % (row[header.name], row[header.chameleon_revision], row[header.starpu_revision]))
+                cvsr.next()
+                cvsr_abstract.next()
 
-                chameleon_name = row[header.name] + '_' + row[header.chameleon_revision]
-                starpu_name = row[header.name] + '_' + row[header.starpu_revision]
-                global_name = row[header.name] + '_c' + row[header.chameleon_revision] + '_s' + row[header.starpu_revision] 
+                logger.info("Starting experiment %s with Chameleon@%s and StarPU@%s..." % (cvsr.name(), cvsr.chameleonRevision(), cvsr.starpuRevision()))
+
+                chameleon_name = cvsr_abstract.name() + '_' + cvsr_abstract.chameleonBranch() + '_' + cvsr_abstract.chameleonRevision() + '_' + cvsr_abstract.command()
+                starpu_name = cvsr_abstract.name() + '_' + cvsr_abstract.starpuBranch() + '_' + cvsr_abstract.starpuRevision() + '_' + cvsr_abstract.command()
+                global_name = cvsr_abstract.name() \
+                                + '_chameleon_' + cvsr_abstract.chameleonBranch() + '_' + cvsr_abstract.chameleonRevision()
+                                + '_starpu' + cvsr_abstract.starpuBranch() + '_' + cvsr_abstract.starpuRevision()
+                                + '_cmd_' + cvsr_abstract.command()
                 
                 spack_spec = 'chameleon@' + chameleon_name + ' +starpu+fxt ^starpu@' + starpu_name + ' +fxt'
 
@@ -77,13 +80,10 @@ class ExecoWorkload(Engine):
                 # RUNNING EXPERIMENT
                 logger.info("Starting StarPU experiment...")
 
-                starpu_experiment = """export STARPU_WORKER_STATS=1
-                                       export STARPU_CALIBRATE=2
-                                       ./timing/time_spotrf_tile --warmup --gpus=3 --threads=9 --nb=960 --ib=96 --n_range=48000:48000:9600"""
-
-                starpu_experiment_process = Process(starpu_cd + '\n' + starpu_experiment, shell=True)
+                starpu_experiment_process = Process(starpu_cd + '\n' + cvsr.command(), shell=True)
                            
                 starpu_experiment_process.stdout_handlers.append(folder + '/' + 'experiment_' + global_name) # create output file for StarPU execution
+                starpu_experiment_process.stdout_handlers.append(folder + '/' + 'stderr_' + global_name) # create error file for StarPU execution
                 starpu_experiment_process.start()
                 starpu_experiment_process.wait()
 
@@ -96,11 +96,10 @@ class ExecoWorkload(Engine):
 
             except StopIteration:
                 break;
-
-        f_csv.close();
             
 if __name__ == "__main__":
     csv_file = (sys.argv)[1]
+    csv_file_abstract = (sys.argv)[2]
 
     execo = ExecoWorkload()
     execo.start()

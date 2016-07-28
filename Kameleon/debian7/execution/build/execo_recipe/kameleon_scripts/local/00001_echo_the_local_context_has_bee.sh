@@ -17,9 +17,9 @@ trap 'save_env' INT TERM EXIT
 source "${__ROOT_DIRECTORY__}/bash_env" 2> /dev/null || true
 
 # Log cmd
-echo python\ ../../scripts/data_csv.py\ ../../scripts/revisions.csv\ starpu_results/ >> "${__ROOT_DIRECTORY__}/bash_history"
+echo echo\ The\ \'local_context\'\ has\ been\ initialized >> "${__ROOT_DIRECTORY__}/bash_history"
 
 
 
-python ../../scripts/data_csv.py ../../scripts/revisions.csv starpu_results/
+echo The 'local_context' has been initialized
 

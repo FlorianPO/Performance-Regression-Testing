@@ -1,0 +1,4 @@
+command_name,command
+cmd1,"export STARPU_WORKER_STATS=1
+export STARPU_CALIBRATE=2
+./timing/time_spotrf_tile --warmup --gpus=3 --threads=9 --nb=960 --ib=96 –n_range=48000:48000:9600"

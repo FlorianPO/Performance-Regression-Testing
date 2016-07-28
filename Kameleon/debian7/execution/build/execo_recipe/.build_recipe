@@ -280,8 +280,15 @@ steps:
     identifier: 87f840bb345f
     cmds:
     - exec_in: echo "null_step"
+- setup/first_step/local_scripts:
+    identifier: fc3d21cb63c3
+    cmds:
+    - exec_local: |-
+        python ../../scripts_local/csv_filler.py ../../input_data/revisions.csv ../../input_data/commands.csv ../../input_data/branches.csv
+        cp ../../input_data/revisions.csv ../../scripts/revisions_abstract.csv
+        cp ../../scripts_local/csv_reader.py ../../scripts/csv_reader.py
 - setup/first_step/scripts_transfer:
-    identifier: 757c0adf4177
+    identifier: eb5d9358721b
     cmds:
     - exec_local: |-
         export DIRECTORY=$PWD
@@ -290,12 +297,15 @@ steps:
     - pipe:
       - exec_local: cat scripts.tar
       - exec_in: cat > scripts.tar
-    - exec_local: rm scripts.tar
-    - exec_in: |-
-        tar -xvf scripts.tar
+    - exec_local: |-
         rm scripts.tar
+        rm ../../scripts/revisions.csv
+        rm ../../scripts/revisions_abstract.csv
+        rm ../../scripts/csv_reader.py
+        rm ../../scripts_local/csv_reader.pyc
+    - exec_in: "tar -xvf scripts.tar\nrm scripts.tar      \n"
 - setup/first_step/execo_step:
-    identifier: cd42ccd7df06
+    identifier: 218a44608a07
     cmds:
     - exec_in: |-
         # SPACK ENVIRONMENT
@@ -313,7 +323,7 @@ steps:
         python execo_script.py revisions.csv
     - breakpoint: Breakpoint...
 - export/g5k_custom/in_to_local:
-    identifier: b5c30846c78e
+    identifier: afae8b24945c
     cmds:
     - exec_in: |-
         tar -cvf kameleon_scripts_in.tar kameleon_scripts/in/                   # Kameleon scripts
@@ -324,16 +334,16 @@ steps:
     - pipe:
       - exec_in: cat starpu_results.tar
       - exec_local: cat > starpu_results.tar
-    - pipe:
-      - exec_in: cat node_info.org
-      - exec_local: cat > node_info.org
     - exec_local: |-
         tar -xvf kameleon_scripts_in.tar
         rm kameleon_scripts_in.tar
         tar -xvf starpu_results.tar
         rm starpu_results.tar
+    - pipe:
+      - exec_in: cat node_info.org
+      - exec_local: cat > starpu_results/node_info.org
 - export/g5k_custom/out_to_local:
-    identifier: b533f001c802
+    identifier: 1bc7ca493f3b
     cmds:
     - exec_out: |-
         tar -cvf kameleon_scripts_out.tar kameleon_scripts/out/                 # Kameleon scripts
@@ -356,10 +366,11 @@ steps:
         rm kameleon_scripts_out.tar
         rm OAR_logs.tar
 - export/g5k_custom/data_csv:
-    identifier: 0b4daa736666
+    identifier: 22b9e226bc08
     cmds:
-    - exec_local: python ../../scripts/data_csv.py ../../scripts/revisions.csv starpu_results/
+    - exec_local: python ../../scripts/org_builder.py ../../scripts/revisions.csv
+        starpu_results/
 - export/_clean_export/_clean_0_deploy_image:
-    identifier: 4d041132e00b
+    identifier: 9fb1a68998db
     cmds:
     - exec_out: oardel `cat job_id`
