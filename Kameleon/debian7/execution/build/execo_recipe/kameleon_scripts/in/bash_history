@@ -9,11 +9,13 @@ export PATH=$SPACK_ROOT/bin:$PATH
 bash get_info.sh node_info.org
 
 # SPACK PACKAGES
-python chameleon_package_builder.py revisions.csv $SPACK_ROOT
-python starpu_package_builder.py revisions.csv $SPACK_ROOT
+python chameleon_package_builder.py revisions.csv revisions_abstract.csv $SPACK_ROOT
+python starpu_package_builder.py revisions.csv revisions_abstract.csv $SPACK_ROOT
 
 # EXECO
-python execo_script.py revisions.csv
+python execo_script.py revisions.csv revisions_abstract.csv
+nano /tmp/root/spack-stage/spack-stage-bliB4d/chameleon/spack-build.out
+nano /tmp/root/spack-stage/spack-stage-bliB4d/chameleon/spack-build
 true
 tar -cvf kameleon_scripts_in.tar kameleon_scripts/in/                   # Kameleon scripts
 tar -cvf starpu_results.tar starpu_results/                             # StarPU results

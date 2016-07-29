@@ -1,0 +1,31 @@
+[starpu][starpu_initialize] Warning: StarPU was configured with --with-fxt, which slows down a bit
+[starpu][check_bus_config_file] No performance model for the bus, calibrating...
+[starpu][check_bus_config_file] ... done
+[starpu][_starpu_bind_thread_on_cpu] Warning: both workers 0 and 8 are bound to the same PU 0, this will strongly degrade performance
+[starpu][_starpu_update_perfmodel_history] Too big deviation for model splgsy on cpu0_impl0 (Comb0): 33455.868000 vs average 11197.840375, 16 such errors against 16 samples (+198.770717%), flushing the performance model. Use the STARPU_HISTORY_MAX_ERROR environement variable to control the threshold (currently 50%)
+[starpu][_starpu_update_perfmodel_history] Too big deviation for model splgsy on cpu0_impl0 (Comb0): 11284.325000 vs average 20492.706125, 8 such errors against 8 samples (-44.934920%), flushing the performance model. Use the STARPU_HISTORY_MAX_ERROR environement variable to control the threshold (currently 50%)
+[starpu][_starpu_update_perfmodel_history] Too big deviation for model ssyrk on cpu0_impl0 (Comb0): 84450.490000 vs average 52771.076000, 1 such errors against 1 samples (+60.031776%), flushing the performance model. Use the STARPU_HISTORY_MAX_ERROR environement variable to control the threshold (currently 50%)
+[starpu][_starpu_update_perfmodel_history] Too big deviation for model ssyrk on cpu0_impl0 (Comb0): 50377.953000 vs average 100731.651000, 1 such errors against 1 samples (-49.987961%), flushing the performance model. Use the STARPU_HISTORY_MAX_ERROR environement variable to control the threshold (currently 50%)
+[starpu][_starpu_update_perfmodel_history] Too big deviation for model spotrf on cpu0_impl0 (Comb0): 21733.478000 vs average 37701.818000, 1 such errors against 1 samples (-42.354297%), flushing the performance model. Use the STARPU_HISTORY_MAX_ERROR environement variable to control the threshold (currently 50%)
+
+#---------------------
+Worker stats:
+CPU 0                           
+	3326 task(s)
+CPU 1                           
+	6078 task(s)
+CPU 2                           
+	6076 task(s)
+CPU 3                           
+	6052 task(s)
+CPU 4                           
+	6086 task(s)
+CPU 5                           
+	6092 task(s)
+CPU 6                           
+	6074 task(s)
+CPU 7                           
+	6099 task(s)
+CPU 8                           
+	3317 task(s)
+#---------------------

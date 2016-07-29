@@ -8,16 +8,16 @@ package_folder = 'starpu'
 result_file = None
 
 def build_from_csv(cvs_name, csv_name_abstract):
-    cvsr = RevisionsReader(cvs_name) # Launch CVS reader
-    cvsr_abstract = RevisionsReader(cvs_name_abstract)
+    csvr = RevisionsReader(cvs_name) # Launch CVS reader
+    csvr_abstract = RevisionsReader(csv_name_abstract)
 
     result_file.write('\n')
     while True:
         try:
-            csv_reader.next()
-            cvsr_abstract.next()
-            name = cvsr_abstract.name() + '_' + cvsr_abstract.starpuBranch() + '_' + cvsr_abstract.starpuRevision() + '_' + cvsr_abstract.command()
-            result_file.write("    version('%s', svn='%s', revision=%s)\n" % (name, cvsr.starpuBranch(), cvsr.starpuRevision()))
+            csvr.next()
+            csvr_abstract.next()
+            name = csvr_abstract.name() + '_' + csvr_abstract.starpuBranch() + '_' + csvr_abstract.starpuRevision() + '_' + csvr_abstract.command()
+            result_file.write("    version('%s', svn='%s', revision=%s)\n" % (name, csvr.starpuBranch(), csvr.starpuRevision()))
         except StopIteration:
             break;
 

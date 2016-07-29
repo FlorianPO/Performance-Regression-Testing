@@ -1,21 +1,9 @@
-echo The 'local_context' has been initialized
-mkdir -p $(dirname /home/bepo/Bureau/debian7/execution/build/execo_recipe/ssh_config);
-cat >/home/bepo/Bureau/debian7/execution/build/execo_recipe/ssh_config <<EOF
-Host *
-  UserKnownHostsFile /dev/null
-  StrictHostKeyChecking no
-  ConnectTimeout 2
-  LogLevel FATAL
-  ForwardAgent yes
-  Protocol 2
-  ControlPath /tmp/a9dc3a1db868%r@%h:%p
-  ControlMaster auto
-  ControlPersist yes
-  Compression yes
-Host g5kaccess
-  User fpopek
-  Hostname access.grid5000.fr
-Host grenoble
-  User fpopek
-  ProxyCommand ssh -F /home/bepo/Bureau/debian7/execution/build/execo_recipe/ssh_config g5kaccess -W %h:%p
-EOF
+cat ${KAMELEON_WORKDIR}/pipe-cat_ssh_config_out | cat > ssh_config_out && rm ${KAMELEON_WORKDIR}/pipe-cat_ssh_config_out
+tar -xvf kameleon_scripts_out.tar
+rm kameleon_scripts_out.tar
+tar -xvf OAR_logs.tar
+rm OAR_logs.tar
+python ../../scripts_local/org_builder.py ../../scripts/revisions.csv ../../input_data/revisions.csv starpu_results/
+python ../../scripts_local/data_csv.py starpu_results/
+rm ../../scripts/revisions.csv
+rm ../../scripts_local/csv_reader.pyc

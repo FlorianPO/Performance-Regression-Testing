@@ -1,0 +1,61 @@
+#+TITLE: Experiment results
+#+DATE: 29/07/2016 17:32:21
+#+AUTHOR: root
+#+MACHINE: adonis-9.grenoble.grid5000.fr
+#+FILE: svn_2_chameleon_trunk_2914_starpu_trunk_17971_cmd1.org
+
+* Host information
+[[file:../node_info.org]]
+* Software revisions
+** Chameleon
+#+BEGIN_EXAMPLE
+chameleon_rev: 2914
+chameleon_bch: https://scm.gforge.inria.fr/anonscm/svn/morse/trunk/chameleon
+#+END_EXAMPLE
+** StarPU
+#+BEGIN_EXAMPLE
+starpu_rev: 17971
+starpu_bch: https://scm.gforge.inria.fr/anonscm/svn/starpu/trunk
+#+END_EXAMPLE
+* Compilation
+[[file:./compil_svn_2_chameleon_trunk_2914_starpu_trunk_17971_cmd1]]
+* Experimental results
+** XP1
+*** Command
+#+begin_src sh :results output :exports both
+export STARPU_WORKER_STATS=1
+export STARPU_CALIBRATE=2
+./timing/time_spotrf_tile --warmup --gpus=3 --threads=9 --nb=960 --ib=96 --n_range=48000:48000:9600
+#+end_src
+*** Standard output
+#+BEGIN_EXAMPLE
+#
+# CHAMELEON 0.9.1, ./timing/time_spotrf_tile
+# Nb threads: 9
+# Nb GPUs:    3
+# NB:         960
+# IB:         96
+# eps:        5.960464e-08
+#
+#     M       N  K/NRHS   seconds   Gflop/s Deviation
+  48000   48000       1   256.330    143.82 +-   0.00  
+
+#+END_EXAMPLE
+*** Standard error
+#+BEGIN_EXAMPLE
+#
+# CHAMELEON 0.9.1, ./timing/time_spotrf_tile
+# Nb threads: 9
+# Nb GPUs:    3
+# NB:         960
+# IB:         96
+# eps:        5.960464e-08
+#
+#     M       N  K/NRHS   seconds   Gflop/s Deviation
+  48000   48000       1   256.330    143.82 +-   0.00  
+
+#+END_EXAMPLE
+*** Result
+#+BEGIN_EXAMPLE
+XP1_Flops: 143.82
+#+END_EXAMPLE

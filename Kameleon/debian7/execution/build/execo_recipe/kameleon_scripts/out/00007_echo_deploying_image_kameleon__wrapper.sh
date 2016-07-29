@@ -5,14 +5,14 @@ ROOT_DIRECTORY=$(dirname $(readlink -f ${BASH_SOURCE[0]}))
 function post_exec_wrapper {
     echo $? > "$ROOT_DIRECTORY/bash_status"
     # Print end flags
-    echo -n __CMD_ERR_7_7127_149985_END__ 1>&2
-    echo -n __CMD_OUT_7_7127_149985_END__
+    echo -n __CMD_ERR_7_7402_37598_END__ 1>&2
+    echo -n __CMD_OUT_7_7402_37598_END__
 }
 
 function pre_exec_wrapper {
     # Print begin flags
-    echo -n __CMD_ERR_7_7127_149985_BEGIN__ 1>&2
-    echo -n __CMD_OUT_7_7127_149985_BEGIN__
+    echo -n __CMD_ERR_7_7402_37598_BEGIN__ 1>&2
+    echo -n __CMD_OUT_7_7402_37598_BEGIN__
 }
 
 trap 'post_exec_wrapper' INT TERM EXIT

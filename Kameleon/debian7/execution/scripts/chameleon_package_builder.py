@@ -8,16 +8,16 @@ package_folder = 'chameleon'
 result_file = None
 
 def build_from_csv(cvs_name, csv_name_abstract):
-    cvsr = RevisionsReader(cvs_name) # Launch CVS reader
-    cvsr_abstract = RevisionsReader(cvs_name_abstract)
+    csvr = RevisionsReader(cvs_name) # Launch CVS reader
+    csvr_abstract = RevisionsReader(csv_name_abstract)
 
     result_file.write('\n')
     while True:
         try:
-            csv_reader.next()
-            cvsr_abstract.next()
-            name = cvsr_abstract.name() + '_' + cvsr_abstract.chameleonBranch() + '_' + cvsr_abstract.chameleonRevision() + '_' + cvsr_abstract.command()
-            result_file.write("    version('%s', svn='%s', revision=%s)\n" % (name, cvsr.chameleonBranch(), cvsr.chameleonRevision()))
+            csvr.next()
+            csvr_abstract.next()
+            name = csvr_abstract.name() + '_' + csvr_abstract.chameleonBranch() + '_' + csvr_abstract.chameleonRevision() + '_' + csvr_abstract.command()
+            result_file.write("    version('%s', svn='%s', revision=%s)\n" % (name, csvr.chameleonBranch(), csvr.chameleonRevision()))
         except StopIteration:
             break;
 

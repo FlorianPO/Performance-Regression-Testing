@@ -1,0 +1,25 @@
+[starpu][starpu_initialize] Warning: StarPU was configured with --with-fxt, which slows down a bit
+[starpu][_starpu_bind_thread_on_cpu] Warning: both workers 0 and 8 are bound to the same PU 0, this will strongly degrade performance
+[starpu][_starpu_update_perfmodel_history] Too big deviation for model strsm on cpu0_impl0 (Comb0): 52011.989000 vs average 87611.607500, 8 such errors against 8 samples (-40.633450%), flushing the performance model. Use the STARPU_HISTORY_MAX_ERROR environement variable to control the threshold (currently 50%)
+
+#---------------------
+Worker stats:
+CPU 0                           
+	3340 task(s)
+CPU 1                           
+	6069 task(s)
+CPU 2                           
+	6084 task(s)
+CPU 3                           
+	6071 task(s)
+CPU 4                           
+	6059 task(s)
+CPU 5                           
+	6073 task(s)
+CPU 6                           
+	6079 task(s)
+CPU 7                           
+	6109 task(s)
+CPU 8                           
+	3316 task(s)
+#---------------------

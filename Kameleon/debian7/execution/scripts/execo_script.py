@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+import errno
 import sys
 import os
 from csv_reader import RevisionsReader
@@ -23,36 +24,46 @@ class ExecoWorkload(Engine):
         return True
 
     def run(self):
-        cvsr = RevisionsReader(csv_file) # Launch CSV reader
-        cvsr_abstract = RevisionsReader(csv_file_abstract)
+        csvr = RevisionsReader(csv_file) # Launch CSV reader
+        csvr_abstract = RevisionsReader(csv_file_abstract)
 
         os.chdir(self.result_dir) # Go to result directory before everything
 
         while True:
             try:
-                cvsr.next()
-                cvsr_abstract.next()
+                csvr.next()
+                csvr_abstract.next()
 
-                logger.info("Starting experiment %s with Chameleon@%s and StarPU@%s..." % (cvsr.name(), cvsr.chameleonRevision(), cvsr.starpuRevision()))
-
-                chameleon_name = cvsr_abstract.name() + '_' + cvsr_abstract.chameleonBranch() + '_' + cvsr_abstract.chameleonRevision() + '_' + cvsr_abstract.command()
-                starpu_name = cvsr_abstract.name() + '_' + cvsr_abstract.starpuBranch() + '_' + cvsr_abstract.starpuRevision() + '_' + cvsr_abstract.command()
-                global_name = cvsr_abstract.name() \
-                                + '_chameleon_' + cvsr_abstract.chameleonBranch() + '_' + cvsr_abstract.chameleonRevision()
-                                + '_starpu' + cvsr_abstract.starpuBranch() + '_' + cvsr_abstract.starpuRevision()
-                                + '_cmd_' + cvsr_abstract.command()
+                chameleon_name = csvr_abstract.name() + '_' + csvr_abstract.chameleonBranch() + '_' + csvr_abstract.chameleonRevision() + '_' + csvr_abstract.command()
+                starpu_name = csvr_abstract.name() + '_' + csvr_abstract.starpuBranch() + '_' + csvr_abstract.starpuRevision() + '_' + csvr_abstract.command()
+                global_name = csvr_abstract.name() \
+                                + '_chameleon_' + csvr_abstract.chameleonBranch() + '_' + csvr_abstract.chameleonRevision() \
+                                + '_starpu_' + csvr_abstract.starpuBranch() + '_' + csvr_abstract.starpuRevision() \
+                                + '_' + csvr_abstract.command()
                 
+                logger.info("Starting experiment %s ..." % (global_name))
+
                 spack_spec = 'chameleon@' + chameleon_name + ' +starpu+fxt ^starpu@' + starpu_name + ' +fxt'
 
                 # FOLDER CREATION
-                folder = self.result_dir + '/' + global_name
-                os.mkdir(folder, 0764)
+                folder_name = 'chameleon_' + csvr_abstract.chameleonBranch() + '_' + csvr_abstract.chameleonRevision() \
+                                + '_starpu_' + csvr_abstract.starpuBranch() + '_' + csvr_abstract.starpuRevision()
+                folder = self.result_dir + '/' + folder_name
+
+                try:
+                    os.mkdir(folder, 0764)
+                except OSError as exc:
+                    if (exc.errno != errno.EEXIST):
+                        raise exc
+                    pass
 
                 # STARPU INSTALLATION
                 logger.info("Starting StarPU installation...")
                 spack_process = Process('spack install -v' + ' ' + spack_spec)
 
-                spack_process.stdout_handlers.append(folder + '/' + 'install_' + global_name) # create output file for StarPU installation
+
+                if (not os.path.isfile(folder + '/' + 'compil_' + folder_name)):
+                    spack_process.stdout_handlers.append(folder + '/' + 'compil_' + folder_name) # create output file for StarPU installation
                 spack_process.start()
                 spack_process.wait()
 
@@ -80,10 +91,10 @@ class ExecoWorkload(Engine):
                 # RUNNING EXPERIMENT
                 logger.info("Starting StarPU experiment...")
 
-                starpu_experiment_process = Process(starpu_cd + '\n' + cvsr.command(), shell=True)
+                starpu_experiment_process = Process(starpu_cd + '\n' + csvr.command(), shell=True)
                            
-                starpu_experiment_process.stdout_handlers.append(folder + '/' + 'experiment_' + global_name) # create output file for StarPU execution
-                starpu_experiment_process.stdout_handlers.append(folder + '/' + 'stderr_' + global_name) # create error file for StarPU execution
+                starpu_experiment_process.stdout_handlers.append(folder + '/' + 'stdout_' + global_name) # create output file for StarPU execution
+                starpu_experiment_process.stderr_handlers.append(folder + '/' + 'stderr_' + global_name) # create error file for StarPU execution
                 starpu_experiment_process.start()
                 starpu_experiment_process.wait()
 

@@ -5,7 +5,7 @@ Host *
   LogLevel FATAL
   ForwardAgent yes
   Protocol 2
-  ControlPath /tmp/a9dc3a1db868%r@%h:%p
+  ControlPath /tmp/c766403c3646%r@%h:%p
   ControlMaster auto
   ControlPersist yes
   Compression yes
@@ -14,4 +14,7 @@ Host g5kaccess
   Hostname access.grid5000.fr
 Host grenoble
   User fpopek
-  ProxyCommand ssh -F /home/bepo/Bureau/debian7/execution/build/execo_recipe/ssh_config g5kaccess -W %h:%p
+  ProxyCommand ssh -F /home/florian/Bureau/debian7/execution/build/execo_recipe/ssh_config g5kaccess -W %h:%p
+Host execo_recipe
+  User root
+  ProxyCommand ssh -vvv -F /home/florian/Bureau/debian7/execution/build/execo_recipe/ssh_config grenoble "nc -q 1 adonis-6.grenoble.grid5000.fr %p"

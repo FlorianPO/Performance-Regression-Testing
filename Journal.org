@@ -1559,3 +1559,68 @@
   #+end_example
 
   Arnaud : placer les commandes dans un autre fichier
+* Vendredi 29/07
+  3 fichiers CSV + nouveau script python créant un CSV final
+
+  Modification des anciens scripts existant
+
+  Une expérience est caractérisée par :
+  - son nom
+  - sa branche (nom abstrait) et révision chameleon
+  - sa branche (nom abstrait) et révision starpu
+  - la commande exécutée (nom abstrait)
+
+  Les fichiers et dossiers des résultats comprendront ces informations
+
+  -> écriture du générateur de org files
+ 
+  -> écriture du parseur de org files pour rassembler tous les résultats
+
+  Toujours cette erreur :
+  #+begin_example
+  [ 75%] Building C object compute/CMakeFiles/chameleon.dir/control/workspace_z.c.o
+  cd /tmp/root/spack-stage/spack-stage-bliB4d/chameleon/spack-build/compute && /root/kameleon_workdir/debian_g5k/spack/lib/spack/env/gcc/gcc  -DADD_ -DCHAMELEON_SCHED_STARPU -DCHAMELEON_USE_S$
+  [ 75%] Building C object compute/CMakeFiles/chameleon.dir/control/workspace_d.c.o
+  cd /tmp/root/spack-stage/spack-stage-bliB4d/chameleon/spack-build/compute && /root/kameleon_workdir/debian_g5k/spack/lib/spack/env/gcc/gcc  -DADD_ -DCHAMELEON_SCHED_STARPU -DCHAMELEON_USE_S$
+  [ 75%] Building C object compute/CMakeFiles/chameleon.dir/control/morse_cf77.c.o
+  cd /tmp/root/spack-stage/spack-stage-bliB4d/chameleon/spack-build/compute && /root/kameleon_workdir/debian_g5k/spack/lib/spack/env/gcc/gcc  -DADD_ -DCHAMELEON_SCHED_STARPU -DCHAMELEON_USE_S$
+  [ 75%] Building C object compute/CMakeFiles/chameleon.dir/control/morse_sf77.c.o
+  cd /tmp/root/spack-stage/spack-stage-bliB4d/chameleon/spack-build/compute && /root/kameleon_workdir/debian_g5k/spack/lib/spack/env/gcc/gcc  -DADD_ -DCHAMELEON_SCHED_STARPU -DCHAMELEON_USE_S$
+  [ 75%] Building C object compute/CMakeFiles/chameleon.dir/control/morse_zf77.c.o
+  cd /tmp/root/spack-stage/spack-stage-bliB4d/chameleon/spack-build/compute && /root/kameleon_workdir/debian_g5k/spack/lib/spack/env/gcc/gcc  -DADD_ -DCHAMELEON_SCHED_STARPU -DCHAMELEON_USE_S$
+  [ 75%] Building C object compute/CMakeFiles/chameleon.dir/control/morse_df77.c.o
+  cd /tmp/root/spack-stage/spack-stage-bliB4d/chameleon/spack-build/compute && /root/kameleon_workdir/debian_g5k/spack/lib/spack/env/gcc/gcc  -DADD_ -DCHAMELEON_SCHED_STARPU -DCHAMELEON_USE_S$
+  [ 75%] Linking Fortran shared library libchameleon.so
+  cd /tmp/root/spack-stage/spack-stage-bliB4d/chameleon/spack-build/compute && /root/kameleon_workdir/debian_g5k/spack/opt/spack/linux-x86_64/gcc-4.7/cmake-3.5.2-n2l2v7fdb2epujz6fsuaeovwhde6a$
+  /root/kameleon_workdir/debian_g5k/spack/lib/spack/env/gcc/gfortran  -fPIC -O2 -g -DNDEBUG  -lgfortran -shared -Wl,-soname,libchameleon.so -o libchameleon.so CMakeFiles/chameleon.dir/__/cont$
+  make[2]: Leaving directory `/tmp/root/spack-stage/spack-stage-bliB4d/chameleon/spack-build'
+  [ 75%] Built target chameleon
+  make[1]: Leaving directory `/tmp/root/spack-stage/spack-stage-bliB4d/chameleon/spack-build'
+  make: *** [all] Error 2
+  ==> Installing chameleon
+  ==> Installing starpu
+  ==> Installing fxt
+  ==> Installing hwloc
+  ==> Installing cmake
+  ==> Installing netlib-cblas
+  ==> cmake is already installed in /root/kameleon_workdir/debian_g5k/spack/opt/spack/linux-x86_64/gcc-4.7/cmake-3.5.2-n2l2v7fdb2epujz6fsuaeovwhde6a7ya
+  ==> Installing openblas
+  ==> fxt is already installed in /root/kameleon_workdir/debian_g5k/spack/opt/spack/linux-x86_64/gcc-4.7/fxt-0.3.1-pcesmbkenyhpewy2qgb6cv6hayywn7nh
+  ==> Installing netlib-lapacke
+  ==> Installing netlib-lapack
+  ==> cmake is already installed in /root/kameleon_workdir/debian_g5k/spack/opt/spack/linux-x86_64/gcc-4.7/cmake-3.5.2-n2l2v7fdb2epujz6fsuaeovwhde6a7ya
+  ==> openblas is already installed in /root/kameleon_workdir/debian_g5k/spack/opt/spack/linux-x86_64/gcc-4.7/openblas-0.2.18-hw3iztftqu5o4rktfsccogprb4hcsnxf
+  ==> cmake is already installed in /root/kameleon_workdir/debian_g5k/spack/opt/spack/linux-x86_64/gcc-4.7/cmake-3.5.2-n2l2v7fdb2epujz6fsuaeovwhde6a7ya
+  ==> openblas is already installed in /root/kameleon_workdir/debian_g5k/spack/opt/spack/linux-x86_64/gcc-4.7/openblas-0.2.18-hw3iztftqu5o4rktfsccogprb4hcsnxf
+  ==> netlib-lapack is already installed in /root/kameleon_workdir/debian_g5k/spack/opt/spack/linux-x86_64/gcc-4.7/netlib-lapack-3.6.0-d7tlkka2srptm2g4l43zkwiw6hcqhqsl
+  ==> openblas is already installed in /root/kameleon_workdir/debian_g5k/spack/opt/spack/linux-x86_64/gcc-4.7/openblas-0.2.18-hw3iztftqu5o4rktfsccogprb4hcsnxf
+  ==> Trying to check out svn repository: https://scm.gforge.inria.fr/anonscm/svn/morse/trunk/chameleon
+  ==> No checksum needed when fetching with svn
+  ==> Already staged chameleon-svn_1_trunk_2920_cmd1-wqe2k6nndxzwzovrbcbburrc2zsgbkha in /root/kameleon_workdir/debian_g5k/spack/var/spack/stage/chameleon-svn_1_trunk_2920_cmd1-wqe2k6nndxzwzo$
+  ==> No patches needed for chameleon
+ ==> Building chameleon
+  #+end_example
+
+** A faire
+   - Prendre en compte les potentielles erreurs
+   - Mettre des noms devant les expériences devant data.csv ?

@@ -41,10 +41,8 @@ setup:
         - exec_in: cat > scripts.tar
       - exec_local: |                                                             # Clean local
           rm scripts.tar
-          rm ../../scripts/revisions.csv
           rm ../../scripts/revisions_abstract.csv
           rm ../../scripts/csv_reader.py
-          rm ../../scripts_local/csv_reader.pyc
       - exec_in: |
           tar -xvf scripts.tar
           rm scripts.tar      
@@ -110,5 +108,9 @@ export:
           rm OAR_logs.tar
 
     - data_csv:                                                                   # Retrieving StarPU data in a CSV file
-      - exec_local: python ../../scripts/org_builder.py ../../scripts/revisions.csv ../../scripts_local/revisions.csv starpu_results/
+      - exec_local: |
+          python ../../scripts_local/org_builder.py ../../scripts/revisions.csv ../../input_data/revisions.csv starpu_results/
+          python ../../scripts_local/data_csv.py starpu_results/
+          rm ../../scripts/revisions.csv
+          rm ../../scripts_local/csv_reader.pyc
 

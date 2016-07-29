@@ -15,7 +15,7 @@ if __name__ == "__main__":
     machine_name = subprocess.Popen(['cat', 'g5k_machine'], stdout=subprocess.PIPE).communicate()[0]
     machine_name = machine_name.replace('\n', '')    
 
-    # Go to starpu_results directory
+    # Go to starpu_outs directory
     starpu_directory = (sys.argv)[3]
     os.chdir(starpu_directory)
  
@@ -25,8 +25,10 @@ if __name__ == "__main__":
             csvr_abstract.next()
             
             # Find directory
-            directory_name = subprocess.Popen(['find', '-type', 'd', '-name', '*%s*%s*%s*' % \
-                (csvr.name(), csvr.chameleonRevision(), csvr.starpuRevision())], stdout=subprocess.PIPE).communicate()[0]       
+            key_string = '*%s*%s*%s*%s*' % (csvr_abstract.chameleonBranch(), csvr_abstract.chameleonRevision(), \
+                                            csvr_abstract.starpuBranch(), csvr_abstract.starpuRevision())
+
+            directory_name = subprocess.Popen(['find', '-type', 'd', '-name', key_string], stdout=subprocess.PIPE).communicate()[0]       
             directory_name = directory_name.replace("\n", "") # remove end of line
 
             os.chdir(directory_name) # go to experiment directory
@@ -65,17 +67,22 @@ if __name__ == "__main__":
 
             # COMPILATION
             result_file.write('* Compilation' + '\n')
-            file_name = subprocess.Popen(['find', '-name', '*install*'], stdout=subprocess.PIPE).communicate()[0]
+            file_name = subprocess.Popen(['find', '-name', '*compil*'], stdout=subprocess.PIPE).communicate()[0]
             file_name = file_name.replace("\n", "") # remove end of line
             result_file.write('[[file:%s]]' % (file_name) + '\n')
 
             # EXPERIMENT RESULTS
             result_file.write('* Experimental results' + '\n')
-            experiments = subprocess.Popen(['find', '-name', '*experiment*'], stdout=subprocess.PIPE).communicate()[0]
-            experiments = string.split(experiments, '\n')
-            del experiments[-1] # erase ''
+
+            experiments_stdout = subprocess.Popen(['find', '-name', '*stdout*'], stdout=subprocess.PIPE).communicate()[0]
+            experiments_stdout = string.split(experiments_stdout, '\n')
+            del experiments_stdout[-1] # erase ''
             
-            for i in range(0, len(experiments)):
+            experiments_stderr = subprocess.Popen(['find', '-name', '*stderr*'], stdout=subprocess.PIPE).communicate()[0]
+            experiments_stderr = string.split(experiments_stderr, '\n')
+            del experiments_stderr[-1] # erase ''
+            
+            for i in range(0, len(experiments_stdout)):
                 result_file.write('** XP%s' % (i+1) + '\n')
                 # COMMAND
                 result_file.write('*** Command' + '\n')
@@ -86,18 +93,21 @@ if __name__ == "__main__":
                 # STANDARD OUTPUT
                 result_file.write('*** Standard output' + '\n')
                 result_file.write('#+BEGIN_EXAMPLE' + '\n')
-                starpu_result = subprocess.Popen(['cat', experiments[i]], stdout=subprocess.PIPE).communicate()[0]
-                result_file.write(starpu_result + '\n')
+                starpu_out = subprocess.Popen(['cat', experiments_stdout[i]], stdout=subprocess.PIPE).communicate()[0]
+                result_file.write(starpu_out + '\n')
                 result_file.write('#+END_EXAMPLE' + '\n')
 
                 # STANDARD ERROR
                 result_file.write('*** Standard error' + '\n')
-                # TODO
+                result_file.write('#+BEGIN_EXAMPLE' + '\n')
+                starpu_err = subprocess.Popen(['cat', experiments_stderr[i]], stdout=subprocess.PIPE).communicate()[0]
+                result_file.write(starpu_err + '\n')
+                result_file.write('#+END_EXAMPLE' + '\n')
 
                 # RESULT
                 result_file.write('*** Result' + '\n')
 
-                cat = subprocess.Popen(['cat', experiments[i]], stdout=subprocess.PIPE)
+                cat = subprocess.Popen(['cat', experiments_stdout[i]], stdout=subprocess.PIPE)
                 tail = subprocess.Popen(['tail', '-n', '1'], stdin=cat.stdout, stdout=subprocess.PIPE)            
                 grep = subprocess.Popen(['grep', '-o', '-E', '[0-9]+.[0-9]+'], stdin=tail.stdout, stdout=subprocess.PIPE)
                 sed = subprocess.Popen(['sed', '4q;d'], stdin=grep.stdout, stdout=subprocess.PIPE)
@@ -108,7 +118,7 @@ if __name__ == "__main__":
                 result_file.write('#+END_EXAMPLE' + '\n')
 
             result_file.close()
-            os.chdir('../') # Go to starpu_results directory
+            os.chdir('../') # Go to starpu_outs directory
 
         except StopIteration:
             break;

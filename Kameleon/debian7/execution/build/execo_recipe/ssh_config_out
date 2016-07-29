@@ -1,6 +1,6 @@
 Host execo_recipe
   User root
-  Hostname adonis-9.grenoble.grid5000.fr
+  Hostname adonis-6.grenoble.grid5000.fr
   UserKnownHostsFile /dev/null
   StrictHostKeyChecking no
   ConnectTimeout 2

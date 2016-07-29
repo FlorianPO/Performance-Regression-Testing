@@ -2,7 +2,7 @@ echo The 'out_context' has been initialized
 echo "Deploying image ~/kameleon_workdir/debian_g5k/kameleonImage.env with kadeploy"
 sleep 1
 echo "Submitting a job for deployment"
-oarsub -p "gpu='YES'" -n "a9dc3a1db868" -l nodes=1,walltime=2:00:00 -t deploy "sleep 1000000"
+oarsub -p "gpu='YES'" -n "c766403c3646" -l nodes=1,walltime=2:00:00 -t deploy "sleep 1000000"
 echo "Retrieving job ID"
 export jobid=`oarstat -u | tail -n 1 | grep -o -E '[0-9]+' | head -n 1`
 echo $jobid > job_id
