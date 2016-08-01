@@ -1,0 +1,10 @@
+experiment_name,chameleon_branch,chameleon_revision,starpu_branch,starpu_revision,command
+svn_1,https://scm.gforge.inria.fr/anonscm/svn/morse/trunk/chameleon,2920,https://scm.gforge.inria.fr/anonscm/svn/starpu/trunk,18010,"export STARPU_WORKER_STATS=1
+export STARPU_CALIBRATE=2
+./timing/time_spotrf_tile --warmup --gpus=3 --threads=9 --nb=960 --ib=96 --n_range=48000:48000:9600"
+svn_2,https://scm.gforge.inria.fr/anonscm/svn/morse/trunk/chameleon,2920,https://scm.gforge.inria.fr/anonscm/svn/starpu/trunk,18010,"export STARPU_WORKER_STATS=1
+export STARPU_CALIBRATE=2
+./timing/time_spotrf_tile --warmup --gpus=3 --threads=9 --nb=960 --ib=96 --n_range=48000:48000:9600"
+svn_3,https://scm.gforge.inria.fr/anonscm/svn/morse/trunk/chameleon,2914,https://scm.gforge.inria.fr/anonscm/svn/starpu/trunk,17971,"export STARPU_WORKER_STATS=1
+export STARPU_CALIBRATE=2
+./timing/time_spotrf_tile --warmup --gpus=3 --threads=9 --nb=960 --ib=96 --n_range=48000:48000:9600"

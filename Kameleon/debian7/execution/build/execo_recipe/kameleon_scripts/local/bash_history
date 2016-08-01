@@ -1,9 +1,17 @@
-cat ${KAMELEON_WORKDIR}/pipe-cat_ssh_config_out | cat > ssh_config_out && rm ${KAMELEON_WORKDIR}/pipe-cat_ssh_config_out
-tar -xvf kameleon_scripts_out.tar
-rm kameleon_scripts_out.tar
-tar -xvf OAR_logs.tar
-rm OAR_logs.tar
-python ../../scripts_local/org_builder.py ../../scripts/revisions.csv ../../input_data/revisions.csv starpu_results/
-python ../../scripts_local/data_csv.py starpu_results/
-rm ../../scripts/revisions.csv
-rm ../../scripts_local/csv_reader.pyc
+cat ${KAMELEON_WORKDIR}/pipe-cat_home_bepo_bureau_ | cat >/home/bepo/Bureau/debian7/execution/build/execo_recipe/g5k_machine && rm ${KAMELEON_WORKDIR}/pipe-cat_home_bepo_bureau_
+mkdir -p $(dirname /home/bepo/Bureau/debian7/execution/build/execo_recipe/ssh_config);
+cat >>/home/bepo/Bureau/debian7/execution/build/execo_recipe/ssh_config <<EOF
+Host execo_recipe
+  User root
+  ProxyCommand ssh -vvv -F /home/bepo/Bureau/debian7/execution/build/execo_recipe/ssh_config grenoble "nc -q 1 `cat /home/bepo/Bureau/debian7/execution/build/execo_recipe/g5k_machine | awk '{print $NF}'` %p"
+EOF
+python ../../scripts_local/csv_filler.py ../../input_data/revisions.csv ../../input_data/commands.csv ../../input_data/branches.csv
+cp ../../input_data/revisions.csv ../../scripts/revisions_abstract.csv
+cp ../../scripts_local/csv_reader.py ../../scripts/csv_reader.py
+export DIRECTORY=$PWD
+cd ../../scripts/
+tar -cvf $DIRECTORY/scripts.tar *
+cat scripts.tar
+rm scripts.tar
+rm ../../scripts/revisions_abstract.csv
+rm ../../scripts/csv_reader.py

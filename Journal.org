@@ -1624,3 +1624,81 @@
 ** A faire
    - Prendre en compte les potentielles erreurs
    - Mettre des noms devant les expériences devant data.csv ?
+* Lundi 01/08
+  Correction de quelques bugs
+
+  Le bug Spack n'est toujours pas résolu ! -> utilisation du flag =-d=
+  (--debug) dans Spack :
+
+  #+begin_example
+  [in] ==> openblas is already installed in /root/kameleon_workdir/debian_g5k/spack/opt/spack/linux-x86_64/gcc-4.7/openblas-0.2.18-hw3iztftqu5o4rktfsccogprb4hcsnxf
+  [in] 
+  [in] stderr:
+  [in] ==> '/usr/bin/g++-4.7' '-dumpversion'
+  [in] ==> '/usr/bin/gfortran-4.7' '-dumpversion'
+  [in] ==> '/usr/bin/gfortran' '-dumpversion'
+  [in] ==> '/usr/bin/gfortran' '-dumpversion'
+  [in] ==> '/usr/bin/g++' '-dumpversion'
+  [in] ==> '/usr/bin/gfortran-4.7' '-dumpversion'
+  [in] ==> '/usr/bin/gfortran' '-dumpversion'
+  [in] ==> '/usr/bin/gfortran' '-dumpversion'
+  [in] ==> '/usr/bin/gfortran-4.7' '-dumpversion'
+  [in] ==> '/usr/bin/gfortran-4.7' '-dumpversion'
+  [in] ==> '/usr/bin/gfortran' '-dumpversion'
+  [in] ==> '/usr/bin/gfortran-4.7' '-dumpversion'
+  [in] ==> '/usr/bin/gfortran' '-dumpversion'
+  [in] ==> '/usr/bin/g++' '-dumpversion'
+  [in] ==> '/usr/bin/gfortran-4.7' '-dumpversion'
+  [in] ==> '/usr/bin/g++' '-dumpversion'
+  [in] ==> '/usr/bin/gfortran-4.7' '-dumpversion'
+  [in] ==> '/usr/bin/gfortran' '-dumpversion'
+  [in] ==> '/usr/bin/gfortran' '-dumpversion'
+  [in] ==> '/usr/bin/g++-4.7' '-dumpversion'
+  [in] ==> '/usr/bin/g++' '-dumpversion'
+  [in] ==> '/usr/bin/g++-4.7' '-dumpversion'
+  [in] ==> '/usr/bin/g++-4.7' '-dumpversion'
+  [in] ==> '/usr/bin/gfortran-4.7' '-dumpversion'
+  [in] ==> '/usr/bin/gcc-4.6' '-dumpversion'
+  [in] ==> '/usr/bin/gcc-4.7' '-dumpversion'
+  [in] ==> '/usr/bin/gcc-4.7' '-dumpversion'
+  [in] ==> '/usr/bin/gcc' '-dumpversion'
+  [in] ==> '/usr/bin/gcc-4.7' '-dumpversion'
+  [in] ==> '/usr/bin/gcc-4.7' '-dumpversion'
+  [in] ==> '/usr/bin/gcc-4.6' '-dumpversion'
+  [in] ==> '/usr/bin/gcc' '-dumpversion'
+  [in] ==> '/usr/bin/gcc' '-dumpversion'
+  [in] ==> '/usr/bin/gcc' '-dumpversion'
+  [in] ==> '/usr/bin/gcc-4.6' '-dumpversion'
+  [in] ==> '/usr/bin/gcc-4.6' '-dumpversion'
+  [in] ==> '/usr/bin/ibv_devices'
+  [in] ==> '/usr/bin/curl' '-C' '-' '-o' '/root/kameleon_workdir/debian_g5k/spack/var/spack/stage/fxt-0.3.1-pcesmbkenyhpewy2qgb6cv6hayywn7nh/fxt-0.3.1.tar.gz.part' '-f' '-D' '-' '-L' 'http://download.savannah.gnu.org/releases/fkt/fxt-0.3.1.tar.gz' '-sS'
+  [in] ==> '/bin/tar' '-xf' '/root/kameleon_workdir/debian_g5k/spack/var/spack/stage/fxt-0.3.1-pcesmbkenyhpewy2qgb6cv6hayywn7nh/fxt-0.3.1.tar.gz'
+  [in] ==> Installing /tmp/root/spack-stage/spack-stage-SursRl/fxt-0.3.1/spack-build.out to /root/kameleon_workdir/debian_g5k/spack/opt/spack/linux-x86_64/gcc-4.7/fxt-0.3.1-pcesmbkenyhpewy2qgb6cv6hayywn7nh/.spack/build.out
+  [in] ==> Installing /tmp/root/spack-stag
+  [in] [...]
+  [in] eon_workdir/debian_g5k/spack/opt/spack/linux-x86_64/gcc-4.7/openblas-0.2.18-hw3iztftqu5o4rktfsccogprb4hcsnxf/.spack/repos/builtin/packages/openblas to /root/kameleon_workdir/debian_g5k/spack/opt/spack/linux-x86_64/gcc-4.7/netlib-lapacke-3.6.0-x6tvxiygun7luxahguabnj6amcg7auzo/.spack/repos/builtin/packages/openblas
+  [in] ==> 	WRITE : netlib-lapacke@3.6.0%gcc@4.7+shared arch=linux-x86_64-x6tvxiy [/root/kameleon_workdir/debian_g5k/spack/share/spack/modules/linux-x86_64/netlib-lapacke-3.6.0-gcc-4.7-x6tvxiygun7luxahguabnj6amcg7auzo]
+  [in] ==> 	WRITE : netlib-lapacke@3.6.0%gcc@4.7+shared arch=linux-x86_64-x6tvxiy [/root/kameleon_workdir/debian_g5k/spack/share/spack/dotkit/linux-x86_64/netlib-lapacke-3.6.0-gcc-4.7-x6tvxiygun7luxahguabnj6amcg7auzo.dk]
+  [in] ==> '/usr/bin/svn' 'checkout' '--force' '-r' '2920' 'https://scm.gforge.inria.fr/anonscm/svn/morse/trunk/chameleon'
+  [in] Traceback (most recent call last):
+  [in]   File "/root/kameleon_workdir/debian_g5k/spack/lib/spack/spack/build_environment.py", line 406, in fork
+  [in]     function()
+  [in]   File "/root/kameleon_workdir/debian_g5k/spack/lib/spack/spack/package.py", line 1022, in build_process
+  [in]     raise e
+  [in] spack.util.executable.ProcessError: Command exited with status 2:
+  [in]     'make' '-j8'
+  [in] Traceback (most recent call last):
+  [in]   File "/root/kameleon_workdir/execo_recipe/../debian_g5k/spack//bin/spack", line 154, in main
+  [in]     return_val = command(parser, args)
+  [in]   File "/root/kameleon_workdir/debian_g5k/spack/lib/spack/spack/cmd/install.py", line 82, in install
+  [in]     explicit=True)
+  [in]   File "/root/kameleon_workdir/debian_g5k/spack/lib/spack/spack/package.py", line 1055, in do_install
+  [in]     spack.build_environment.fork(self, build_process)
+  [in]   File "/root/kameleon_workdir/debian_g5k/spack/lib/spack/spack/build_environment.py", line 427, in fork
+  [in]     raise InstallError("Installation process had nonzero exit code.".format(str(returncode)))
+  [in] spack.build_environment.InstallError: Installation process had nonzero exit code.
+  #+end_example
+
+  Problème dur : envoie d'un mail à Florent
+  
+  Début du rapport de stage

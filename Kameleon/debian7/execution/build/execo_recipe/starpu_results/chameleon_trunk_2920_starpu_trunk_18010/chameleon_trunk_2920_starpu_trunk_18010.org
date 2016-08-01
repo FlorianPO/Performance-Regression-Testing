@@ -1,0 +1,79 @@
+#+TITLE: Experiment results
+#+DATE: 01/08/2016 11:34:51
+#+AUTHOR: root
+#+MACHINE: adonis-10.grenoble.grid5000.fr
+#+FILE: chameleon_trunk_2920_starpu_trunk_18010.org
+
+* Host information
+[[file:../node_info.org]]
+* Software revisions
+** Chameleon
+#+BEGIN_EXAMPLE
+chameleon_rev: 2920
+chameleon_bch: https://scm.gforge.inria.fr/anonscm/svn/morse/trunk/chameleon
+#+END_EXAMPLE
+** StarPU
+#+BEGIN_EXAMPLE
+starpu_rev: 18010
+starpu_bch: https://scm.gforge.inria.fr/anonscm/svn/starpu/trunk
+#+END_EXAMPLE
+* Compilation
+[[file:./compil_chameleon_trunk_2920_starpu_trunk_18010]]
+* Experimental results
+** XP1
+*** Command
+#+begin_src sh :results output :exports both
+export STARPU_WORKER_STATS=1
+export STARPU_CALIBRATE=2
+./timing/time_spotrf_tile --warmup --gpus=3 --threads=9 --nb=960 --ib=96 --n_range=48000:48000:9600
+#+end_src
+*** Standard output
+#+BEGIN_EXAMPLE
+#
+# CHAMELEON 0.9.1, ./timing/time_spotrf_tile
+# Nb threads: 9
+# Nb GPUs:    3
+# NB:         960
+# IB:         96
+# eps:        5.960464e-08
+#
+#     M       N  K/NRHS   seconds   Gflop/s Deviation
+  48000   48000       1   259.752    141.92 +-   0.00  
+
+#+END_EXAMPLE
+*** Standard error
+#+BEGIN_EXAMPLE
+[starpu][starpu_initialize] Warning: StarPU was configured with --with-fxt, which slows down a bit
+[starpu][check_bus_config_file] No performance model for the bus, calibrating...
+[starpu][check_bus_config_file] ... done
+[starpu][_starpu_bind_thread_on_cpu] Warning: both workers 0 and 8 are bound to the same PU 0, this will strongly degrade performance
+[starpu][_starpu_update_perfmodel_history] Too big deviation for model strsm on cpu0_impl0 (Comb0): 54214.772000 vs average 88501.774857, 7 such errors against 7 samples (-38.741599%), flushing the performance model. Use the STARPU_HISTORY_MAX_ERROR environement variable to control the threshold (currently 50%)
+[starpu][_starpu_update_perfmodel_history] Too big deviation for model strsm on cpu0_impl0 (Comb0): 99876.890000 vs average 64731.305000, 1 such errors against 1 samples (+54.294572%), flushing the performance model. Use the STARPU_HISTORY_MAX_ERROR environement variable to control the threshold (currently 50%)
+
+#---------------------
+Worker stats:
+CPU 0                           
+	3297 task(s)
+CPU 1                           
+	6037 task(s)
+CPU 2                           
+	6002 task(s)
+CPU 3                           
+	6016 task(s)
+CPU 4                           
+	6147 task(s)
+CPU 5                           
+	6132 task(s)
+CPU 6                           
+	6142 task(s)
+CPU 7                           
+	6152 task(s)
+CPU 8                           
+	3275 task(s)
+#---------------------
+
+#+END_EXAMPLE
+*** Result
+#+BEGIN_EXAMPLE
+XP1_Flops: 141.92
+#+END_EXAMPLE

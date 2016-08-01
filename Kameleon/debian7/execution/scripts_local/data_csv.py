@@ -33,7 +33,7 @@ if __name__ == "__main__":
 
         for j in range(0, len(grep2)):
             xp_name = (directories[i]).replace('./', '')
-            result_file.write(xp_name + ',' + grep2[i] + '\n')
+            result_file.write(xp_name + ',' + grep2[j] + '\n')
 
         os.chdir('../') # Go to starpu_results directory
 

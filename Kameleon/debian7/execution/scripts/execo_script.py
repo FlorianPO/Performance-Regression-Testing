@@ -59,7 +59,7 @@ class ExecoWorkload(Engine):
 
                 # STARPU INSTALLATION
                 logger.info("Starting StarPU installation...")
-                spack_process = Process('spack install -v' + ' ' + spack_spec)
+                spack_process = Process('spack -d install' + ' ' + spack_spec)
 
 
                 if (not os.path.isfile(folder + '/' + 'compil_' + folder_name)):
