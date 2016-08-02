@@ -1,0 +1,29 @@
+* TODO Page de garde
+  Voir FB
+  - Rapport de stage 2016 / Polytech
+  - Popek Florian
+  - Test de non régression de performance
+* TODO Abstract
+  - De quoi ça parle
+* TODO Sommaire
+* TODO Introduction
+** TODO Contexte
+  - Recherche reproductible, StarPU/Morse, Simgrid, HPC, Grid5000
+** TODO Etat de l'art
+  - Phoronix
+  - Pilotage expérience (XPFlow, Execo, ...)
+  - Contrôle environnement (Spack, Kameleon)
+* TODO Ma contribution
+** 
+* TODO XP results
+* TODO Conclusion
+* TODO Ouverture / Perspectives futures
+  - RStudio -> affichage des résultats
+  - Stockage (Git, ...)
+* TODO Organisation et connaissances acquises			     :Moodle:
+  - Shell, Org-mode (journal)
+* TODO Responsabilité sociétale des entreprises			     :Moodle:
+* TODO Bibliographie
+* TODO Documents rédigés					     :Moodle:
+* TODO Résumé / Tableau de révisions				     :Moodle:
+* TODO Annexes

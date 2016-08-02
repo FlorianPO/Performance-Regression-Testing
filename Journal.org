@@ -1702,3 +1702,10 @@
   Problème dur : envoie d'un mail à Florent
   
   Début du rapport de stage
+* Mardi 02/08
+  Pas de réponse de Florent (sûrement en vacances)
+
+  Continuation du rapport de stage
+
+  Ecriture d'un bilan de production (à l'intention du futur
+  developpeur qui prendra ma place)

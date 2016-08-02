@@ -1,0 +1,176 @@
+#+TITLE: Mise en place de tests de non régression de performance
+#+LANGUAGE: fr
+#+Author: Florian Popek 
+#+TAGS: noexport(n) deprecated(d)
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+
+#+LaTeX_CLASS: memoir
+#+LaTeX_CLASS_OPTIONS: [12pt, a4paper]
+#+OPTIONS: H:5 title:nil author:nil email:nil creator:nil timestamp:nil skip:nil toc:nil ^:nil
+#+BABEL: :session *R* :cache yes :results output graphics :exports both :tangle yes 
+
+#+LATEX_HEADER:\usepackage[french,english]{babel}
+#+LATEX_HEADER:\usepackage [vscale=0.76,includehead]{geometry}                % See geometry.pdf to learn the layout options. There are lots.
+# #+LATEX_HEADER:\geometry{a4paper}                   % ... or a4paper or a5paper or ... 
+# #+LATEX_HEADER:\geometry{landscape}                % Activate for for rotated page geometry
+# #+LATEX_HEADER:\OnehalfSpacing
+# #+LATEX_HEADER: \setSingleSpace{1.05}
+# #+LATEX_HEADER:\usepackage[parfill]{parskip}    % Activate to begin paragraphs with an empty line rather than an indent
+#+LATEX_HEADER:\usepackage{amsmath}
+#+LATEX_HEADER:\usepackage{fullpage}
+#+LATEX_HEADER:\usepackage{mathptmx} % font = times
+#+LATEX_HEADER:\usepackage{helvet} % font sf = helvetica
+#+LATEX_HEADER:\usepackage[latin1]{inputenc}
+#+LATEX_HEADER:\usepackage{relsize}
+#+LATEX_HEADER:\usepackage{listings}
+#+LATEX_HEADER:\usepackage{color}
+#+latex_header:\usepackage{xspace}
+#+latex_header:\usepackage{subcaption}
+#+LATEX_HEADER: \usepackage{verbments}
+#+LaTeX_HEADER: \usepackage{minted}
+
+
+#+BEGIN_LaTeX
+\lstset{ %
+  basicstyle=\footnotesize,        % the size of the fonts that are used for the code
+  breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+  breaklines=true,                 % sets automatic line breaking
+  captionpos=b,                    % sets the caption-position to bottom
+  %commentstyle=\color{mygreen},    % comment style
+  deletekeywords={...},            % if you want to delete keywords from the given language
+  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+  extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+  frame=single,	                   % adds a frame around the code
+  keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+  keywordstyle=\color{blue},       % keyword style
+  language=Shell,                 % the language of the code
+  otherkeywords={*,...},           % if you want to add more keywords to the set
+  numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
+  numbersep=5pt,                   % how far the line-numbers are from the code
+  %numberstyle=\tiny\color{mygray}, % the style that is used for the line-numbers
+  rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+  showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+  showstringspaces=false,          % underline spaces within strings only
+  showtabs=false,                  % show tabs within strings adding particular underscores
+  stepnumber=2,                    % the step between two line-numbers. If it's 1, each line will be numbered
+  stringstyle=\color{mymauve},     % string literal style
+  tabsize=2,	                   % sets default tabsize to 2 spaces
+  title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
+}
+\renewcommand{\lstlistingname}{Code}
+#+END_LaTeX
+
+#+BEGIN_LaTeX
+%Style des têtes de section, headings, chapitre
+\headstyles{komalike}
+\nouppercaseheads
+\chapterstyle{dash}
+\makeevenhead{headings}{\sffamily\thepage}{}{\sffamily\leftmark} 
+\makeoddhead{headings}{\sffamily\rightmark}{}{\sffamily\thepage}
+\makeoddfoot{plain}{}{}{} % Pages chapitre. 
+\makeheadrule{headings}{\textwidth}{\normalrulethickness}
+%\renewcommand{\leftmark}{\thechapter ---}
+\renewcommand{\chaptername}{\relax}
+\renewcommand{\chaptitlefont}{ \sffamily\bfseries \LARGE}
+\renewcommand{\chapnumfont}{ \sffamily\bfseries \LARGE}
+\setsecnumdepth{subsection}
+
+
+% Title page formatting -- do not change!
+\pretitle{\HUGE\sffamily \bfseries\begin{center}} 
+\posttitle{\end{center}}
+\preauthor{\LARGE  \sffamily \bfseries\begin{center}}
+\postauthor{\par\end{center}}
+
+\newcommand{\jury}[1]{% 
+\gdef\juryB{#1}} 
+\newcommand{\juryB}{} 
+\newcommand{\session}[1]{% 
+\gdef\sessionB{#1}} 
+\newcommand{\sessionB}{} 
+\newcommand{\option}[1]{% 
+\gdef\optionB{#1}} 
+\newcommand{\optionB}{} 
+
+\renewcommand{\maketitlehookd}{% 
+\vfill{}  \large\par\noindent  
+\begin{center}\juryB \bigskip\sessionB\end{center}
+\vspace{-1.5cm}}
+\renewcommand{\maketitlehooka}{% 
+\vspace{-1.5cm}\noindent\includegraphics[height=14ex]{logoINP.png}\hfill\raisebox{2ex}{\includegraphics[height=7ex]{logoUJF.jpg}}\\
+\bigskip
+\begin{center} \large
+Master of Science in Informatics at Grenoble \\
+Master Math\'ematiques Informatique - sp\'ecialit\'e Informatique \\ 
+option \optionB  \end{center}\vfill}
+% End of title page formatting
+
+\option{$PDES$}
+\title{ Semi-Automatic Performance Optimization of HPC Kernels }%\\\vspace{-1ex}\rule{10ex}{0.5pt} \\sub-title} 
+\author{Steven QUINITO MASNADA}
+%\date{ June 22th 2016 } % Delete this line to display the current date
+\jury{
+Research project performed at $LIG$ \\\medskip
+Under the supervision of:\\
+Arnaud LEGRAND, Brice VIDEAU, Frederic DESPREZ\\ $CORSE$ and $POLARIS$ teams\\\medskip
+Defended before a jury composed of:\\
+Prof Noel DEPALMA\\
+Prof Martin HEUSSE\\
+Dr Thomas ROPARS\\
+Prof Olivier GRUBER\\
+Dr Henri-Pierre CHARLES\\
+}
+\session{$June$\hfill 2016}
+#+END_LaTeX
+
+#+BEGIN_LaTeX
+\selectlanguage{english} % french si rapport en français
+\frontmatter
+\begin{titlingpage}
+\maketitle
+\end{titlingpage}
+
+%\small
+\setlength{\parskip}{-1pt plus 1pt}
+
+\renewcommand{\abstracttextfont}{\normalfont}
+\abstractintoc
+\begin{abstract} 
+High Performance Computing platforms are made to answer the need 
+of huge computing power, however, taking advantage of their power 
+is difficult as they are complex machines and each platform has a 
+unique set of characteristics. Thus, the developer must program 
+them with care and write specialized code. Tools exist to help 
+the developer in this tricky task to generate optimized versions 
+of an application. Finding high performing versions is the main concern 
+because the search space can be huge (e.g GCC has about 500 compilation flags)
+and an exhaustive search is prohibitive. Hence, auto-tuning considers this as 
+a mathematical optimization problem. To the best of our knowledge most 
+auto-tuning frameworks mostly resort to generic optimization techniques 
+combined to fully automatic explorations. However, this approach excludes the 
+user from the optimization process. Hence, it is difficult to know if further 
+improvement can be made and the quality evaluation of the solution is complicated.
+To answer this problem we propose a semi-automatic approach that gives power back 
+to the user. This approach is based on linear regression techniques to predict 
+the computation kernel performances. More precisely we used both least square regression and 
+quantile regression. It is also combined to techniques inspired from design of experiments 
+which aim to reduce the experimental cost. 
+We evaluated our approach using the case of a Laplacian kernel and compared it with
+other classical optimization techniques used in the auto-tuning literature. 
+Our method gives very good results by finding almost every time near-optimal solutions.
+We provide an in depth analysis of the reason why our approach is much more effective
+than previously proposed one. 
+\end{abstract}
+\abstractintoc
+\renewcommand\abstractname{R\'esum\'e}
+\selectlanguage{english}% french si rapport en français
+
+\cleardoublepage
+
+\tableofcontents* % the asterisk means that the table of contents itself isn't put into the ToC
+\normalsize
+
+\mainmatter
+\SingleSpace
+#+END_LaTeX

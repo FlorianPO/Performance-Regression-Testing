@@ -1,0 +1,199 @@
+* Présentation
+** Intro
+   Ce projet permet de déployer et d'exécuter différentes révisions
+   SVN de StarPU sur Grid5000 afin d'en récupérer les résultats, dans
+   le but de tester les performances de StarPU (pour comparer les versions
+   de StarPU, etc...)
+
+** Tehnologies
+   - Kameleon : http://kameleon.imag.fr/
+     + Déploie sur Grid5000
+     + Installe et sauvegarde des images Linux
+     + Exécute des scripts
+     + Récupère les résultats en local
+   - Spack : http://software.llnl.gov/spack/
+     + Installe StarPU et ses dépendances
+     + En fonction des révisions SVN
+   - Execo : http://execo.gforge.inria.fr/doc/latest-stable/index.html
+     + Exécute Spack
+     + Exécute StarPU
+   - Scripts Shell et Python
+
+** Hierarchie
+   - =Kameleon/=
+     - =creation/=
+       - =default/=            # ne pas toucher (déploiement grid5000 avec Kameleon)
+       - =scripts/=            # contient les scripts à exécuter sur la machine distante
+       - =debian_g5k.yaml=     # recette Kameleon pour la création de l'image de base où seront exécutées les expériences
+     - =execution/=
+       - =default/=            # ne pas toucher (déploiement grid5000 avec Kameleon)
+       - =scripts/=            # contient les scripts à exécuter sur la machine distante
+       - =scripts_local/=      # contient les scripts à exécuter sur la machine locale
+       - =input_data/=         # contient des fichiers CSV (plan d'expérience)
+       - =execo_recipe.yaml=   # recette Kameleon pour l'expérience (utilise l'image créée précédemment)
+
+** Installation préalable
+   Installer Kameleon : http://kameleon.imag.fr/installation.html
+   #+begin_src 
+   apt-get install ruby-dev ruby-childprocess polipo libguestfs-tools
+   gem install --no-ri --no-rdoc kameleon-builder
+   #+end_src
+
+** Utilisation
+*** Création
+    Pour créer l'image, aller dans =Kameleon/creation/= et faire :
+    #+begin_src
+    kameleon build debian_g5k.yaml
+    #+end_src
+
+    Une image sera générée (.env et .tgz) dans votre dossier personnel
+    sur Grid5000 : =~/kameleon_workdir/debian_g5k/<nom de l'image>=
+
+    Par ailleurs, en local, un dossier =build/= sera généré et
+    contiendra tout un tas d'informations sur la machine, scripts
+    utilisés, ...
+
+*** Exécution
+    Pour lancer l'expérience : aller dans =Kameleon/execution/= et faire :
+    #+begin_src 
+    kameleon build execo_recipe.yaml
+    #+end_src
+
+    Le dossier =build/= généré contiendra tous les résultats ainsi que
+    les informations de la machine
+
+    Le fichier =input_data/revisions.csv= contient la liste des
+    expériences à exécuter.
+
+    Une expérience est constituée de :
+    - un nom (quelconque, n'a pas besoin d'être unique)
+    - la branche Chameleon
+    - la révision Chameleon
+    - la branche StarPU
+    - la révision StarPU
+    - la commande à exécuter dans StarPU
+
+    Les branches ainsi que les commandes sont des alias se trouvant
+    respectivement dans les fichiers =input_data/branches.csv= et
+    =input_data/commands.csv=
+
+* En détail
+** Création
+   La création consiste à installer les programmes/dépendances statiques :
+
+   - Prérequis StarPU :
+     #+begin_src 
+     apt-get update
+     apt-get install -y python2.7-dev python-httplib2 python-pip
+     apt-get install -y vim emacs
+     apt-get install -y curl patch
+     apt-get install -y git subversion mercurial
+     apt-get install -y build-essential gfortran
+     apt-get install -y autoconf automake cmake cmake-data doxygen texinfo
+     apt-get install -y libtool
+     apt-get install -y libboost-dev
+     apt-get install -y gawk
+     apt-get install -y bison flex
+     apt-get install -y binutils-dev libelf-dev libiberty-dev
+     apt-get install -y libz-dev
+     apt-get install -y libqt4-dev freeglut3-dev
+     apt-get install -y environment-modules
+     apt-get install -y hwloc libhwloc-dev
+     #+end_src
+   - Installation de Spack (+ passage branche Morse) :
+     #+begin_src 
+     git clone https://github.com/fpruvost/spack          
+     cd spack/
+     git checkout morse     
+     #+end_src
+   - Installation de Execo
+     #+begin_src 
+     pip install --user execo
+     #+end_src
+     
+   Au passage, on récupère des informations machines à l'aide d'un
+   script (=scripts/get_info.sh=)
+
+** Exécution
+   Plusieurs étapes clés :
+
+   - Calcul du tableau CSV _sans_ alias (=scripts_local/csv_filler.py=) :
+     + ce nouveau tableau sera placé dans =scripts/= (pour être donné à
+       la machine distante)
+     + le tableau avec les alias sera également placé dans =scripts/=
+     + les fichiers CSV sont manipulés avec le module
+       =scripts_local/csv_reader.py=, si le nom des colonnes des
+       fichiers CSV change, il faut également modifier ce et seulement
+       ce fichier (simple, c'est fait pour)       
+
+   - Modification des packages Spack :
+     + Pour pouvoir installer StarPU+Chameleon à partir d'une révision,
+       il faut modifier les packages Spack correspondant. Les scripts
+       =scripts/chameleon_builder.py= et =scripts/starpu_builder.py=
+       permettent de modifier ces packages en ajoutant par exemple les
+       lignes :
+       #+BEGIN_EXAMPLE
+       version('svn_1_trunk_18010_cmd1', svn='https://scm.gforge.inria.fr/anonscm/svn/starpu/trunk', revision=18010)
+       version('svn_2_trunk_18010_cmd2', svn='https://scm.gforge.inria.fr/anonscm/svn/starpu/trunk', revision=18010)
+       version('svn_3_trunk_17971_cmd1', svn='https://scm.gforge.inria.fr/anonscm/svn/starpu/trunk', revision=17971)
+       #+END_EXAMPLE
+       Ces lignes sont bien évidemment générées à partir des fichiers CSV
+
+   - Exécution de l'expérience avec Execo (=scripts/execo_script.py=) :
+     + Consiste fondamentalement à exécuter des commandes
+       (pourrait-être fait sans Execo), cependant Execo fournit des
+       abstractions intéressantes) :
+       1. Installation de StarPU avec Spack :
+	  #+begin_src 
+	  spack install svn_1_trunk_18010_cmd1
+	  #+end_src
+       2. Aller à l'emplacement de l'installation
+	  #+begin_src 
+	  cd <emplacement de l'installation>
+	  #+end_src
+       3. Exécution de StarPu
+	  #+begin_src 
+	  export STARPU_WORKER_STATS=1
+	  export STARPU_CALIBRATE=2
+	  ./timing/time_spotrf_tile --warmup --gpus=3 --threads=9 --nb=960 --ib=96 --n_range=48000:48000:9600
+	  #+end_src
+       4. Stocker les résultats d'installation/compilation et ceux de StarPU
+     
+     + Et ce autant de fois qu'il y a d'expériences à faire (plusieurs
+       expériences peuvent être réalisées pour une même installation,
+       pour chaque installation, un dossier résultat est créé)
+
+   - Récupération et parsing des données :
+     + On récupère des informations machines (=scripts/get_info.sh=)
+     + Toutes les données sont rapatriées en local, pour chaque
+       installation, un fichier =.org= est généré afin de résumer les
+       expériences (=scripts_local/org_builder.py=)
+     + Les fichiers =.org= sont ensuite eux-mêmes parsés afin de générer
+       un fichier CSV contenant l'ensemble des résultats StarPU (à
+       utiliser dans R ensuite à votre bon vouloir) (=scripts_local/data_csv.py=)
+
+* Remarques
+  - 75% des recettes Kameleon concerne la copie de fichiers vers la
+    machine distante et inversement (avec =cat= et =tar=) (le nettoyage
+    des fichiers temporaires prend lui aussi de la place)
+
+  - Les recettes Kameleon se basent sur celles permettant de déployer
+    sur Grid5000, /légèrement modifiées/ :
+    + Ajout d'un hook permettant de nettoyer la réservation Grid5000 à
+      la fin de l'expérience ou lors d'un arrêt brutal (ctrl + c)
+    + Récupération du =Job_ID= de la réservation dans un fichier (pour
+      palier à un bug Kameleon qui efface les variables d'environnement)
+
+  - Dans la recette =creation=, les paquets à installer ne devraient pas
+    figurer sur une même ligne :
+    
+    Eviter :
+    #+begin_src 
+    apt-get install -y paquet1 paquet2
+    #+end_src
+
+    Préférer :
+    #+begin_src 
+    apt-get install -y paquet1
+    apt-get install -y paquet2
+    #+end_src
