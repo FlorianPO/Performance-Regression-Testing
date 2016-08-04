@@ -1,29 +1,167 @@
+=Les titres marqués :Moodle: sont les parties qui me sont imposées=
+
 * TODO Page de garde
-  Voir FB
-  - Rapport de stage 2016 / Polytech
-  - Popek Florian
-  - Test de non régression de performance
+  =A la fin=
+
 * TODO Abstract
-  - De quoi ça parle
+  =Commencer plus généralement=
+
+  Dans ce document, nous aborderons le problème de la reproductibilité
+  des expériences, en particulier dans le domaine HPC (High
+  Performance Computing), selon deux aspects qui sont : le contrôle de
+  l'envrironnement et le pilotage de l'expérience. On y présentera
+  notre solution basée sur des technologies développées à l'Inria
+  permettant de déployer un envrionnement afin d'y conduire des
+  expériences (runtime). L'objectif final est d'évaluer les
+  performances (/benchmarker/) de StarPU tout au long de son évolution
+  afin d'y déceler de potentielles régressions entre deux versions,
+  tout en ayant un contrôle parfait de l'environnement et de
+  l'expérience.
+
+  =Ne pas évoquer StarPU tout de suite ?=
+
+  =A étoffer=
+ 
 * TODO Sommaire
+  =A la fin=
+
 * TODO Introduction
-** TODO Contexte
-  - Recherche reproductible, StarPU/Morse, Simgrid, HPC, Grid5000
-** TODO Etat de l'art
-  - Phoronix
-  - Pilotage expérience (XPFlow, Execo, ...)
-  - Contrôle environnement (Spack, Kameleon)
+  L'informatique moderne est devenue de plus en plus complexe au fur
+  et à mesure des années, au niveau matériel tout comme au niveau
+  logiciel : les architectures multi-coeurs (CPUs et GPUs) sont
+  devenues communes, reliées par des réseaux à haute vitesse, dans
+  lesquelles de nombreuses optimisations interviennent à tous les
+  niveaux de façon dynamique. Tous ces éléments rendent
+  l'informatique moderne imprédictible et non déterministe. Répéter
+  une expérience ne produira pas forcément les mêmes résultats, en
+  particulier lorsque la machine qui l'exécute n'est pas la même,
+  pour des raisons matérielles. Mais le partage même de l'expérience
+  à un tiers pose d'énormes problèmes : logiciels/packages plus
+  disponibles, problèmes de version, problèmes de compabilité,
+  etc ... Il convient donc de s'intérresser à la reproductibilité des
+  expériences, pour pouvoir les réitérer si besoin même 10 ans après.
+  
+  La reproductibilité est avant tout liée à de bonnes pratiques :
+  comme dans d'autres domaines tels que les sciences physiques, une
+  rigueur est de mise. Décrire un plan d'expérience, construire un
+  environnement pour ensuite exécuter l'expérience, tenir un journal,
+  organiser et stocker pertinemment les résultats, etc ... sont des
+  éléments à prendre en considération dès le départ.
+  
+  Il existe de nombreux outils et autres solutions répondant à ce
+  besoin, mais aucun ne résoud le problème dans sa globalité. C'est
+  pourquoi nous avons décidé de construire un outil /maison/ à l'aide
+  d'outil préexistant (Spack, Kameleon, ...) permettant de définir un
+  entièrement une expérience : création de l'environnement,
+  déploiement de l'environnement, pilotage de l'expérience et synthèse
+  des résultats.
+  
+  =Description des différentes sections évoquées (trop tôt pour se
+  prononcer ...)=
+   
+* TODO Contexte
+  =Commencer généralement (parler du HPC etc...) (en quête
+  d'inspiration)=
+
+  Grid5000 est un projet lancé en 2003 dont le but était de mettre en
+  place une grille informatique expérimentale répartie sur 10 sites en
+  France. Ajourd'hui Grid5000 est constituée de milliers de CPU et de
+  GPU et constitue le support des expériences HPC (mais pas que) des
+  chercheurs en informatique en France.
+
+  =Description de StarPU (trouvé sur internet, à remanier):=
+  Nous avons donc conçus StarPU, un support exécutif original qui
+  fournit un modele d’execution unifié afin d’exploiter l’integralité
+  de la puissance de calcul tout en s’affranchissant des difficultés
+  liées a la gestion des données. StarPU offre par ailleurs la
+  possibilité de concevoir facilement des stratégies d’ordonnancement
+  portables et efficaces.
+
+  Chaque nuit (quasiment), des tests automatiques ont lieux afin de
+  tester les performances de la révision courante. Notre objectif est
+  de refaire toutes ces expériences (installer StarPU selon une
+  révision particulière, l'exécuter, recommencer pour une autre
+  révision, ...) à l'aide de Grid5000, sans aucun environnement au
+  préalable.
+
+  =A étoffer sérieusement (faire un vrai contexte)=
+
+  =Lier les paragraphes=
+
+* TODO Etat de l'art
+  Tous les paramètres (nombre de coeurs, version des packages,
+  version des compilateurs, etc... (la liste est longue)) doivent
+  être captés au moment de l'expérience pour en interpréter les
+  résultats. Il suffirait donc de construire un environnement
+  possédant ces mêmes paramètres pour retrouver des résultats
+  identiques. Cependant, est-ce possible ? Peut-on installer un
+  programme/package à partir d'une version précise sans tomber
+  dans un enfer de dépendances ?
+
+  Une solution brutale, mais efficace, consisterait à enregistrer
+  l'environnement dans sa globalité pour obtenir une image (un .tgz
+  par exemple) que l'on pourrait redéployer : on obtiendrait un
+  environnement identique et, auquel cas, des expériences identiques.
+
+  Grid5000 est basé sur ce principe : à l'aide *tgz-g5k*, il est
+  possible d'enregistrer son environnement pour ensuite le redéployer
+  avec *Kadeploy*, un outil développé à l'Inria.
+
+  Cette solution s'appuie sur le principe de bonnes pratiques, c'est
+  à l'expérimentateur de s'assurer qu'une image de son expérience est
+  disponible. Pour des raisons de stockage (une image peut peser
+  plusieurs GB), cette solution peut ne pas être systématiquement
+  appliquée, en particulier lorsqu'un logiciel à benchmarker possède des milliers
+  de révisions.
+
+  Ainsi la plupart du temps, si l'on souhaite répéter une expérience,
+  il faudra installer à la main cet environnement. L'installation de
+  StarPU est un calvaire : les dépendances sont nombreuses et peuvent
+  même changer (StarPU utilise des BLAS (Basic Linear
+  Algebra Subprograms) pour ses calculs).
+
+  *Spack* résoud ce problème en abstrayant toutes ces dépendances et
+  leur installation à l'utilisateur. Ce dernier pourra ainsi
+  installer StarPU avec tel ou tel BLAS, pour une version donnée,
+  et/ou une version de compilateur, etc... sans se soucier du
+  téléchargement des paquets nécessaires et de leur installation.
+
+  Cependant, Spack ne peut qu'installer les logiciels dont il a la
+  connaissance, _ie_ : les logiciels dont les règles de
+  compilation/installation ont été fournies auparavant par un tiers
+  (dans notre cas, on pourra s'en servir pour installer StarPU).
+
+  =Parler de Kameleon pour la création d'environnement=
+
+  =A étoffer sérieusement=
+  
 * TODO Ma contribution
-** 
+  =A venir=
+
 * TODO XP results
+  =A venir=
+
 * TODO Conclusion
+  =A la fin, mais pas obligé (quand ce sera clair dans ma tête)=
+
 * TODO Ouverture / Perspectives futures
-  - RStudio -> affichage des résultats
-  - Stockage (Git, ...)
+  =RStudio -> affichage des résultats (flexdashboard)=
+  =Stockage (Git branching, ...)=
+
 * TODO Organisation et connaissances acquises			     :Moodle:
-  - Shell, Org-mode (journal)
+  =Shell, Org-mode (tenir un journal), ... (à méditer)=
+
 * TODO Responsabilité sociétale des entreprises			     :Moodle:
+  =A évacuer rapidement=
+
 * TODO Bibliographie
+  =A a fin=
+
 * TODO Documents rédigés					     :Moodle:
+  =A éclaircir=
+
 * TODO Résumé / Tableau de révisions				     :Moodle:
+  =A la fin=
+
 * TODO Annexes
+  =A venir=

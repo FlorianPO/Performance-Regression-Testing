@@ -174,3 +174,25 @@ than previously proposed one.
 \mainmatter
 \SingleSpace
 #+END_LaTeX
+
+* Emacs Setup 							   :noexport:
+  This document has local variables in its postembule, which should
+  allow Org-mode to work seamlessly without any setup. If you're
+  uncomfortable using such variables, you can safely ignore them at
+  startup. Exporting may require that you copy them in your .emacs.
+
+# Local Variables:
+# eval:    (require 'org-install)
+# eval:    (org-babel-do-load-languages 'org-babel-load-languages '( (sh . t) (R . t) (perl . t) (ditaa . t) ))
+# eval:    (setq org-confirm-babel-evaluate nil)
+# eval:    (unless (boundp 'org-latex-classes) (setq org-latex-classes nil))
+# eval:    (add-to-list 'org-latex-classes '("memoir" "\\documentclass[smallextended]{memoir} \n \[NO-DEFAULT-PACKAGES]\n \[EXTRA]\n  \\usepackage{graphicx}\n  \\usepackage{hyperref}" ("\\chapter{%s}" . "\\chapter*{%s}") ("\\section{%s}" . "\\section*{%s}") ("\\subsection{%s}" . "\\subsection*{%s}")                       ("\\subsubsection{%s}" . "\\subsubsection*{%s}")                       ("\\paragraph{%s}" . "\\paragraph*{%s}")                       ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+# eval:    (add-to-list 'org-latex-classes '("acm-proc-article-sp" "\\documentclass{acm_proc_article-sp}\n \[NO-DEFAULT-PACKAGES]\n \[EXTRA]\n"  ("\\section{%s}" . "\\section*{%s}") ("\\subsection{%s}" . "\\subsection*{%s}")                       ("\\subsubsection{%s}" . "\\subsubsection*{%s}")                       ("\\paragraph{%s}" . "\\paragraph*{%s}")                       ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+# eval:    (setq org-alphabetical-lists t)
+# eval:    (setq org-src-fontify-natively t)
+# eval:    (setq org-export-babel-evaluate nil)
+# eval:    (setq ispell-local-dictionary "english")
+# eval:    (eval (flyspell-mode t))
+# eval:    (setq org-latex-listings 'minted)
+# eval:    (setq org-latex-minted-options '(("bgcolor" "white") ("style" "tango") ("numbers" "left") ("numbersep" "5pt")))
+# End:
