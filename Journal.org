@@ -1709,3 +1709,10 @@
 
   Ecriture d'un bilan de production (à l'intention du futur
   developpeur qui prendra ma place)
+* Vendredi 05/08
+  Dans le package starPU : la spec =+fxt= et la spec =svn-trunk= sont
+  liées -> adaptation pour fonctionner avec nos révisions
+
+  Pas suffisant pour résoudre le problème
+
+  Retirer la compilation parallèle de Chameleon -> semble fonctionner !

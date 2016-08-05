@@ -41,7 +41,7 @@ class ExecoWorkload(Engine):
                                 + '_starpu_' + csvr_abstract.starpuBranch() + '_' + csvr_abstract.starpuRevision() \
                                 + '_' + csvr_abstract.command()
                 
-                logger.info("Starting experiment %s ..." % (global_name))
+                logger.info("Starting experiment %s" % (global_name))
 
                 spack_spec = 'chameleon@' + chameleon_name + ' +starpu+fxt ^starpu@' + starpu_name + ' +fxt'
 
@@ -58,7 +58,7 @@ class ExecoWorkload(Engine):
                     pass
 
                 # STARPU INSTALLATION
-                logger.info("Starting StarPU installation...")
+                logger.info("Starting StarPU installation")
                 spack_process = Process('spack -d install' + ' ' + spack_spec)
 
 
@@ -67,7 +67,7 @@ class ExecoWorkload(Engine):
                 spack_process.start()
                 spack_process.wait()
 
-                logger.info("StarPU installation DONE...")
+                logger.info("StarPU installation DONE")
                 is_ok = self.checkProcess(spack_process)
                 spack_process.kill()
 
@@ -75,7 +75,7 @@ class ExecoWorkload(Engine):
                     continue # stop this experiment
 
                 # STARPU DIRECTORY
-                logger.info("Searching and going to StarPU installation directory...")
+                logger.info("Searching and going to StarPU installation directory")
 
                 starpu_location_process = Process('spack location -i' + ' ' + spack_spec).start()
                 starpu_location_process.wait()
@@ -89,7 +89,7 @@ class ExecoWorkload(Engine):
                     continue # stop this experiment
                 
                 # RUNNING EXPERIMENT
-                logger.info("Starting StarPU experiment...")
+                logger.info("Starting StarPU experiment")
 
                 starpu_experiment_process = Process(starpu_cd + '\n' + csvr.command(), shell=True)
                            
@@ -98,7 +98,7 @@ class ExecoWorkload(Engine):
                 starpu_experiment_process.start()
                 starpu_experiment_process.wait()
 
-                logger.info("StarPU experiment DONE...")
+                logger.info("StarPU experiment DONE")
                 is_ok = self.checkProcess(starpu_experiment_process)        
                 starpu_experiment_process.kill()
 

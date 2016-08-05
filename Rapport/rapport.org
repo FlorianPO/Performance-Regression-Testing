@@ -4,9 +4,20 @@
   =A la fin=
 
 * TODO Abstract
-  =Commencer plus généralement=
+  =Intro pompeuse :)=
 
-  Dans ce document, nous aborderons le problème de la reproductibilité
+  De tout temps la communauté scientifique n'a cessé de croître grâce
+  aux échanges, permettant aux scientifiques de baser leurs travaux
+  sur ceux préalablement établis par d'autres. Ces échanges permettent
+  également de crédibiliser les résultats trouvés en décrivant les protocoles
+  expérimentaux, afin que quiconque puisse de son côté les
+  vérifier. L'informatique ne dérogue pas à ce principe, néanmoins,
+  le nombre de paramètres à prendre en compte et les différences entre
+  machines rendent ce processus de partage épineux, autant pour celui
+  qui souhaite décrire précisément son expérience que pour celui qui
+  souhaite la reproduire.
+
+  Dans ce document, nous abordons le problème de la reproductibilité
   des expériences, en particulier dans le domaine HPC (High
   Performance Computing), selon deux aspects qui sont : le contrôle de
   l'envrironnement et le pilotage de l'expérience. On y présentera
@@ -63,26 +74,28 @@
   =Commencer généralement (parler du HPC etc...) (en quête
   d'inspiration)=
 
-  Grid5000 est un projet lancé en 2003 dont le but était de mettre en
+  Le domainde du HPC s'intéresse aux architectures multicoeurs et à
+  l'ordonnancement des tâches afin d'approcher les performances
+  théoriques offertes par ce genre d'architecture, traitant des
+  centaines de noeuds sur différentes machines connectées entre
+  elles. En France, ces expériences sont principalement exécutées sur
+  Grid5000, un projet lancé en 2003 dont le but était de mettre en
   place une grille informatique expérimentale répartie sur 10 sites en
   France. Ajourd'hui Grid5000 est constituée de milliers de CPU et de
-  GPU et constitue le support des expériences HPC (mais pas que) des
-  chercheurs en informatique en France.
+  GPU, mis à disposition des chercheurs informatiques.
 
-  =Description de StarPU (trouvé sur internet, à remanier):=
-  Nous avons donc conçus StarPU, un support exécutif original qui
-  fournit un modele d’execution unifié afin d’exploiter l’integralité
-  de la puissance de calcul tout en s’affranchissant des difficultés
-  liées a la gestion des données. StarPU offre par ailleurs la
-  possibilité de concevoir facilement des stratégies d’ordonnancement
-  portables et efficaces.
+  Pour gérer cet ordonnancement des tâches, Inria a conçus StarPU : un
+  support exécutif original qui fournit un modele d’execution unifié
+  afin d’exploiter l’integralité de la puissance de calcul tout en
+  s’affranchissant des difficultés liées a la gestion des
+  données, et offre par ailleurs la possibilité de concevoir
+  facilement des stratégies d’ordonnancement portables et efficaces.
 
   Chaque nuit (quasiment), des tests automatiques ont lieux afin de
-  tester les performances de la révision courante. Notre objectif est
-  de refaire toutes ces expériences (installer StarPU selon une
-  révision particulière, l'exécuter, recommencer pour une autre
-  révision, ...) à l'aide de Grid5000, sans aucun environnement au
-  préalable.
+  tester les performances de la révision courante de StarPU. Notre
+  objectif est de refaire toutes ces expériences à l'aide de Grid5000, 
+  en déployant un environnement controlé afin d'évaluer StarPU pour
+  chacune de ces révisions.
 
   =A étoffer sérieusement (faire un vrai contexte)=
 
@@ -107,12 +120,12 @@
   possible d'enregistrer son environnement pour ensuite le redéployer
   avec *Kadeploy*, un outil développé à l'Inria.
 
-  Cette solution s'appuie sur le principe de bonnes pratiques, c'est
-  à l'expérimentateur de s'assurer qu'une image de son expérience est
+  Cette solution s'appuie sur le principe de bonnes pratiques, c'est à
+  l'expérimentateur de s'assurer qu'une image de son expérience est
   disponible. Pour des raisons de stockage (une image peut peser
   plusieurs GB), cette solution peut ne pas être systématiquement
-  appliquée, en particulier lorsqu'un logiciel à benchmarker possède des milliers
-  de révisions.
+  appliquée, en particulier lorsqu'un logiciel à benchmarker possède
+  des milliers de révisions.
 
   Ainsi la plupart du temps, si l'on souhaite répéter une expérience,
   il faudra installer à la main cet environnement. L'installation de

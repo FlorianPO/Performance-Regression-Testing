@@ -48,6 +48,7 @@ setup:
           rm scripts.tar      
 
     - execo_step:                                                                 # Main experiment
+      - breakpoint: "Breakpoint..."
       - exec_in: |
           # SPACK ENVIRONMENT
           export SPACK_ROOT=$PWD/../debian_g5k/spack/
