@@ -1,0 +1,73 @@
+#    -*- mode: org -*-
+
+
+Archived entries from file /home/florian/Bureau/Performance-Regression-Testing/Rapport/rapport.org
+
+
+* TODO Etat de l'art
+  :PROPERTIES:
+  :ARCHIVE_TIME: 2016-08-07 dim. 15:42
+  :ARCHIVE_FILE: ~/Bureau/Performance-Regression-Testing/Rapport/rapport.org
+  :ARCHIVE_CATEGORY: rapport
+  :ARCHIVE_TODO: TODO
+  :END:
+  Tous les paramètres (nombre de coeurs, version des packages,
+  version des compilateurs, etc... (la liste est longue)) doivent
+  être captés au moment de l'expérience pour en interpréter les
+  résultats. Il suffirait donc de construire un environnement
+  possédant ces mêmes paramètres pour retrouver des résultats
+  identiques. Cependant, est-ce possible ? Peut-on installer un
+  programme/paquet à partir d'une version précise sans tomber
+  dans un enfer de dépendances ?
+
+  Une solution brutale, mais efficace, consisterait à enregistrer
+  l'environnement dans sa globalité pour obtenir une image (un .tgz
+  par exemple) que l'on pourrait redéployer : on obtiendrait un
+  environnement identique et, auquel cas, des expériences identiques.
+
+  Grid5000 est basé sur ce principe : à l'aide *tgz-g5k*, il est
+  possible d'enregistrer son environnement pour ensuite le redéployer
+  avec *Kadeploy*, un outil développé à l'Inria.
+
+  Cette solution s'appuie sur le principe de bonnes pratiques, c'est à
+  l'expérimentateur de s'assurer qu'une image de son expérience est
+  disponible. Pour des raisons de stockage (une image peut peser
+  plusieurs GB), cette solution peut ne pas être systématiquement
+  appliquée, en particulier lorsqu'un logiciel à benchmarker possède
+  des milliers de révisions.
+
+  Plûtot que d'enregistrer chacun des environnements, des solutions
+  telles que *Kameleon* permettent de les construire à volonté selon des
+  /recettes/ : une image Debian8 pourra être construite pour ensuite y
+  installer un certain nombre de paquets ou de logiciels, et
+  constituer l'environnement d'une expérience. Kameleon n'est pas
+  juste un outil qui exécutera successivement des commandes Shell. Son
+  gros avantage (outre sa simplicité exemplaire) est la possibilité de
+  créer des recettes basées sur d'autres recettes, à la manière
+  d'héritage tel qu'il est proposé par les langages orientés
+  objets. Une recette Kameleon pourra ainsi reprendre une recette
+  construisant une image Debian basique sans se soucier de ce qu'elle
+  contient.
+ 
+  Pour ce qui concerne les dépendances dynamiques, l'outil *Spack*
+  résoud ce problème en abstrayant toutes ces dépendances et leur
+  installation à l'utilisateur. Ce dernier pourra ainsi installer
+  StarPU avec tel ou tel BLAS, pour une version donnée, et/ou une
+  version de compilateur, etc... sans se soucier du téléchargement des
+  paquets nécessaires et de leur installation.
+
+  Ces deux outils, à eux seuls, permettent de largement simplifier le
+  travail de l'expérimentateur en ce qui concerne le gestion de son
+  environnement et illustrent le besoin croissant des enjeux de la
+  reproductibilité : des outils simples permettant de définir
+  précisément et clairement les dépendances d'une machine d'un *point
+  de vue extérieur*. Bien que ce ne soient pas des solutions miracles
+  (installer StarPU avec Spack nécessite de fournir une fois pour
+  toute les règles de compilation de ce premier), une recette Kameleon
+  utilisant Spack en interne pourra être partagée sans problème et
+  réutilisée à volonté.
+
+  =Parler de du cache persistant de Kameleon pour capturer les paquets téléchargés=
+
+  =Parler de Docker=
+  
