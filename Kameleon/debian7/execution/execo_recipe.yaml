@@ -113,5 +113,4 @@ export:
           rm ../../scripts/revisions.csv
           rm ../../scripts_local/csv_reader.pyc
 
-      - breakpoint: "Breakpoint..."
 
