@@ -1,7 +1,141 @@
-* TODO Page de garde
-  =A la fin=
+#+TITLE: Mise en place de tests de non régression de performance
+#+AUTHOR: Florian Popek 
+#+DATE: 13 août 2016
+#+LANGUAGE: fr
+#+TAGS: noexport(n) deprecated(d)
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
 
-* Abstract
+#+LaTeX_CLASS: memoir
+#+LaTeX_CLASS_OPTIONS: [12pt, a4paper]
+#+OPTIONS: H:3 title:nil email:nil creator:nil timestamp:nil skip:nil toc:nil ^:nil
+#+BABEL: :session *R* :cache yes :results output graphics :exports both :tangle yes 
+
+#+LATEX_HEADER:\usepackage[french]{babel}
+#+LATEX_HEADER:\usepackage [vscale=0.76,includehead]{geometry}                % See geometry.pdf to learn the layout options. There are lots.
+# #+LATEX_HEADER:\geometry{a4paper}                   % ... or a4paper or a5paper or ... 
+# #+LATEX_HEADER:\geometry{landscape}                % Activate for for rotated page geometry
+# #+LATEX_HEADER:\OnehalfSpacing
+# #+LATEX_HEADER: \setSingleSpace{1.05}
+# #+LATEX_HEADER:\usepackage[parfill]{parskip}    % Activate to begin paragraphs with an empty line rather than an indent
+#+LATEX_HEADER:\usepackage{amsmath}
+#+LATEX_HEADER:\usepackage{fullpage}
+#+LATEX_HEADER:\usepackage{mathptmx} % font = times
+#+LATEX_HEADER:\usepackage{helvet} % font sf = helvetica
+#+LATEX_HEADER:\usepackage[utf8]{inputenc}
+#+LATEX_HEADER:\usepackage{relsize}
+#+LATEX_HEADER:% \usepackage{listings}
+#+LATEX_HEADER:\usepackage{color}
+#+latex_header:\usepackage{xspace}
+#+latex_header:\usepackage{subcaption}
+#+LATEX_HEADER:% \usepackage{verbments}
+#+LaTeX_HEADER:% \usepackage{minted}
+
+
+#+BEGIN_LaTeX
+% \lstset{ %
+%   basicstyle=\footnotesize,        % the size of the fonts that are used for the code
+%   breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+%   breaklines=true,                 % sets automatic line breaking
+%   captionpos=b,                    % sets the caption-position to bottom
+%   %commentstyle=\color{mygreen},    % comment style
+%   deletekeywords={...},            % if you want to delete keywords from the given language
+%   escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+%   extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+%   frame=single,                    % adds a frame around the code
+%   keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+%   keywordstyle=\color{blue},       % keyword style
+%   language=Shell,                 % the language of the code
+%   otherkeywords={*,...},           % if you want to add more keywords to the set
+%   numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
+%   numbersep=5pt,                   % how far the line-numbers are from the code
+%   %numberstyle=\tiny\color{mygray}, % the style that is used for the line-numbers
+%   rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+%   showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+%   showstringspaces=false,          % underline spaces within strings only
+%   showtabs=false,                  % show tabs within strings adding particular underscores
+%   stepnumber=2,                    % the step between two line-numbers. If it's 1, each line will be numbered
+%   stringstyle=\color{mymauve},     % string literal style
+%   tabsize=2,                       % sets default tabsize to 2 spaces
+%   title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
+% }
+% \renewcommand{\lstlistingname}{Code}
+#+END_LaTeX
+
+#+BEGIN_LaTeX
+%Style des têtes de section, headings, chapitre
+\headstyles{komalike}
+\nouppercaseheads
+\chapterstyle{dash}
+\makeevenhead{headings}{\sffamily\thepage}{}{\sffamily\leftmark} 
+\makeoddhead{headings}{\sffamily\rightmark}{}{\sffamily\thepage}
+\makeoddfoot{plain}{}{}{} % Pages chapitre. 
+\makeheadrule{headings}{\textwidth}{\normalrulethickness}
+%\renewcommand{\leftmark}{\thechapter ---}
+\renewcommand{\chaptername}{\relax}
+\renewcommand{\chaptitlefont}{ \sffamily\bfseries \LARGE}
+\renewcommand{\chapnumfont}{ \sffamily\bfseries \LARGE}
+\setsecnumdepth{subsection}
+
+
+% Title page formatting -- do not change!
+\pretitle{\HUGE\sffamily \bfseries\begin{center}} 
+\posttitle{\end{center}}
+\preauthor{\LARGE  \sffamily \bfseries\begin{center}}
+\postauthor{\par\end{center}}
+
+\newcommand{\jury}[1]{% 
+\gdef\juryB{#1}} 
+\newcommand{\juryB}{} 
+\newcommand{\session}[1]{% 
+\gdef\sessionB{#1}} 
+\newcommand{\sessionB}{} 
+\newcommand{\option}[1]{% 
+\gdef\optionB{#1}} 
+\newcommand{\optionB}{} 
+
+\renewcommand{\maketitlehookd}{% 
+\vfill{}  \large\par\noindent  
+\begin{center}\juryB \bigskip\sessionB\end{center}
+\vspace{-1.5cm}}
+\renewcommand{\maketitlehooka}{% 
+% \vspace{-1.5cm}\noindent\includegraphics[height=14ex]{logoINP.png}\hfill\raisebox{2ex}{\includegraphics[height=7ex]{logoUJF.jpg}}\\
+\bigskip
+\begin{center} \large
+RICM \\
+option Réseau \end{center}\vfill}
+% End of title page formatting
+
+\option{$PDES$}
+%\title{Mise en place de tests de non régression de performance}%\\\vspace{-1ex}\rule{10ex}{0.5pt} \\sub-title} 
+%\author{Florian POPEK}
+%\date{ June 22th 2016 } % Delete this line to display the current date
+\jury{
+Stage réalisé au Laboratoire d'Informatique de Grenoble \\\medskip
+Sous la supervision d'Arnaud Legrand (équipe POLARIS)\\\medskip
+
+Soutenu devant le jury composé de:\\
+Dr Olivier Richard\\
+...\\
+}
+\session{\textit{Septembre}\hfill 2016}
+#+END_LaTeX
+
+#+BEGIN_LaTeX
+\selectlanguage{french} % french si rapport en français
+\frontmatter
+\begin{titlingpage}
+\maketitle
+\end{titlingpage}
+
+%\small
+\setlength{\parskip}{-1pt plus 1pt}
+
+\renewcommand{\abstracttextfont}{\normalfont}
+\abstractintoc
+\renewcommand\abstractname{R\'esum\'e}
+\begin{abstract} 
+#+END_LaTeX
   De tout temps la communauté scientifique n'a cessé de croître grâce
   aux échanges, permettant aux scientifiques de baser leurs travaux
   sur ceux préalablement établis par d'autres. Ces échanges permettent
@@ -24,9 +158,20 @@
   (/benchmarker/) de StarPU tout au long de son évolution afin d'y
   déceler de potentielles régressions entre deux versions, tout en
   ayant un contrôle parfait de l'environnement et de l'expérience.
- 
-* TODO Sommaire
-  =A la fin=
+ \end{abstract}
+#+BEGIN_LaTeX
+
+\cleardoublepage
+
+\tableofcontents* % the asterisk means that the table of contents itself isn't put into the ToC
+\normalsize
+
+\mainmatter
+\SingleSpace
+#+END_LaTeX
+* Trucs à faire 						   :noexport:
+** TODO Sommaire
+   =A la fin=
 
 * TODO Introduction
   L'informatique moderne est devenue de plus en plus complexe au fur
@@ -65,7 +210,7 @@
   =Description des différentes sections évoquées (trop tôt pour se
   prononcer ...)=
    
-* Etat de l'art
+* État de l'art
   La reproductibilité est une préoccupation récente motivée en
   particulier par les chercheurs en informatique traduisant une
   volonté de transparence et de clarté des expériences et des
@@ -277,3 +422,24 @@
 
 * TODO Annexes
   =A venir=
+* Emacs Setup 							   :noexport:
+  This document has local variables in its postembule, which should
+  allow Org-mode to work seamlessly without any setup. If you're
+  uncomfortable using such variables, you can safely ignore them at
+  startup. Exporting may require that you copy them in your .emacs.
+
+# Local Variables:
+# eval:    (require 'org-install)
+# eval:    (org-babel-do-load-languages 'org-babel-load-languages '( (sh . t) (R . t) (perl . t) (ditaa . t) ))
+# eval:    (setq org-confirm-babel-evaluate nil)
+# eval:    (unless (boundp 'org-latex-classes) (setq org-latex-classes nil))
+# eval:    (add-to-list 'org-latex-classes '("memoir" "\\documentclass[smallextended]{memoir} \n \[NO-DEFAULT-PACKAGES]\n \[EXTRA]\n  \\usepackage{graphicx}\n  \\usepackage{hyperref}" ("\\chapter{%s}" . "\\chapter*{%s}") ("\\section{%s}" . "\\section*{%s}") ("\\subsection{%s}" . "\\subsection*{%s}")                       ("\\subsubsection{%s}" . "\\subsubsection*{%s}")                       ("\\paragraph{%s}" . "\\paragraph*{%s}")                       ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+# eval:    (add-to-list 'org-latex-classes '("acm-proc-article-sp" "\\documentclass{acm_proc_article-sp}\n \[NO-DEFAULT-PACKAGES]\n \[EXTRA]\n"  ("\\section{%s}" . "\\section*{%s}") ("\\subsection{%s}" . "\\subsection*{%s}")                       ("\\subsubsection{%s}" . "\\subsubsection*{%s}")                       ("\\paragraph{%s}" . "\\paragraph*{%s}")                       ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+# eval:    (setq org-alphabetical-lists t)
+# eval:    (setq org-src-fontify-natively t)
+# eval:    (setq org-export-babel-evaluate nil)
+# eval:    (setq ispell-local-dictionary "english")
+# eval:    (eval (flyspell-mode t))
+# eval:    (setq org-latex-listings 'minted)
+# eval:    (setq org-latex-minted-options '(("bgcolor" "white") ("style" "tango") ("numbers" "left") ("numbersep" "5pt")))
+# End:
