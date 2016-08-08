@@ -30,8 +30,6 @@
   l'expérience.
 
   =Ne pas évoquer StarPU tout de suite ?=
-
-  =A étoffer=
  
 * TODO Sommaire
   =A la fin=
@@ -47,7 +45,7 @@
   une expérience ne produira pas forcément les mêmes résultats, en
   particulier lorsque la machine qui l'exécute n'est pas la même,
   pour des raisons matérielles. Mais le partage même de l'expérience
-  à un tiers pose d'énormes problèmes : logiciels/packages plus
+  à un tiers pose d'énormes problèmes : logiciels/paquets plus
   disponibles, problèmes de version, problèmes de compabilité,
   etc ... Il convient donc de s'intérresser à la reproductibilité des
   expériences, pour pouvoir les réitérer si besoin même 10 ans après.
@@ -60,20 +58,17 @@
   éléments à prendre en considération dès le départ.
   
   Il existe de nombreux outils et autres solutions répondant à ce
-  besoin, mais aucun ne résoud le problème dans sa globalité. C'est
-  pourquoi nous avons décidé de construire un outil /maison/ à l'aide
-  d'outil préexistant (Spack, Kameleon, ...) permettant de définir un
-  entièrement une expérience : création de l'environnement,
-  déploiement de l'environnement, pilotage de l'expérience et synthèse
-  des résultats.
+  besoin, mais aucun ne résoud le problème dans sa globalité et la
+  question reste encore ouverte. C'est pourquoi nous avons décidé de
+  construire un outil /maison/ à l'aide d'outil préexistant (Spack,
+  Kameleon, ...) permettant de définir entièrement une expérience :
+  création de l'environnement, déploiement de l'environnement,
+  pilotage de l'expérience et synthèse des résultats.
   
   =Description des différentes sections évoquées (trop tôt pour se
   prononcer ...)=
    
 * TODO Contexte
-  =Commencer généralement (parler du HPC etc...) (en quête
-  d'inspiration)=
-
   Le domainde du HPC s'intéresse aux architectures multicoeurs et à
   l'ordonnancement des tâches afin d'approcher les performances
   théoriques offertes par ce genre d'architecture, traitant des
@@ -91,15 +86,39 @@
   données, et offre par ailleurs la possibilité de concevoir
   facilement des stratégies d’ordonnancement portables et efficaces.
 
-  Chaque nuit (quasiment), des tests automatiques ont lieux afin de
-  tester les performances de la révision courante de StarPU. Notre
-  objectif est de refaire toutes ces expériences à l'aide de Grid5000, 
-  en déployant un environnement controlé afin d'évaluer StarPU pour
-  chacune de ces révisions.
+  Piloter efficacement l'expérience ne représente qu'une partie de
+  l'enjeu. La seconde partie que constitue la gestion de
+  l'environnement nécessite de déterminer les éléments essentiels
+  utilisés lors de l'expérience. Très souvent, lorsque l'on souhaite
+  partager un logiciel qui a été crée sur sa machine, ce n'est jamais
+  immédiat : les dépendances externes (librairies ou modules utilisés)
+  ne représentent qu'une partie des dépendances et certains paquets
+  échappent à l'oeil de l'expérimentateur, puisqu'il n'a pas eu besoin
+  de les installer : ils l'étaient déjà.
 
-  =A étoffer sérieusement (faire un vrai contexte)=
+  S'abstraire du contenu préexistant sur sa machine peut être réalisé
+  en virtualisant une partie de son environnement (avec une VirtualBox
+  par exemple). Néanmoins, un environnement virtualisé souffre d'un
+  manque de performances inconvenant pour le HPC, en plus d'un manque
+  de contrôle sur la virtualisation : c'est une boîte noire dont le
+  comportement interne ne peut être précisément défini. Néanmoins, de
+  nouvelles solutions (que nous présenterons plus tard) commencent à
+  emmerger afin de pallier ces défauts.
 
-  =Lier les paragraphes=
+  Cette gestion statique des dépendances, au moyen de temps et
+  d'essais, pourra à priori être résolue bien que ce ne soit très
+  plaisant. Malheureusement, cette gestion peut devenir dynamique : un
+  plan d'expérience pourrait nécessiter l'installation successive d'un
+  même logiciel mais avec plusieurs versions différentes, ou bien pour des
+  dépendances différentes. C'est le cas avec StarPU par exemple : ce
+  dernier utilise des BLAS (Basic Linear Algebra Subprograms) qui sont
+  des librairies mathématiques, pour le calcul - à haute performances -
+  de matrices par exemple.
+
+  Tester StarPU pour différentes BLAS, avec différentes versions du
+  logiciel, et ce de façon automatique (contenu dans un plan
+  d'expérience) nécessite donc des outils afin de faciliter ce travail
+  pour l'expérimentateur, aussi rigoureux soit-il.
 
 * TODO Etat de l'art
   Tous les paramètres (nombre de coeurs, version des packages,
@@ -108,7 +127,7 @@
   résultats. Il suffirait donc de construire un environnement
   possédant ces mêmes paramètres pour retrouver des résultats
   identiques. Cependant, est-ce possible ? Peut-on installer un
-  programme/package à partir d'une version précise sans tomber
+  programme/paquet à partir d'une version précise sans tomber
   dans un enfer de dépendances ?
 
   Une solution brutale, mais efficace, consisterait à enregistrer
@@ -127,26 +146,42 @@
   appliquée, en particulier lorsqu'un logiciel à benchmarker possède
   des milliers de révisions.
 
-  Ainsi la plupart du temps, si l'on souhaite répéter une expérience,
-  il faudra installer à la main cet environnement. L'installation de
-  StarPU est un calvaire : les dépendances sont nombreuses et peuvent
-  même changer (StarPU utilise des BLAS (Basic Linear
-  Algebra Subprograms) pour ses calculs).
+  Plûtot que d'enregistrer chacun des environnements, des solutions
+  telles que *Kameleon* permettent de les construire à volonté selon des
+  /recettes/ : une image Debian8 pourra être construite pour ensuite y
+  installer un certain nombre de paquets ou de logiciels, et
+  constituer l'environnement d'une expérience. Kameleon n'est pas
+  juste un outil qui exécutera successivement des commandes Shell. Son
+  gros avantage (outre sa simplicité exemplaire) est la possibilité de
+  créer des recettes basées sur d'autres recettes, à la manière
+  d'héritage tel qu'il est proposé par les langages orientés
+  objets. Une recette Kameleon pourra ainsi reprendre une recette
+  construisant une image Debian basique sans se soucier de ce qu'elle
+  contient.
+ 
+  Pour ce qui concerne les dépendances dynamiques, l'outil *Spack*
+  résoud ce problème en abstrayant toutes ces dépendances et leur
+  installation à l'utilisateur. Ce dernier pourra ainsi installer
+  StarPU avec tel ou tel BLAS, pour une version donnée, et/ou une
+  version de compilateur, etc... sans se soucier du téléchargement des
+  paquets nécessaires et de leur installation.
 
-  *Spack* résoud ce problème en abstrayant toutes ces dépendances et
-  leur installation à l'utilisateur. Ce dernier pourra ainsi
-  installer StarPU avec tel ou tel BLAS, pour une version donnée,
-  et/ou une version de compilateur, etc... sans se soucier du
-  téléchargement des paquets nécessaires et de leur installation.
+  Ces deux outils, à eux seuls, permettent de largement simplifier le
+  travail de l'expérimentateur en ce qui concerne le gestion de son
+  environnement et illustrent le besoin croissant des enjeux de la
+  reproductibilité : des outils simples permettant de définir
+  précisément et clairement les dépendances d'une machine d'un *point
+  de vue extérieur*. Bien que ce ne soient pas des solutions miracles
+  (installer StarPU avec Spack nécessite de fournir une fois pour
+  toute les règles de compilation de ce premier), une recette Kameleon
+  utilisant Spack en interne pourra être partagée sans problème et
+  réutilisée à volonté.
 
-  Cependant, Spack ne peut qu'installer les logiciels dont il a la
-  connaissance, _ie_ : les logiciels dont les règles de
-  compilation/installation ont été fournies auparavant par un tiers
-  (dans notre cas, on pourra s'en servir pour installer StarPU).
+  =Parler de du cache persistant de Kameleon pour capturer les paquets téléchargés=
 
-  =Parler de Kameleon pour la création d'environnement=
+  =Parler de Docker=
 
-  =A étoffer sérieusement=
+  =Parler d'autres trucs ?=
   
 * TODO Ma contribution
   =A venir=
