@@ -1,18 +1,14 @@
-=Les titres marqués :Moodle: sont les parties qui me sont imposées=
-
 * TODO Page de garde
   =A la fin=
 
-* TODO Abstract
-  =Intro pompeuse :)=
-
+* Abstract
   De tout temps la communauté scientifique n'a cessé de croître grâce
   aux échanges, permettant aux scientifiques de baser leurs travaux
   sur ceux préalablement établis par d'autres. Ces échanges permettent
-  également de crédibiliser les résultats trouvés en décrivant les protocoles
-  expérimentaux, afin que quiconque puisse de son côté les
-  vérifier. L'informatique ne dérogue pas à ce principe, néanmoins,
-  le nombre de paramètres à prendre en compte et les différences entre
+  également de crédibiliser les résultats trouvés en décrivant les
+  protocoles expérimentaux, afin que quiconque puisse de son côté les
+  vérifier. L'informatique ne dérogue pas à ce principe, néanmoins, le
+  nombre de paramètres à prendre en compte et les différences entre
   machines rendent ce processus de partage épineux, autant pour celui
   qui souhaite décrire précisément son expérience que pour celui qui
   souhaite la reproduire.
@@ -20,16 +16,14 @@
   Dans ce document, nous abordons le problème de la reproductibilité
   des expériences, en particulier dans le domaine HPC (High
   Performance Computing), selon deux aspects qui sont : le contrôle de
-  l'envrironnement et le pilotage de l'expérience. On y présentera
-  notre solution basée sur des technologies développées à l'Inria
-  permettant de déployer un envrionnement afin d'y conduire des
-  expériences (runtime). L'objectif final est d'évaluer les
-  performances (/benchmarker/) de StarPU tout au long de son évolution
-  afin d'y déceler de potentielles régressions entre deux versions,
-  tout en ayant un contrôle parfait de l'environnement et de
-  l'expérience.
-
-  =Ne pas évoquer StarPU tout de suite ?=
+  l'envrironnement et le pilotage de l'expérience, en plus de quelques
+  considérations autour de la reproductibilité en général. On y
+  présentera notre solution basée sur des technologies développées à
+  l'Inria permettant de déployer un envrionnement afin d'y conduire
+  des expériences. L'objectif final est d'évaluer les performances
+  (/benchmarker/) de StarPU tout au long de son évolution afin d'y
+  déceler de potentielles régressions entre deux versions, tout en
+  ayant un contrôle parfait de l'environnement et de l'expérience.
  
 * TODO Sommaire
   =A la fin=
@@ -40,15 +34,17 @@
   logiciel : les architectures multi-coeurs (CPUs et GPUs) sont
   devenues communes, reliées par des réseaux à haute vitesse, dans
   lesquelles de nombreuses optimisations interviennent à tous les
-  niveaux de façon dynamique. Tous ces éléments rendent
-  l'informatique moderne imprédictible et non déterministe. Répéter
-  une expérience ne produira pas forcément les mêmes résultats, en
-  particulier lorsque la machine qui l'exécute n'est pas la même,
-  pour des raisons matérielles. Mais le partage même de l'expérience
-  à un tiers pose d'énormes problèmes : logiciels/paquets plus
-  disponibles, problèmes de version, problèmes de compabilité,
-  etc ... Il convient donc de s'intérresser à la reproductibilité des
-  expériences, pour pouvoir les réitérer si besoin même 10 ans après.
+  niveaux de façon dynamique. Tous ces éléments rendent l'informatique
+  moderne imprédictible et non déterministe. Répéter une expérience ne
+  produira pas forcément les mêmes résultats, en particulier lorsque
+  la machine qui l'exécute n'est pas la même, pour des raisons
+  matérielles. Mais le partage même de l'expérience à un tiers pose
+  d'énormes problèmes : logiciels/paquets plus disponibles, problèmes
+  de version, problèmes de compabilité, problèmes même de
+  compréhension de l'expérience, etc ... Il convient donc de
+  s'intérresser à la reproductibilité des expériences, pour pouvoir
+  les réitérer si besoin même 10 ans après, sans avoir à y consacrer
+  bien trop de temps précieux.
   
   La reproductibilité est avant tout liée à de bonnes pratiques :
   comme dans d'autres domaines tels que les sciences physiques, une
@@ -63,11 +59,78 @@
   construire un outil /maison/ à l'aide d'outil préexistant (Spack,
   Kameleon, ...) permettant de définir entièrement une expérience :
   création de l'environnement, déploiement de l'environnement,
-  pilotage de l'expérience et synthèse des résultats.
+  pilotage de l'expérience et synthèse des résultats, afin de répondre
+  précisément à nos attentes concernant notre objectif.
   
   =Description des différentes sections évoquées (trop tôt pour se
   prononcer ...)=
    
+* Etat de l'art
+  La reproductibilité est une préoccupation récente motivée en
+  particulier par les chercheurs en informatique traduisant une
+  volonté de transparence et de clarté des expériences et des
+  résultats (graphes clairs, titré, avec une bonne échelle, présence
+  des unités, problèmes rencontrés, ...).
+
+  Elle est issue d'un phénomène courant : lorsqu'un article paraît
+  présentant des résultats, récupérer le code de l'expérience auprès
+  de leurs auteurs est rarement possible pour des raisons variées :
+
+  - L'auteur n'a pas l'intention de fournir le code
+  - Le code n'est pas disponible pour des raisons commerciales
+  - Le code est la propriété d'un organisme ou d'une université
+  - La personne en charge de ce code ne fait plus parti de l'organisme
+  - Problème de version : le code récupéré n'est pas exactement le
+    même (il a évolué depuis)
+  - Mauvaise pratique de back-up : le code est perdu / n'est plus
+    accessible
+  - Le code sera bientôt disponible (il est en phase de /nettoyage/, et
+    très souvent ne sera pas délivré)
+  - Le code n'est pas partageable : trop d'investissement serait
+    nécessaire pour qu'il le soit
+
+  D'autres phénomènes peuvent également biaiser les résultats d'une expérience la
+  rendant non-reproductible :
+
+  - Un article devra quasi-systématiquement afficher des résultats
+    positifs (esprit de compétitivité)
+  - Biais de l'expérimentateur : celui-ci se débrouillera pour
+    concurrencer les résultats d'autres chercheurs puisqu'il fera tout
+    pour (ces derniers pourraient en faire autant) : problème de
+    contexte d'exécution et de point de vue de l'expérimentateur
+  - L'erreur humaine : problème de manipulation de données, ou erreurs
+    de programmations qui au final affichent de bons résultats
+  - Pas de volonté de rendre l'expérience partageable de toute façon :
+    manque d'outils, le matériel et le logiciel changent constamment
+    (ces excuses ne sont plus valables aujourd'hui)
+  - Voire même problème de fraude
+
+  Tous ces problèmes ont poussé les chercheurs à entreprendre des
+  recherches reproductibles, dont la définition ne se limite pas à
+  pouvoir ré-exécuter du code. Il s'agit de pouvoir répliquer à
+  l'identique ce qu'un tiers a pu faire (réplicabilité) afin de
+  recréer l'esprit des précédents travaux par soi-même pour en arriver
+  à des conclusions identiques (reproductibilité).
+
+  Plusieurs points clés définissent le processus de recherche
+  reproductible :
+
+  - Noter son activité
+  - Noter et enregistrer ses résultats
+  - Organiser ses résultats
+  - Controler son environnement
+  - Controller son expérience
+  - Tout le monde refaire l'expérience
+
+  Ainsi, l'objectif principal des recherches reproductibles est de noter
+  absuloment tout ce que l'expérimentateur entreprend et collecte,
+  tant de bons que de mauvais résultats, mais aussi les motivations de
+  ce qu'il fait. De nombreux outils permettent de faciliter ce travail
+  de prise de note (Org-mode par exemple, que nous présenterons), et
+  d'autres outils permettent de mieux définir une expérience en terme
+  de workflow, mais aussi en terme d'avancement / de back-up avec les
+  logiciels de gestion de versions tels que Git par exemple.
+
 * TODO Contexte
   Le domainde du HPC s'intéresse aux architectures multicoeurs et à
   l'ordonnancement des tâches afin d'approcher les performances
@@ -117,10 +180,11 @@
 
   Tester StarPU pour différentes BLAS, avec différentes versions du
   logiciel, et ce de façon automatique (contenu dans un plan
-  d'expérience) nécessite donc des outils afin de faciliter ce travail
-  pour l'expérimentateur, aussi rigoureux soit-il.
+  d'expérience) nécessite donc des outils et de bonnes pratiques afin
+  de faciliter ce travail pour l'expérimentateur, aussi rigoureux
+  soit-il.
 
-* TODO Etat de l'art
+* Vrac
   Tous les paramètres (nombre de coeurs, version des packages,
   version des compilateurs, etc... (la liste est longue)) doivent
   être captés au moment de l'expérience pour en interpréter les
