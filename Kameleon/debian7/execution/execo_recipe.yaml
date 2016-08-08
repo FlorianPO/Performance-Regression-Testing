@@ -16,7 +16,7 @@ global:
   my_g5k_user: fpopek
   my_g5k_property: -p \"gpu='YES'\"
   my_g5k_nodes: 1
-  my_g5k_walltime: "2:00:00" 
+  my_g5k_walltime: "6:00:00" 
   my_g5k_env: ~/kameleon_workdir/debian_g5k/kameleonImage.env
 
 bootstrap:
@@ -48,7 +48,6 @@ setup:
           rm scripts.tar      
 
     - execo_step:                                                                 # Main experiment
-      - breakpoint: "Breakpoint..."
       - exec_in: |
           # SPACK ENVIRONMENT
           export SPACK_ROOT=$PWD/../debian_g5k/spack/
@@ -63,7 +62,6 @@ setup:
 
           # EXECO
           python execo_script.py revisions.csv revisions_abstract.csv
-      - breakpoint: "Breakpoint..."
 
 export:
   - g5k_custom:
@@ -114,4 +112,6 @@ export:
           python ../../scripts_local/data_csv.py starpu_results/
           rm ../../scripts/revisions.csv
           rm ../../scripts_local/csv_reader.pyc
+
+      - breakpoint: "Breakpoint..."
 

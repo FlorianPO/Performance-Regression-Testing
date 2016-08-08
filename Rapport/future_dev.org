@@ -197,3 +197,8 @@
     apt-get install -y paquet1
     apt-get install -y paquet2
     #+end_src
+
+  - Les résultats sont rapatriés tout à la fin des expériences, il
+    serait bon de le faire au fur et à mesure (ne pas utiliser les
+    pipes Kameleon, mais des commandes telles que =scp= dans le script
+    Execo)
