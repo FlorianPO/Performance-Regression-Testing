@@ -149,7 +149,7 @@ Dr Olivier Richard\\
 
   Dans ce document, nous abordons le problème de la reproductibilité
   des expériences, en particulier dans le domaine HPC (High
-  Performance Computing), selon deux aspects qui sont : le contrôle de
+  Performance Computing), selon deux aspects qui sont: le contrôle de
   l'environnement et le pilotage de l'expérience, en plus de quelques
   considérations autour de la reproductibilité en général. On y
   présentera notre solution basée sur des technologies développées à
@@ -176,7 +176,7 @@ Dr Olivier Richard\\
 * TODO Introduction
   L'informatique moderne est devenue de plus en plus complexe au fur
   et à mesure des années, au niveau matériel tout comme au niveau
-  logiciel : les architectures multi-cœurs (CPUs et GPUs) sont
+  logiciel: les architectures multi-cœurs (CPUs et GPUs) sont
   devenues communes, reliées par des réseaux à haute vitesse, dans
   lesquelles de nombreuses optimisations interviennent à tous les
   niveaux de façon dynamique. Tous ces éléments rendent l'informatique
@@ -184,14 +184,14 @@ Dr Olivier Richard\\
   produira pas forcément les mêmes résultats, en particulier lorsque
   la machine qui l'exécute n'est pas la même, pour des raisons
   matérielles. Mais le partage même de l'expérience à un tiers pose
-  d'énormes problèmes : logiciels/paquets plus disponibles, problèmes
+  d'énormes problèmes: logiciels/paquets plus disponibles, problèmes
   de version, problèmes de compatibilité, problèmes même de
   compréhension de l'expérience, etc ... Il convient donc de
   s'intéresser à la reproductibilité des expériences, pour pouvoir
   les réitérer si besoin même 10 ans après, sans avoir à y consacrer
   bien trop de temps précieux.
   
-  La reproductibilité est avant tout liée à de bonnes pratiques :
+  La reproductibilité est avant tout liée à de bonnes pratiques:
   comme dans d'autres domaines tels que les sciences physiques, une
   rigueur est de mise. Décrire un plan d'expérience, construire un
   environnement pour ensuite exécuter l'expérience, tenir un journal,
@@ -202,7 +202,7 @@ Dr Olivier Richard\\
   besoin, mais aucun ne résoud le problème dans sa globalité et la
   question reste encore ouverte. C'est pourquoi nous avons décidé de
   construire un outil /maison/ à l'aide d'outil préexistant (Spack,
-  Kameleon, ...) permettant de définir entièrement une expérience :
+  Kameleon, ...) permettant de définir entièrement une expérience:
   création de l'environnement, déploiement de l'environnement,
   pilotage de l'expérience et synthèse des résultats, afin de répondre
   précisément à nos attentes concernant notre objectif.
@@ -217,35 +217,35 @@ Dr Olivier Richard\\
   résultats (graphes clairs, titré, avec une bonne échelle, présence
   des unités, problèmes rencontrés, ...).
 
-  Elle est issue d'un phénomène courant : lorsqu'un article paraît
+  Elle est issue d'un phénomène courant: lorsqu'un article paraît
   présentant des résultats, récupérer le code de l'expérience auprès
-  de leurs auteurs est rarement possible pour des raisons variées :
+  de leurs auteurs est rarement possible pour des raisons variées:
 
   - L'auteur n'a pas l'intention de fournir le code
   - Le code n'est pas disponible pour des raisons commerciales
   - Le code est la propriété d'un organisme ou d'une université
   - La personne en charge de ce code ne fait plus parti de l'organisme
-  - Problème de version : le code récupéré n'est pas exactement le
+  - Problème de version: le code récupéré n'est pas exactement le
     même (il a évolué depuis)
-  - Mauvaise pratique de back-up : le code est perdu / n'est plus
+  - Mauvaise pratique de back-up: le code est perdu / n'est plus
     accessible
   - Le code sera bientôt disponible (il est en phase de /nettoyage/, et
     très souvent ne sera pas délivré)
-  - Le code n'est pas partageable : trop d'investissement serait
+  - Le code n'est pas partageable: trop d'investissement serait
     nécessaire pour qu'il le soit
 
   D'autres phénomènes peuvent également biaiser les résultats d'une expérience la
-  rendant non-reproductible :
+  rendant non-reproductible:
 
   - Un article devra quasi-systématiquement afficher des résultats
     positifs (esprit de compétitivité)
-  - Biais de l'expérimentateur : celui-ci se débrouillera pour
+  - Biais de l'expérimentateur: celui-ci se débrouillera pour
     concurrencer les résultats d'autres chercheurs puisqu'il fera tout
-    pour (ces derniers pourraient en faire autant) : problème de
+    pour (ces derniers pourraient en faire autant): problème de
     contexte d'exécution et de point de vue de l'expérimentateur
-  - L'erreur humaine : problème de manipulation de données, ou erreurs
+  - L'erreur humaine: problème de manipulation de données, ou erreurs
     de programmations qui au final affichent de bons résultats
-  - Pas de volonté de rendre l'expérience partageable de toute façon :
+  - Pas de volonté de rendre l'expérience partageable de toute façon:
     manque d'outils, le matériel et le logiciel changent constamment
     (ces excuses ne sont plus valables aujourd'hui)
   - Voire même problème de fraude
@@ -258,7 +258,7 @@ Dr Olivier Richard\\
   à des conclusions identiques (reproductibilité).
 
   Plusieurs points clés définissent le processus de recherche
-  reproductible :
+  reproductible:
 
   - Noter son activité
   - Noter et enregistrer ses résultats
@@ -287,7 +287,7 @@ Dr Olivier Richard\\
   France. Aujourd'hui Grid5000 est constituée de milliers de CPU et de
   GPU, mis à disposition des chercheurs informatiques.
 
-  Pour gérer cet ordonnancement des tâches, Inria a conçus StarPU : un
+  Pour gérer cet ordonnancement des tâches, Inria a conçus StarPU: un
   support exécutif original qui fournit un modelé d’exécution unifié
   afin d’exploiter l’intégralité de la puissance de calcul tout en
   s’affranchissant des difficultés liées a la gestion des
@@ -299,26 +299,26 @@ Dr Olivier Richard\\
   l'environnement nécessite de déterminer les éléments essentiels
   utilisés lors de l'expérience. Très souvent, lorsque l'on souhaite
   partager un logiciel qui a été crée sur sa machine, ce n'est jamais
-  immédiat : les dépendances externes (librairies ou modules utilisés)
+  immédiat: les dépendances externes (librairies ou modules utilisés)
   ne représentent qu'une partie des dépendances et certains paquets
   échappent à l'oeil de l'expérimentateur, puisqu'il n'a pas eu besoin
-  de les installer : ils l'étaient déjà.
+  de les installer: ils l'étaient déjà.
 
   S'abstraire du contenu préexistant sur sa machine peut être réalisé
   en virtualisant une partie de son environnement (avec une VirtualBox
   par exemple). Néanmoins, un environnement virtualisé souffre d'un
   manque de performances inconvenant pour le HPC, en plus d'un manque
-  de contrôle sur la virtualisation : c'est une boîte noire dont le
+  de contrôle sur la virtualisation: c'est une boîte noire dont le
   comportement interne ne peut être précisément défini. Néanmoins, de
   nouvelles solutions (que nous présenterons plus tard) commencent à
   émerger afin de pallier ces défauts.
 
   Cette gestion statique des dépendances, au moyen de temps et
   d'essais, pourra à priori être résolue bien que ce ne soit très
-  plaisant. Malheureusement, cette gestion peut devenir dynamique : un
+  plaisant. Malheureusement, cette gestion peut devenir dynamique: un
   plan d'expérience pourrait nécessiter l'installation successive d'un
   même logiciel mais avec plusieurs versions différentes, ou bien pour des
-  dépendances différentes. C'est le cas avec StarPU par exemple : ce
+  dépendances différentes. C'est le cas avec StarPU par exemple: ce
   dernier utilise des BLAS (Basic Linear Algebra Subprograms) qui sont
   des librairies mathématiques, pour le calcul - à haute performances -
   de matrices par exemple.
@@ -341,10 +341,10 @@ Dr Olivier Richard\\
 
   Une solution brutale, mais efficace, consisterait à enregistrer
   l'environnement dans sa globalité pour obtenir une image (un .tgz
-  par exemple) que l'on pourrait redéployer : on obtiendrait un
+  par exemple) que l'on pourrait redéployer: on obtiendrait un
   environnement identique et, auquel cas, des expériences identiques.
 
-  Grid5000 est basé sur ce principe : à l'aide *tgz-g5k*, il est
+  Grid5000 est basé sur ce principe: à l'aide *tgz-g5k*, il est
   possible d'enregistrer son environnement pour ensuite le redéployer
   avec *Kadeploy*, un outil développé à l'Inria.
 
@@ -357,7 +357,7 @@ Dr Olivier Richard\\
 
   Plutôt que d'enregistrer chacun des environnements, des solutions
   telles que *Kameleon* permettent de les construire à volonté selon des
-  /recettes/ : une image Debian8 pourra être construite pour ensuite y
+  /recettes/: une image Debian8 pourra être construite pour ensuite y
   installer un certain nombre de paquets ou de logiciels, et
   constituer l'environnement d'une expérience. Kameleon n'est pas
   juste un outil qui exécutera successivement des commandes Shell. Son
@@ -378,7 +378,7 @@ Dr Olivier Richard\\
   Ces deux outils, à eux seuls, permettent de largement simplifier le
   travail de l'expérimentateur en ce qui concerne le gestion de son
   environnement et illustrent le besoin croissant des enjeux de la
-  reproductibilité : des outils simples permettant de définir
+  reproductibilité: des outils simples permettant de définir
   précisément et clairement les dépendances d'une machine d'un *point
   de vue extérieur*. Bien que ce ne soient pas des solutions miracles
   (installer StarPU avec Spack nécessite de fournir une fois pour
