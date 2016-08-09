@@ -174,6 +174,57 @@ Dr Olivier Richard\\
    =A la fin=
 
 * TODO Introduction
+
+  - informatique = 3rd pillar of science. L'informatique est devenue
+    indispensable aux sciences modernes en permettant à la fois des
+    études en simulation (in silico) et la fouille de donnée massive
+    (big data).
+  - Pour répondre aux besoins de calcul sans cesse croissant tout en
+    respectant les contraintes technologiques (finesse de gravure) et
+    physiques (vitesse de la lumière, dissipation de chaleur) on n'a
+    pas trouvé d'autre solution que des architectures de plus en plus
+    compliquées. Les architectures actuelles sont massivement
+    multi-coeurs, embarques parfois dans un même noeud de calcul des
+    processeurs de technologies différentes (ARM, x86) et des
+    accélérateurs (GPUs, Xeon Phi,...).
+  - L'exploitation de telles architectures nécessite de revisiter
+    complètement la façon de les programmer. L'approche actuellement
+    la plus efficace consiste à utiliser un runtime utilisant le
+    paradigme de tâches. Au lieu d'indiquer explicitement et
+    séquentiellemnt comment le calcul doit être fait, on décrit 
+    le calcul par un graphe de tâches de calcul et c'est le runtime
+    qui décidera dynamiquement sur quelles ressources de calcul placer
+    les tâches et quand transférer les données entre ces ressources.
+  - L'ordonnancement optimal d'un tel graphe de tâche étant un
+    problème difficile, ces runtimes utilisent des heuristiques (type
+    ordonnancement de liste ou vol de travail) plus ou moins
+    évoluées. S'assurer que de tels runtime sont efficaces sur une
+    grande variété de plate-forme et de graphes est donc extrêmement
+    difficile.
+  - Il est habituel de mettre en place des tests de non régression
+    afin de s'assurer qu'on n'introduit pas de bugs lors du cycle d
+    vie du runtime. Dans un contexte de calcul où les performances
+    sont très importantes, il serait essentiel d'avoir des tests de
+    non régression de performance, afin de s'assurer que tel ou tel
+    amélioration du code sur telle plate-forme ne conduit pas en
+    réalité à une régression de performance sur d'autres
+    plates-formes.
+  - Ce problème de non-régression de performance a été quelque
+    peu abordé dans le contexte du noyau linux ou dans la communauté
+    python mais quasiment pas dans le contexte du calcul hautes
+    performances.
+  - Dans mon stage, je me suis donc intéressé à la mise en place d'une
+    infrastructure de test de non régression de performance légère et
+    adaptée au runtime HPC StarPU, dont l'objectif est l'exploitation
+    efficace d'architectures hybrides.
+
+  - Ce rapport est organisé de la façon suivante. Dans la section
+    truc.....
+
+
+
+
+
   L'informatique moderne est devenue de plus en plus complexe au fur
   et à mesure des années, au niveau matériel tout comme au niveau
   logiciel: les architectures multi-cœurs (CPUs et GPUs) sont
@@ -209,126 +260,210 @@ Dr Olivier Richard\\
   
   =Description des différentes sections évoquées (trop tôt pour se
   prononcer ...)=
-   
-* État de l'art
-  La reproductibilité est une préoccupation récente motivée en
-  particulier par les chercheurs en informatique traduisant une
-  volonté de transparence et de clarté des expériences et des
-  résultats (graphes clairs, titré, avec une bonne échelle, présence
-  des unités, problèmes rencontrés, ...).
-
-  Elle est issue d'un phénomène courant: lorsqu'un article paraît
-  présentant des résultats, récupérer le code de l'expérience auprès
-  de leurs auteurs est rarement possible pour des raisons variées:
-
-  - L'auteur n'a pas l'intention de fournir le code
-  - Le code n'est pas disponible pour des raisons commerciales
-  - Le code est la propriété d'un organisme ou d'une université
-  - La personne en charge de ce code ne fait plus parti de l'organisme
-  - Problème de version: le code récupéré n'est pas exactement le
-    même (il a évolué depuis)
-  - Mauvaise pratique de back-up: le code est perdu / n'est plus
-    accessible
-  - Le code sera bientôt disponible (il est en phase de /nettoyage/, et
-    très souvent ne sera pas délivré)
-  - Le code n'est pas partageable: trop d'investissement serait
-    nécessaire pour qu'il le soit
-
-  D'autres phénomènes peuvent également biaiser les résultats d'une expérience la
-  rendant non-reproductible:
-
-  - Un article devra quasi-systématiquement afficher des résultats
-    positifs (esprit de compétitivité)
-  - Biais de l'expérimentateur: celui-ci se débrouillera pour
-    concurrencer les résultats d'autres chercheurs puisqu'il fera tout
-    pour (ces derniers pourraient en faire autant): problème de
-    contexte d'exécution et de point de vue de l'expérimentateur
-  - L'erreur humaine: problème de manipulation de données, ou erreurs
-    de programmations qui au final affichent de bons résultats
-  - Pas de volonté de rendre l'expérience partageable de toute façon:
-    manque d'outils, le matériel et le logiciel changent constamment
-    (ces excuses ne sont plus valables aujourd'hui)
-  - Voire même problème de fraude
-
-  Tous ces problèmes ont poussé les chercheurs à entreprendre des
-  recherches reproductibles, dont la définition ne se limite pas à
-  pouvoir ré-exécuter du code. Il s'agit de pouvoir répliquer à
-  l'identique ce qu'un tiers a pu faire (réplicabilité) afin de
-  recréer l'esprit des précédents travaux par soi-même pour en arriver
-  à des conclusions identiques (reproductibilité).
-
-  Plusieurs points clés définissent le processus de recherche
-  reproductible:
-
-  - Noter son activité
-  - Noter et enregistrer ses résultats
-  - Organiser ses résultats
-  - Contrôler son environnement
-  - Contrôler son expérience
-  - Tout le monde refaire l'expérience
-
-  Ainsi, l'objectif principal des recherches reproductibles est de noter
-  absolument tout ce que l'expérimentateur entreprend et collecte,
-  tant de bons que de mauvais résultats, mais aussi les motivations de
-  ce qu'il fait. De nombreux outils permettent de faciliter ce travail
-  de prise de note (Org-mode par exemple, que nous présenterons), et
-  d'autres outils permettent de mieux définir une expérience en terme
-  de workflow, mais aussi en terme d'avancement / de back-up avec les
-  logiciels de gestion de versions tels que Git par exemple.
 
 * TODO Contexte
-  Le domaine du HPC s'intéresse aux architectures multi-cœurs et à
-  l'ordonnancement des tâches afin d'approcher les performances
-  théoriques offertes par ce genre d'architecture, traitant des
-  centaines de noeuds sur différentes machines connectées entre
-  elles. En France, ces expériences sont principalement exécutées sur
-  Grid5000, un projet lancé en 2003 dont le but était de mettre en
-  place une grille informatique expérimentale répartie sur 10 sites en
-  France. Aujourd'hui Grid5000 est constituée de milliers de CPU et de
-  GPU, mis à disposition des chercheurs informatiques.
+** TODO Responsabilité sociétale des entreprises		     :Moodle:
+   =A évacuer rapidement=
 
-  Pour gérer cet ordonnancement des tâches, Inria a conçus StarPU: un
-  support exécutif original qui fournit un modelé d’exécution unifié
-  afin d’exploiter l’intégralité de la puissance de calcul tout en
-  s’affranchissant des difficultés liées a la gestion des
-  données, et offre par ailleurs la possibilité de concevoir
-  facilement des stratégies d’ordonnancement portables et efficaces.
+   Le *LIG*, l'Inria, sa vie son oeuvre. 
+   - POLARIS à Grenoble
+     - Kameleon
+     - expo
+     - g5K
+   - RUNTIME à Bordeaux
+     - StarPU
 
-  Piloter efficacement l'expérience ne représente qu'une partie de
-  l'enjeu. La seconde partie que constitue la gestion de
-  l'environnement nécessite de déterminer les éléments essentiels
-  utilisés lors de l'expérience. Très souvent, lorsque l'on souhaite
-  partager un logiciel qui a été crée sur sa machine, ce n'est jamais
-  immédiat: les dépendances externes (librairies ou modules utilisés)
-  ne représentent qu'une partie des dépendances et certains paquets
-  échappent à l'oeil de l'expérimentateur, puisqu'il n'a pas eu besoin
-  de les installer: ils l'étaient déjà.
+   http://www.theses.fr/2015GREAM035
 
-  S'abstraire du contenu préexistant sur sa machine peut être réalisé
-  en virtualisant une partie de son environnement (avec une VirtualBox
-  par exemple). Néanmoins, un environnement virtualisé souffre d'un
-  manque de performances inconvenant pour le HPC, en plus d'un manque
-  de contrôle sur la virtualisation: c'est une boîte noire dont le
-  comportement interne ne peut être précisément défini. Néanmoins, de
-  nouvelles solutions (que nous présenterons plus tard) commencent à
-  émerger afin de pallier ces défauts.
+** Le Calcul Hautes Performances
 
-  Cette gestion statique des dépendances, au moyen de temps et
-  d'essais, pourra à priori être résolue bien que ce ne soit très
-  plaisant. Malheureusement, cette gestion peut devenir dynamique: un
-  plan d'expérience pourrait nécessiter l'installation successive d'un
-  même logiciel mais avec plusieurs versions différentes, ou bien pour des
-  dépendances différentes. C'est le cas avec StarPU par exemple: ce
-  dernier utilise des BLAS (Basic Linear Algebra Subprograms) qui sont
-  des librairies mathématiques, pour le calcul - à haute performances -
-  de matrices par exemple.
+   - Architectures multi-coeur, multi-GPUs
+   - Compliqué à programmer (threads, CUDA, transferts de données, ...)
+   - Du coup, programmation de plus haut niveau (DAG) et exécution
+     dynamique opportuniste (StarPU, Quark, parsec).
+   - StarPU est propre et bien codé.
+   - Les applications legacy sont codées directement en threads/openMP
+     et CUDA et c'est galère. Les technologies évoluent tellement vite
+     qu'avoir un code avec des performances portables, c'est super
+     dur. Plein d'applications et de bibliothèques sont en train de
+     passer à un modèle de programmation à plus haut niveau.
 
-  Tester StarPU pour différentes BLAS, avec différentes versions du
-  logiciel, et ce de façon automatique (contenu dans un plan
-  d'expérience) nécessite donc des outils et de bonnes pratiques afin
-  de faciliter ce travail pour l'expérimentateur, aussi rigoureux
-  soit-il.
+   Pour gérer cet ordonnancement des tâches, Inria a conçus StarPU: un
+   support exécutif original qui fournit un modelé d’exécution unifié
+   afin d’exploiter l’intégralité de la puissance de calcul tout en
+   s’affranchissant des difficultés liées a la gestion des
+   données, et offre par ailleurs la possibilité de concevoir
+   facilement des stratégies d’ordonnancement portables et efficaces.
+** L'écosysteme StarPU
+   - Algèbre linéaire dense.
+     - BLAS/MKL
+     - MORSE/CHAMELEON
+   - Système de packaging ?
+** Plates-formes expérimentales
+   - Plafrim à Bordeaux: avec plein de machines typiquement
+     HPC. Plate-forme de production "classique".
+   - Grid5000: nationale, dédiée à l'expérimentation et pas à la
+     production, plus homogène (type grille ou cloud) mais dans
+     laquelle on trouve quand même quelques noeuds un peu exotiques.
 
+   Le domaine du HPC s'intéresse aux architectures multi-cœurs et à
+   l'ordonnancement des tâches afin d'approcher les performances
+   théoriques offertes par ce genre d'architecture, traitant des
+   centaines de noeuds sur différentes machines connectées entre
+   elles. En France, ces expériences sont principalement exécutées sur
+   Grid5000, un projet lancé en 2003 dont le but était de mettre en
+   place une grille informatique expérimentale répartie sur 10 sites en
+   France. Aujourd'hui Grid5000 est constituée de milliers de CPU et de
+   GPU, mis à disposition des chercheurs informatiques.
+
+** La conduite d'expérience
+   En quoi c'est dur.
+   - Beaucoup de choses rentrent en jeu dans la performance d'un code:
+     - architecture, non homogénéité du cluster
+     - compilateur
+     - bibliothèques utilisées (versions de CUDA, mais aussi BLAS,
+       MKL, ...)
+     - OS (version, scheduleur, paramètres), gouverneur DVFS
+     Du coup, sur des plates-formes comme plafrim, c'est compliqué, on
+     est tributaire des mises à jour de l'administrateur système qui
+     fait pour le mieux pour l'ensemble de la communauté.
+** Tests de non régression de performance
+   Ce que Samuel a mis en place. À chaque nouvelle révision ou chaque
+   nuit, un job est lancé sur plafrim, et tourne un Cholesky
+   (https://hal.inria.fr/hal-00978602/PDF/siampp14.pdf) sur une
+   matrice de taille
+
+http://starpu.gforge.inria.fr/testing/morse/trunk/morse.html
+
+
+   #+begin_src sh :results output :exports both
+     ./timing/time_spotrf_tile --nowarmup --gpus=3 --threads=9 --nb=960 --ib=96 --n_range=48000:48000:9600
+   #+end_src
+
+   https://fr.wikipedia.org/wiki/Factorisation_de_Cholesky
+
+   A=L.L^T
+
+
+   # Piloter efficacement l'expérience ne représente qu'une partie de
+   # l'enjeu. La seconde partie que constitue la gestion de
+   # l'environnement nécessite de déterminer les éléments essentiels
+   # utilisés lors de l'expérience. Très souvent, lorsque l'on souhaite
+   # partager un logiciel qui a été crée sur sa machine, ce n'est jamais
+   # immédiat: les dépendances externes (librairies ou modules utilisés)
+   # ne représentent qu'une partie des dépendances et certains paquets
+   # échappent à l'oeil de l'expérimentateur, puisqu'il n'a pas eu besoin
+   # de les installer: ils l'étaient déjà.
+
+   # S'abstraire du contenu préexistant sur sa machine peut être réalisé
+   # en virtualisant une partie de son environnement (avec une VirtualBox
+   # par exemple). Néanmoins, un environnement virtualisé souffre d'un
+   # manque de performances inconvenant pour le HPC, en plus d'un manque
+   # de contrôle sur la virtualisation: c'est une boîte noire dont le
+   # comportement interne ne peut être précisément défini. Néanmoins, de
+   # nouvelles solutions (que nous présenterons plus tard) commencent à
+   # émerger afin de pallier ces défauts.
+
+   # Cette gestion statique des dépendances, au moyen de temps et
+   # d'essais, pourra à priori être résolue bien que ce ne soit très
+   # plaisant. Malheureusement, cette gestion peut devenir dynamique: un
+   # plan d'expérience pourrait nécessiter l'installation successive d'un
+   # même logiciel mais avec plusieurs versions différentes, ou bien pour des
+   # dépendances différentes. C'est le cas avec StarPU par exemple: ce
+   # dernier utilise des BLAS (Basic Linear Algebra Subprograms) qui sont
+   # des librairies mathématiques, pour le calcul - à haute performances -
+   # de matrices par exemple.
+
+   # Tester StarPU pour différentes BLAS, avec différentes versions du
+   # logiciel, et ce de façon automatique (contenu dans un plan
+   # d'expérience) nécessite donc des outils et de bonnes pratiques afin
+   # de faciliter ce travail pour l'expérimentateur, aussi rigoureux
+   # soit-il.
+   
+* État de l'art
+** Non régression de performance
+   - codespeed pour python
+   - Chromium: Bisecting Performance Regressions
+   - phoronix
+   - Jenkins/Perf module. Certains ont bricolé un truc maison à base
+     de jenkins + grid5000 (cado) mais c'est difficile à exploiter
+   - Collective Mind ??
+** Recherche Reproductible
+   La reproductibilité est une préoccupation récente motivée en
+   particulier par les chercheurs en informatique traduisant une
+   volonté de transparence et de clarté des expériences et des
+   résultats (graphes clairs, titré, avec une bonne échelle, présence
+   des unités, problèmes rencontrés, ...).
+
+   Elle est issue d'un phénomène courant: lorsqu'un article paraît
+   présentant des résultats, récupérer le code de l'expérience auprès
+   de leurs auteurs est rarement possible pour des raisons variées:
+
+   - L'auteur n'a pas l'intention de fournir le code
+   - Le code n'est pas disponible pour des raisons commerciales
+   - Le code est la propriété d'un organisme ou d'une université
+   - La personne en charge de ce code ne fait plus parti de l'organisme
+   - Problème de version: le code récupéré n'est pas exactement le
+     même (il a évolué depuis)
+   - Mauvaise pratique de back-up: le code est perdu / n'est plus
+     accessible
+   - Le code sera bientôt disponible (il est en phase de /nettoyage/, et
+     très souvent ne sera pas délivré)
+   - Le code n'est pas partageable: trop d'investissement serait
+     nécessaire pour qu'il le soit
+
+   D'autres phénomènes peuvent également biaiser les résultats d'une expérience la
+   rendant non-reproductible:
+
+   - Un article devra quasi-systématiquement afficher des résultats
+     positifs (esprit de compétitivité)
+   - Biais de l'expérimentateur: celui-ci se débrouillera pour
+     concurrencer les résultats d'autres chercheurs puisqu'il fera tout
+     pour (ces derniers pourraient en faire autant): problème de
+     contexte d'exécution et de point de vue de l'expérimentateur
+   - L'erreur humaine: problème de manipulation de données, ou erreurs
+     de programmations qui au final affichent de bons résultats
+   - Pas de volonté de rendre l'expérience partageable de toute façon:
+     manque d'outils, le matériel et le logiciel changent constamment
+     (ces excuses ne sont plus valables aujourd'hui)
+   - Voire même problème de fraude
+
+   Tous ces problèmes ont poussé les chercheurs à entreprendre des
+   recherches reproductibles, dont la définition ne se limite pas à
+   pouvoir ré-exécuter du code. Il s'agit de pouvoir répliquer à
+   l'identique ce qu'un tiers a pu faire (réplicabilité) afin de
+   recréer l'esprit des précédents travaux par soi-même pour en arriver
+   à des conclusions identiques (reproductibilité).
+
+   Plusieurs points clés définissent le processus de recherche
+   reproductible:
+
+   - Noter son activité
+   - Noter et enregistrer ses résultats
+   - Organiser ses résultats
+   - Contrôler son environnement
+   - Contrôler son expérience
+   - Tout le monde refaire l'expérience
+
+   Ainsi, l'objectif principal des recherches reproductibles est de noter
+   absolument tout ce que l'expérimentateur entreprend et collecte,
+   tant de bons que de mauvais résultats, mais aussi les motivations de
+   ce qu'il fait. De nombreux outils permettent de faciliter ce travail
+   de prise de note (Org-mode par exemple, que nous présenterons), et
+   d'autres outils permettent de mieux définir une expérience en terme
+   de workflow, mais aussi en terme d'avancement / de back-up avec les
+   logiciels de gestion de versions tels que Git par exemple.
+
+   1. programmation litérale associée à des outils de stats (R,
+      knitr, org-mode)
+   2. gestionnaire de version de code comme git
+   3. notion de workflow (science computationelle, où seul le résultat
+      du calcul importe)
+   4. contrôle d'environnement (docker mais dans notre contexte, c'est
+      compliqué, mais heureusement, G5K permet de travailler en natif)
+   5. moteur d'expérimentation (expo, xpflow, etc.)
+** Contrôle d'environnement
+** Moteur d'expérimentation
 * Vrac
   Tous les paramètres (nombre de coeurs, version des packages,
   version des compilateurs, etc... (la liste est longue)) doivent
@@ -392,34 +527,28 @@ Dr Olivier Richard\\
 
   =Parler d'autres trucs ?=
   
-* TODO Ma contribution
+* Méthodologie
+** TODO Documents rédigés					     :Moodle:
+   =A éclaircir=
   =A venir=
+** TODO Résumé / Tableau de révisions				     :Moodle:
+   =A la fin=
 
-* TODO XP results
-  =A venir=
+* TODO Ma contribution
+** Architecture logicielle
+** TODO XP results
+   =A venir=
 
 * TODO Conclusion
   =A la fin, mais pas obligé (quand ce sera clair dans ma tête)=
-
-* TODO Ouverture / Perspectives futures
-  =RStudio -> affichage des résultats (flexdashboard)=
-  =Stockage (Git branching, ...)=
-
-* TODO Organisation et connaissances acquises			     :Moodle:
-  =Shell, Org-mode (tenir un journal), ... (à méditer)=
-
-* TODO Responsabilité sociétale des entreprises			     :Moodle:
-  =A évacuer rapidement=
+** TODO Organisation et connaissances acquises			     :Moodle:
+   =Shell, Org-mode (tenir un journal), ... (à méditer)=
+** TODO Ouverture / Perspectives futures
+   =RStudio -> affichage des résultats (flexdashboard)=
+   =Stockage (Git branching, ...)=
 
 * TODO Bibliographie
   =A a fin=
-
-* TODO Documents rédigés					     :Moodle:
-  =A éclaircir=
-
-* TODO Résumé / Tableau de révisions				     :Moodle:
-  =A la fin=
-
 * TODO Annexes
   =A venir=
 * Emacs Setup 							   :noexport:
